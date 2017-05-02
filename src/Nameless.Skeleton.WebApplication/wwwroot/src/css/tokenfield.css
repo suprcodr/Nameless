@@ -1,0 +1,31 @@
+﻿.tokenfield .token {
+    background-color: #0073b7;
+    border-radius: 0;
+}
+
+.tokenfield .token .token-label {
+    color: #FFF;
+    font-weight: 500;
+}
+
+span.twitter-typeahead .tt-input {
+    height: 20px;
+    padding: 0;
+}
+
+div.tt-menu {
+    background-color: #ebebeb;
+    border: 1px solid #CCC;
+}
+
+div.tt-menu div.tt-dataset {
+
+}
+
+div.tt-menu div.tt-dataset .suggestion-message {
+
+}
+
+div.tt-menu div.tt-dataset .tt-suggestion .tt-cursor {
+
+}

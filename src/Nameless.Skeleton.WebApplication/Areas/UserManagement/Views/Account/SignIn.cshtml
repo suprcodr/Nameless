@@ -1,0 +1,90 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Sign In";
+    ViewData["PageCssClass"] = "user-management-page";
+}
+
+@section Styles {
+    <environment names="Development">
+        <link href="~/src/css/user_management.account.global.css" rel="stylesheet" />
+    </environment>
+    <environment names="Staging,Production">
+        <link href="~/assets/css/skeleton.user.management.min.css" rel="stylesheet" />
+    </environment>
+}
+
+<div class="user-management-box">
+    <div class="user-management-logo">
+        <a asp-area="" asp-controller="Home" asp-action="Index"><b>@ViewData["ApplicationName"]</b> App</a>
+    </div>
+    <!-- /.user-management-logo -->
+    <div class="user-management-box-body">
+        <p class="user-management-box-msg">@T["Sign in to start your session"]</p>
+
+        <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+            <div class="form-group has-feedback">
+                <input type="email" asp-for="Email" class="form-control" placeholder="@T["Email"]" />
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                <span asp-validation-for="Email" class="help-block"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" asp-for="Password" class="form-control" placeholder="Password" />
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                <span asp-validation-for="Password" class="help-block"></span>
+            </div>
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="checkbox icheck">
+                        <label>
+                            <input type="checkbox" name="RememberMe" /> @T["Remember Me"]
+                        </label>
+                    </div>
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">@T["Sign In"]</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        </form>
+
+        <div class="social-auth-links text-center">
+            <p>@T["- OR -"]</p>
+            <a asp-area="Users" asp-controller="Account" asp-action="ExternalLogin" asp-route-provider="Facebook" class="btn btn-block btn-social btn-facebook btn-flat">
+                <i class="fa fa-facebook"></i> @T["Sign in using"]
+                Facebook
+            </a>
+            <a asp-area="Users" asp-controller="Account" asp-action="ExternalLogin" asp-route-provider="Google" class="btn btn-block btn-social btn-google btn-flat">
+                <i class="fa fa-google-plus"></i> @T["Sign in using"]
+                Google+
+            </a>
+        </div>
+        <!-- /.social-auth-links -->
+
+        <a asp-area="UserManagement" asp-controller="Account" asp-action="ForgotPassword">@T["I forgot my password"]</a><br>
+        <a asp-area="UserManagement" asp-controller="Account" asp-action="SignUp" class="text-center">@T["Register a new membership"]</a>
+    </div>
+    <!-- /.user-management-box-body -->
+</div>
+<!-- /.user-management-box -->
+
+@if (Model.LoginProviders.Any()) {
+    <div class="col-md-4">
+        <section>
+            <h4>@T["Use another service to log in."]</h4>
+            <hr />
+            <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+                <div>
+                    <p>
+                        @foreach (var provider in Model.LoginProviders) {
+                            <button type="submit" class="btn btn-default" name="provider" value="@provider.AuthenticationScheme" title="Log in using your @provider.DisplayName account">@provider.AuthenticationScheme</button>
+                        }
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+}
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

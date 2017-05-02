@@ -1,0 +1,1 @@
+﻿DELETE FROM [dbo].[roles_claims] WHERE [role_id] = @RoleId AND [type] = @Type AND [value] = @Value

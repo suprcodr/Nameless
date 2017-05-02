@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <RootNamespace>Nameless.Skeleton.Framework</RootNamespace>
+    <Authors>Marco Antonio Orestes Teixeira</Authors>
+    <Company>Nameless Inc.</Company>
+    <Product>Nameless.Skeleton.Framework.Web.dll</Product>
+    <Description>Skeleton Framework Web Assembly</Description>
+    <Copyright>MIT</Copyright>
+    <PackageProjectUrl>https://marcoaoteixeira.github.io/projects/skeleton</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/marcoaoteixeira/Skeleton</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\..\build\</OutputPath>
+    <DocumentationFile>..\..\build\netcoreapp1.1\Nameless.Skeleton.Framework.Web.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\build\</OutputPath>
+    <DocumentationFile>..\..\build\netcoreapp1.1\Nameless.Skeleton.Framework.Web.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nameless.Skeleton.Common\Nameless.Skeleton.Common.csproj" />
+    <ProjectReference Include="..\Nameless.Skeleton.Framework.Impl\Nameless.Skeleton.Framework.Impl.csproj" />
+    <ProjectReference Include="..\Nameless.Skeleton.Framework\Nameless.Skeleton.Framework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

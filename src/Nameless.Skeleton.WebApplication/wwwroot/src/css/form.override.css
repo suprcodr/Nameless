@@ -1,0 +1,54 @@
+﻿/*
+    Effect: Sae (override)
+*/
+
+.input {
+}
+
+.input_field {
+}
+
+    .input_field:focus {
+    }
+
+.input_label {
+}
+
+.input_label-content {
+}
+
+.graphic {
+}
+
+.icon {
+}
+
+.input-sae {
+}
+
+.input_field-sae {
+}
+
+.input_label-sae {
+}
+
+    .input_label-sae::after {
+    }
+
+.icon-sae {
+}
+
+.input_label-content-sae {
+}
+
+.input_field-sae:focus + .input_label-sae .input_label-content-sae,
+.input-filled .input_label-content-sae {
+}
+
+.input_field-sae:focus + .input_label-sae::after,
+.input-filled .input_label-sae::after {
+}
+
+.input_field-sae:focus + .input_label-sae .icon-sae,
+.input-filled .icon-sae {
+}

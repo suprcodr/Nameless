@@ -1,0 +1,1 @@
+﻿DELETE FROM [dbo].[roles] WHERE [role_id] = @RoleId;

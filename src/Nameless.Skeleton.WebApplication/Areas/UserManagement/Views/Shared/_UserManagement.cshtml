@@ -1,0 +1,14 @@
+﻿@{ Layout = "_Layout"; }
+@section Styles {
+    @RenderSection("Styles", required: false)
+}
+
+@RenderBody()
+
+@section EndOfLayout {
+    @RenderSection("EndOfLayout", required: false)
+}
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

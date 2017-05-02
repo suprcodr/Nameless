@@ -1,0 +1,9 @@
+﻿.info-box-img {
+    font-size: initial;
+}
+
+.info-box-img img {
+    height: 90px;
+    vertical-align: initial;
+    width: 90px;
+}

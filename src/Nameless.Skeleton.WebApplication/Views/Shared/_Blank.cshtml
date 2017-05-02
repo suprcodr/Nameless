@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewData["ApplicationName"] | @ViewData["Title"]</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <environment names="Development">
+        <link href="~/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/bower_components/fontawesome/css/font-awesome.css" rel="stylesheet" />
+        <link href="~/bower_components/Ionicons/css/ionicons.css" rel="stylesheet" />
+        <link href="~/vendors/AdminLTE/css/_imports.css" rel="stylesheet" />
+        <link href="~/vendors/AdminLTE/css/AdminLTE.css" rel="stylesheet" />
+        <link href="~/bower_components/iCheck/skins/square/_all.css" rel="stylesheet" />
+        <link href="~/src/css/form.css" rel="stylesheet" />
+        <link href="~/src/css/form.override.css" rel="stylesheet" />
+        <link href="~/src/css/widget.css" rel="stylesheet" />
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="~/bower_components/html5shiv/dist/html5shiv.js" type="text/javascript"></script>
+            <script src="~/bower_components/respond/src/respond.js" type="text/javascript"></script>
+        <![endif]-->
+    </environment>
+
+    <environment names="Staging,Production">
+        <link href="~/assets/css/skeleton.minimal.min.css" rel="stylesheet" />
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="~/assets/js/skeleton.IE8.html5.min.js" type="text/javascript"></script>
+        <![endif]-->
+    </environment>
+
+    @RenderSection("Styles", required: false)
+
+</head>
+<body class="hold-transition @ViewData["PageCssClass"]">
+    @RenderBody()
+    <environment names="Development">
+        <script type="text/javascript" src="~/bower_components/jquery/dist/jquery.js"></script>
+        <script type="text/javascript" src="~/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+        <script type="text/javascript" src="~/bower_components/iCheck/icheck.js"></script>
+        <script type="text/javascript" src="~/src/js/checkbox.js"></script>
+        <script type="text/javascript" src="~/src/js/classie.js"></script>
+        <script type="text/javascript" src="~/src/js/form.js"></script>
+        <script type="text/javascript" src="~/src/js/polyfills.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script type="text/javascript" src="~/assets/js/skeleton.minimal.min.js"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
