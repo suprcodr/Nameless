@@ -32,8 +32,8 @@ namespace Nameless.Skeleton.Framework.IoC.Modules {
         /// <summary>
         /// Gets or sets the <see cref="IPluralStringLocalizer{T}"/> <see cref="LifetimeScopeType"/>.
         /// </summary>
-        /// <remarks>Default is <see cref="LifetimeScopeType.Singleton"/>.</remarks>
-        public LifetimeScopeType PluralStringLocalizerLifetimeScope { get; set; } = LifetimeScopeType.Singleton;
+        /// <remarks>Default is <see cref="LifetimeScopeType.PerScope"/>.</remarks>
+        public LifetimeScopeType PluralStringLocalizerLifetimeScope { get; set; } = LifetimeScopeType.PerScope;
 
         #endregion Public Properties
 
@@ -72,17 +72,11 @@ namespace Nameless.Skeleton.Framework.IoC.Modules {
         private void AttachToComponentRegistration(ComponentRegisteredEventArgs args) {
             var registration = args.ComponentRegistration;
             var userProperty = FindUserProperty(registration.Activator.LimitType);
-
             if (userProperty != null) {
                 var scope = registration.Activator.LimitType;
-
                 registration.Activated += (sender, e) => {
-                    if (e.Instance.GetType() != scope) {
-                        return;
-                    }
-
+                    if (e.Instance.GetType() != scope) { return; }
                     var localizer = Cache.GetOrAdd(scope.FullName, key => ResolveLocalizer(e.Context, scope));
-
                     userProperty.SetValue(e.Instance, localizer, null);
                 };
             }

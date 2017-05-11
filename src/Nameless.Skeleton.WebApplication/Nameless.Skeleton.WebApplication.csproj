@@ -7,6 +7,24 @@
   <PropertyGroup>
     <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
     <UserSecretsId>607e8f80-bf73-4876-9e67-049a1fbd3e06</UserSecretsId>
+    <Authors>Marco Antonio Orestes Teixeira</Authors>
+    <Company>Nameless Inc.</Company>
+    <Product>Skeleton Web Application</Product>
+    <Description>Simple multi purpose web application</Description>
+    <Copyright>MIT</Copyright>
+    <PackageProjectUrl>https://marcoaoteixeira.github.io/projects/skeleton</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/marcoaoteixeira/Skeleton</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\..\build\</OutputPath>
+    <DocumentationFile>..\..\build\netcoreapp1.1\Nameless.Skeleton.WebApplication.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\build\</OutputPath>
+    <DocumentationFile>..\..\build\netcoreapp1.1\Nameless.Skeleton.WebApplication.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -271,11 +289,11 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Displays.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Displays.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Validations.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Validations.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

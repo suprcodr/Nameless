@@ -23,7 +23,7 @@ namespace Nameless.Skeleton.WebApplication.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Validations {
+    public class Validations {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -37,7 +37,7 @@ namespace Nameless.Skeleton.WebApplication.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Nameless.Skeleton.WebApplication.Resources.Validations", typeof(Validations).GetTypeInfo().Assembly);
@@ -52,7 +52,7 @@ namespace Nameless.Skeleton.WebApplication.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -64,7 +64,7 @@ namespace Nameless.Skeleton.WebApplication.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The new password and confirmation password do not match..
         /// </summary>
-        internal static string ConfirmNewPassword {
+        public static string ConfirmNewPassword {
             get {
                 return ResourceManager.GetString("ConfirmNewPassword", resourceCulture);
             }
@@ -73,7 +73,7 @@ namespace Nameless.Skeleton.WebApplication.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The password and confirmation password do not match..
         /// </summary>
-        internal static string ConfirmPassword {
+        public static string ConfirmPassword {
             get {
                 return ResourceManager.GetString("ConfirmPassword", resourceCulture);
             }
@@ -82,7 +82,7 @@ namespace Nameless.Skeleton.WebApplication.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The field value is not a valid e-mail address..
         /// </summary>
-        internal static string EmailAddress {
+        public static string EmailAddress {
             get {
                 return ResourceManager.GetString("EmailAddress", resourceCulture);
             }
@@ -91,7 +91,7 @@ namespace Nameless.Skeleton.WebApplication.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The field {0} is required..
         /// </summary>
-        internal static string Required {
+        public static string Required {
             get {
                 return ResourceManager.GetString("Required", resourceCulture);
             }
@@ -100,7 +100,7 @@ namespace Nameless.Skeleton.WebApplication.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The {0} must be at least {2} and at max {1} characters long..
         /// </summary>
-        internal static string StringLength {
+        public static string StringLength {
             get {
                 return ResourceManager.GetString("StringLength", resourceCulture);
             }

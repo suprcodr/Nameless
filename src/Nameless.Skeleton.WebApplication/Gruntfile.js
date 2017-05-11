@@ -57,37 +57,37 @@
             plugins: {
                 files: [{
                     expand: true,
-                    cwd: './bower_components/bootstrap/dist',
+                    cwd: './wwwroot/lib/bootstrap/dist',
                     src: ['fonts/**/*'],
                     dest: './wwwroot/assets/'
                 }, {
                     expand: true,
-                    cwd: './bower_components/bootstrap-colorpicker/dist',
+                    cwd: './wwwroot/lib/bootstrap-colorpicker/dist',
                     src: ['img/**/*'],
                     dest: './wwwroot/assets/'
                 }, {
                     expand: true,
-                    cwd: './bower_components/bootstrap-fileinput',
+                    cwd: './wwwroot/lib/bootstrap-fileinput',
                     src: ['img/**/*'],
                     dest: './wwwroot/assets/'
                 }, {
                     expand: true,
-                    cwd: './bower_components/fontawesome',
+                    cwd: './wwwroot/lib/fontawesome',
                     src: ['fonts/**/*'],
                     dest: './wwwroot/assets/'
                 }, {
                     expand: true,
-                    cwd: './bower_components/iCheck/skins/square',
+                    cwd: './wwwroot/lib/iCheck/skins/square',
                     src: ['**/*.png'],
                     dest: './wwwroot/assets/img'
                 }, {
                     expand: true,
-                    cwd: './bower_components/ion.rangeSlider',
+                    cwd: './wwwroot/lib/ion.rangeSlider',
                     src: ['img/**/*'],
                     dest: './wwwroot/assets/'
                 }, {
                     expand: true,
-                    cwd: './bower_components/Ionicons',
+                    cwd: './wwwroot/lib/Ionicons',
                     src: ['fonts/**/*'],
                     dest: './wwwroot/assets/'
                 }]
@@ -96,7 +96,7 @@
             ckeditor: {
                 files: [{
                     expand: true,
-                    cwd: './bower_components/ckeditor',
+                    cwd: './wwwroot/lib/ckeditor',
                     src: [
                         'lang/**/*.js',
                         'plugins/**/*',
@@ -128,30 +128,30 @@
                 // the files to concatenate
                 src: [
                     // COMMON
-                    './bower_components/jquery/dist/jquery.min.js',
-                    './bower_components/jquery-ui/jquery-ui.min.js',
+                    './wwwroot/lib/jquery/dist/jquery.min.js',
+                    './wwwroot/lib/jquery-ui/jquery-ui.min.js',
                     './wwwroot/src/js/jquery-ui.fixture.min.js',
-                    './bower_components/bootstrap/dist/js/bootstrap.min.js',
-                    './bower_components/bootstrap-tokenfield/dist/bootstrap-tokenfield.min.js',
-                    './bower_components/typeahead.js/dist/typeahead.min.js',
-                    './bower_components/raphael/raphael.min.js',
-                    './bower_components/morris.js/morris.min.js',
-                    './bower_components/jquery-sparkline/dist/jquery.sparkline.min.js',
-                    './bower_components/jvectormap/jquery.jvectormap.min.js',
+                    './wwwroot/lib/bootstrap/dist/js/bootstrap.min.js',
+                    './wwwroot/lib/bootstrap-tokenfield/dist/bootstrap-tokenfield.min.js',
+                    './wwwroot/lib/typeahead.js/dist/typeahead.min.js',
+                    './wwwroot/lib/raphael/raphael.min.js',
+                    './wwwroot/lib/morris.js/morris.min.js',
+                    './wwwroot/lib/jquery-sparkline/dist/jquery.sparkline.min.js',
+                    './wwwroot/lib/jvectormap/jquery.jvectormap.min.js',
                     './wwwroot/vendors/jvectormap/jquery-jvectormap-world-mill.min.js',
-                    './bower_components/jquery-knob/dist/jquery.knob.min.js',
-                    './bower_components/moment/min/moment-with-locales.min.js',
-                    './bower_components/bootstrap-daterangepicker/daterangepicker.min.js',
+                    './wwwroot/lib/jquery-knob/dist/jquery.knob.min.js',
+                    './wwwroot/lib/moment/min/moment-with-locales.min.js',
+                    './wwwroot/lib/bootstrap-daterangepicker/daterangepicker.min.js',
                     './wwwroot/vendors/datepicker/bootstrap-datepicker.min.js',
                     './wwwroot/vendors/datepicker/locales/*.min.js',
-                    './bower_components/bootstrap3-wysihtml5-bower/dist/bootstrap3-wysihtml5.all.min.js',
-                    './bower_components/bootstrap3-wysihtml5-bower/dist/locales/*.min.js',
-                    './bower_components/jquery-slimscroll/jquery.slimscroll.min.js',
-                    './bower_components/fastclick/lib/fastclick.min.js',
-                    './bower_components/iCheck/icheck.min.js',
-                    './bower_components/bootstrap-fileinput/js/fileinput.min.js',
-                    './bower_components/bootstrap-fileinput/js/locales/*.min.js',
-                    './bower_components/bootbox/bootbox.min.js',
+                    './wwwroot/lib/bootstrap3-wysihtml5-bower/dist/bootstrap3-wysihtml5.all.min.js',
+                    './wwwroot/lib/bootstrap3-wysihtml5-bower/dist/locales/*.min.js',
+                    './wwwroot/lib/jquery-slimscroll/jquery.slimscroll.min.js',
+                    './wwwroot/lib/fastclick/lib/fastclick.min.js',
+                    './wwwroot/lib/iCheck/icheck.min.js',
+                    './wwwroot/lib/bootstrap-fileinput/js/fileinput.min.js',
+                    './wwwroot/lib/bootstrap-fileinput/js/locales/*.min.js',
+                    './wwwroot/lib/bootbox/bootbox.min.js',
                     './wwwroot/vendors/AdminLTE/js/AdminLTE.min.js',
                     // CUSTOM
                     './wwwroot/src/js/checkbox.min.js',
@@ -170,22 +170,22 @@
                 // the files to concatenate
                 src: [
                     // COMMON
-                    './bower_components/bootstrap/dist/css/bootstrap.min.css',
-                    './bower_components/bootstrap-tokenfield/dist/css/bootstrap-tokenfield.min.css',
-                    './bower_components/bootstrap-tokenfield/dist/css/tokenfield-typeahead.min.css',
-                    './bower_components/fontawesome/css/font-awesome.min.css',
-                    './bower_components/Ionicons/css/ionicons.min.css',
+                    './wwwroot/lib/bootstrap/dist/css/bootstrap.min.css',
+                    './wwwroot/lib/bootstrap-tokenfield/dist/css/bootstrap-tokenfield.min.css',
+                    './wwwroot/lib/bootstrap-tokenfield/dist/css/tokenfield-typeahead.min.css',
+                    './wwwroot/lib/fontawesome/css/font-awesome.min.css',
+                    './wwwroot/lib/Ionicons/css/ionicons.min.css',
                     './wwwroot/vendors/AdminLTE/css/_imports.css',
                     './wwwroot/vendors/AdminLTE/css/AdminLTE.min.css',
                     './wwwroot/vendors/AdminLTE/css/skins/_all-skins.min.css',
-                    './bower_components/iCheck/skins/square/_all.min.css',
+                    './wwwroot/lib/iCheck/skins/square/_all.min.css',
                     './wwwroot/vendors/iCheck/css/square.override.min.css',
-                    './bower_components/morris.js/morris.min.css',
-                    './bower_components/jvectormap/jquery-jvectormap.min.css',
+                    './wwwroot/lib/morris.js/morris.min.css',
+                    './wwwroot/lib/jvectormap/jquery-jvectormap.min.css',
                     './wwwroot/vendors/datepicker/datepicker3.min.css',
-                    './bower_components/bootstrap-daterangepicker/daterangepicker.min.css',
-                    './bower_components/bootstrap3-wysihtml5-bower/dist/bootstrap3-wysihtml5.min.css',
-                    './bower_components/bootstrap-fileinput/css/fileinput.min.css',
+                    './wwwroot/lib/bootstrap-daterangepicker/daterangepicker.min.css',
+                    './wwwroot/lib/bootstrap3-wysihtml5-bower/dist/bootstrap3-wysihtml5.min.css',
+                    './wwwroot/lib/bootstrap-fileinput/css/fileinput.min.css',
                     // CUSTOM
                     './wwwroot/src/css/form.min.css',
                     './wwwroot/src/css/form.override.min.css',
@@ -201,9 +201,9 @@
                 // the files to concatenate
                 src: [
                     // COMMON
-                    './bower_components/jquery/dist/jquery.min.js',
-                    './bower_components/bootstrap/dist/js/bootstrap.min.js',
-                    './bower_components/iCheck/icheck.min.js',
+                    './wwwroot/lib/jquery/dist/jquery.min.js',
+                    './wwwroot/lib/bootstrap/dist/js/bootstrap.min.js',
+                    './wwwroot/lib/iCheck/icheck.min.js',
                     // CUSTOM
                     './wwwroot/src/js/checkbox.min.js',
                     './wwwroot/src/js/classie.min.js',
@@ -220,12 +220,12 @@
                 // the files to concatenate
                 src: [
                     // COMMON
-                    './bower_components/bootstrap/dist/css/bootstrap.min.css',
-                    './bower_components/fontawesome/css/font-awesome.min.css',
-                    './bower_components/Ionicons/css/ionicons.min.css',
+                    './wwwroot/lib/bootstrap/dist/css/bootstrap.min.css',
+                    './wwwroot/lib/fontawesome/css/font-awesome.min.css',
+                    './wwwroot/lib/Ionicons/css/ionicons.min.css',
                     './wwwroot/vendors/AdminLTE/css/_imports.css',
                     './wwwroot/vendors/AdminLTE/css/AdminLTE.min.css',
-                    './bower_components/iCheck/skins/square/_all.min.css',
+                    './wwwroot/lib/iCheck/skins/square/_all.min.css',
                     './wwwroot/vendors/iCheck/css/square.override.min.css',
                     // CUSTOM
                     './wwwroot/src/css/form.min.css',
@@ -242,8 +242,8 @@
                 // the files to concatenate
                 src: [
                     // COMMON
-                    './bower_components/html5shiv/dist/html5shiv.min.js',
-                    './bower_components/respond/dest/respond.min.js'
+                    './wwwroot/lib/html5shiv/dist/html5shiv.min.js',
+                    './wwwroot/lib/respond/dest/respond.min.js'
                 ],
                 // the location of the resulting JS file
                 dest: './wwwroot/assets/js/<%= pkg.name %>.IE8.html5.min.js'
@@ -254,9 +254,9 @@
                 },
                 // the files to concatenate
                 src: [
-                    './bower_components/jquery-validation/dist/jquery.validate.min.js',
+                    './wwwroot/lib/jquery-validation/dist/jquery.validate.min.js',
                     './wwwroot/src/validate.min.js',
-                    './bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js'
+                    './wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js'
                 ],
                 // the location of the resulting JS file
                 dest: './wwwroot/assets/js/<%= pkg.name %>.validation.min.js'
@@ -304,13 +304,13 @@
                     './wwwroot/vendors/datepicker/datepicker3.min.css': './wwwroot/vendors/datepicker/datepicker3.css',
                     './wwwroot/vendors/iCheck/square.override.min.css': './wwwroot/vendors/iCheck/square.override.css',
                     
-                    './bower_components/bootstrap-daterangepicker/daterangepicker.min.css': './bower_components/bootstrap-daterangepicker/daterangepicker.css',
-                    './bower_components/bootstrap-timepicker/css/timepicker.min.css': './bower_components/bootstrap-timepicker/css/timepicker.css',
-                    './bower_components/iCheck/skins/square/_all.min.css': './bower_components/iCheck/skins/square/_all.css',
-                    './bower_components/ion.rangeSlider/css/ion.rangeSlider.skinHTML5.min.css': './bower_components/ion.rangeSlider/css/ion.rangeSlider.skinHTML5.css',
-                    './bower_components/jvectormap/jquery-jvectormap.min.css': './bower_components/jvectormap/jquery-jvectormap.css',
-                    './bower_components/morris.js/morris.min.css': './bower_components/morris.js/morris.css',
-                    './bower_components/PACE/themes/blue/pace-theme-flash.min.css': './bower_components/PACE/themes/blue/pace-theme-flash.css'
+                    './wwwroot/lib/bootstrap-daterangepicker/daterangepicker.min.css': './wwwroot/lib/bootstrap-daterangepicker/daterangepicker.css',
+                    './wwwroot/lib/bootstrap-timepicker/css/timepicker.min.css': './wwwroot/lib/bootstrap-timepicker/css/timepicker.css',
+                    './wwwroot/lib/iCheck/skins/square/_all.min.css': './wwwroot/lib/iCheck/skins/square/_all.css',
+                    './wwwroot/lib/ion.rangeSlider/css/ion.rangeSlider.skinHTML5.min.css': './wwwroot/lib/ion.rangeSlider/css/ion.rangeSlider.skinHTML5.css',
+                    './wwwroot/lib/jvectormap/jquery-jvectormap.min.css': './wwwroot/lib/jvectormap/jquery-jvectormap.css',
+                    './wwwroot/lib/morris.js/morris.min.css': './wwwroot/lib/morris.js/morris.css',
+                    './wwwroot/lib/PACE/themes/blue/pace-theme-flash.min.css': './wwwroot/lib/PACE/themes/blue/pace-theme-flash.css'
                 }
             },
             bookshelf: {
@@ -343,31 +343,31 @@
                     './wwwroot/vendors/jvectormap/jquery.jvectormap.min.js': './wwwroot/vendors/jvectormap/jquery.jvectormap.js',
                     './wwwroot/vendors/jvectormap/jquery-jvectormap-world-mill.min.js': './wwwroot/vendors/jvectormap/jquery-jvectormap-world-mill.js',
 
-                    './bower_components/bootbox/bootbox.min.js': './bower_components/bootbox/bootbox.js',
-                    './bower_components/bootstrap-daterangepicker/daterangepicker.min.js': './bower_components/bootstrap-daterangepicker/daterangepicker.js',
-                    './bower_components/bootstrap-timepicker/js/bootstrap-timepicker.min.js': './bower_components/bootstrap-timepicker/js/bootstrap-timepicker.js',
-                    './bower_components/eve-raphael/eve.min.js': './bower_components/eve-raphael/eve.js',
-                    './bower_components/fastclick/lib/fastclick.min.js': './bower_components/fastclick/lib/fastclick.js',
-                    './bower_components/fullcalendar/dist/locale-all.min.js': './bower_components/fullcalendar/dist/locale-all.js',
-                    './bower_components/jquery-flot/jquery.flot.min.js': './bower_components/jquery-flot/jquery.flot.js'
+                    './wwwroot/lib/bootbox/bootbox.min.js': './wwwroot/lib/bootbox/bootbox.js',
+                    './wwwroot/lib/bootstrap-daterangepicker/daterangepicker.min.js': './wwwroot/lib/bootstrap-daterangepicker/daterangepicker.js',
+                    './wwwroot/lib/bootstrap-timepicker/js/bootstrap-timepicker.min.js': './wwwroot/lib/bootstrap-timepicker/js/bootstrap-timepicker.js',
+                    './wwwroot/lib/eve-raphael/eve.min.js': './wwwroot/lib/eve-raphael/eve.js',
+                    './wwwroot/lib/fastclick/lib/fastclick.min.js': './wwwroot/lib/fastclick/lib/fastclick.js',
+                    './wwwroot/lib/fullcalendar/dist/locale-all.min.js': './wwwroot/lib/fullcalendar/dist/locale-all.js',
+                    './wwwroot/lib/jquery-flot/jquery.flot.min.js': './wwwroot/lib/jquery-flot/jquery.flot.js'
                 }]
             },
             locale_wysihtml5: {
-                files: grunt.file.expandMapping(['./bower_components/bootstrap3-wysihtml5-bower/dist/locales/*.js', '!./bower_components/bootstrap3-wysihtml5-bower/dist/locales/*.min.js'], './', {
+                files: grunt.file.expandMapping(['./wwwroot/lib/bootstrap3-wysihtml5-bower/dist/locales/*.js', '!./wwwroot/lib/bootstrap3-wysihtml5-bower/dist/locales/*.min.js'], './', {
                     rename: function (destinationBase, destinationPath) {
                         return destinationBase + destinationPath.replace('.js', '.min.js');
                     }
                 })
             },
             locale_fullcalendar: {
-                files: grunt.file.expandMapping(['./bower_components/fullcalendar/dist/locale/*.js', '!./bower_components/fullcalendar/dist/locale/*.min.js'], './', {
+                files: grunt.file.expandMapping(['./wwwroot/lib/fullcalendar/dist/locale/*.js', '!./wwwroot/lib/fullcalendar/dist/locale/*.min.js'], './', {
                     rename: function (destinationBase, destinationPath) {
                         return destinationBase + destinationPath.replace('.js', '.min.js');
                     }
                 })
             },
             locale_select2: {
-                files: grunt.file.expandMapping(['./bower_components/select2/dist/js/i18n/*.js', '!./bower_components/select2/dist/js/i18n/*.min.js'], './', {
+                files: grunt.file.expandMapping(['./wwwroot/lib/select2/dist/js/i18n/*.js', '!./wwwroot/lib/select2/dist/js/i18n/*.min.js'], './', {
                     rename: function (destinationBase, destinationPath) {
                         return destinationBase + destinationPath.replace('.js', '.min.js');
                     }
@@ -381,7 +381,7 @@
                 })
             },
             locale_fileinput: {
-                files: grunt.file.expandMapping(['./bower_components/bootstrap-fileinput/js/locales/*.js', '!./bower_components/bootstrap-fileinput/js/locales/*.min.js'], './', {
+                files: grunt.file.expandMapping(['./wwwroot/lib/bootstrap-fileinput/js/locales/*.js', '!./wwwroot/lib/bootstrap-fileinput/js/locales/*.min.js'], './', {
                     rename: function (destinationBase, destinationPath) {
                         return destinationBase + destinationPath.replace('.js', '.min.js');
                     }
@@ -407,7 +407,7 @@
                     compress: false
                 },
                 files: {
-                    './bower_components/bootstrap-timepicker/css/timepicker.css': './bower_components/bootstrap-timepicker/css/timepicker.less'
+                    './wwwroot/lib/bootstrap-timepicker/css/timepicker.css': './wwwroot/lib/bootstrap-timepicker/css/timepicker.less'
                 }
             }
         },

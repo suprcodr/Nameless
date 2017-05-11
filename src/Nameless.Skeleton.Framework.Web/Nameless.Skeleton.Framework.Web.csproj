@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
-    <RootNamespace>Nameless.Skeleton.Framework</RootNamespace>
+    <RootNamespace>Nameless.Skeleton.Framework.Web</RootNamespace>
     <Authors>Marco Antonio Orestes Teixeira</Authors>
     <Company>Nameless Inc.</Company>
     <Product>Nameless.Skeleton.Framework.Web.dll</Product>

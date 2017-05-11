@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Nameless.Skeleton.Framework.Cqrs.Query;
-using Nameless.Skeleton.Framework.Data.Ado;
+using Nameless.Skeleton.Framework.Data.Sql.Ado;
 using Nameless.Skeleton.Framework.Web.Identity.Domains.Resources;
 using Nameless.Skeleton.Framework.Web.Identity.Models;
 

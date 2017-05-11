@@ -23,7 +23,7 @@ namespace Nameless.Skeleton.WebApplication.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Displays {
+    public class Displays {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -37,7 +37,7 @@ namespace Nameless.Skeleton.WebApplication.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Nameless.Skeleton.WebApplication.Resources.Displays", typeof(Displays).GetTypeInfo().Assembly);
@@ -52,7 +52,7 @@ namespace Nameless.Skeleton.WebApplication.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -64,7 +64,7 @@ namespace Nameless.Skeleton.WebApplication.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Confirmar senha.
         /// </summary>
-        internal static string ConfirmPassword {
+        public static string ConfirmPassword {
             get {
                 return ResourceManager.GetString("ConfirmPassword", resourceCulture);
             }
@@ -73,7 +73,7 @@ namespace Nameless.Skeleton.WebApplication.Resources {
         /// <summary>
         ///   Looks up a localized string similar to E-mail.
         /// </summary>
-        internal static string Email {
+        public static string Email {
             get {
                 return ResourceManager.GetString("Email", resourceCulture);
             }
@@ -82,7 +82,7 @@ namespace Nameless.Skeleton.WebApplication.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Nome completo.
         /// </summary>
-        internal static string FullName {
+        public static string FullName {
             get {
                 return ResourceManager.GetString("FullName", resourceCulture);
             }
@@ -91,7 +91,7 @@ namespace Nameless.Skeleton.WebApplication.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Nome.
         /// </summary>
-        internal static string Name {
+        public static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
             }
@@ -100,7 +100,7 @@ namespace Nameless.Skeleton.WebApplication.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Senha.
         /// </summary>
-        internal static string Password {
+        public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
             }
@@ -109,7 +109,7 @@ namespace Nameless.Skeleton.WebApplication.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Lembrar-me?.
         /// </summary>
-        internal static string RememberMe {
+        public static string RememberMe {
             get {
                 return ResourceManager.GetString("RememberMe", resourceCulture);
             }

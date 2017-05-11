@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Data;
-using Nameless.Skeleton.Framework.Data.Ado;
+using Nameless.Skeleton.Framework.Data.Sql.Ado;
 using Nameless.Skeleton.Framework.EventSourcing.Models;
 using SQL = Nameless.Skeleton.Framework.EventSourcing.Resources.Resource;
 

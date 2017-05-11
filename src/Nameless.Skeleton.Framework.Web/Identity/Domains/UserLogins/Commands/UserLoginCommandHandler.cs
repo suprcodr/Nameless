@@ -1,6 +1,6 @@
 ﻿using System.Data;
 using Nameless.Skeleton.Framework.Cqrs.Command;
-using Nameless.Skeleton.Framework.Data.Ado;
+using Nameless.Skeleton.Framework.Data.Sql.Ado;
 using Nameless.Skeleton.Framework.Web.Identity.Domains.Resources;
 
 namespace Nameless.Skeleton.Framework.Web.Identity.Domains.UserLogins.Commands {

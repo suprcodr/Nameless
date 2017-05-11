@@ -18,7 +18,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
-using Nameless.Skeleton.Framework.Data.Ado;
+using Nameless.Skeleton.Framework.Data.Sql.Ado;
 using Nameless.Skeleton.Framework.IoC;
 using Nameless.Skeleton.Framework.IoC.Modules;
 using Nameless.Skeleton.Framework.Web;
@@ -164,12 +164,12 @@ namespace Nameless.Skeleton.WebApplication {
             };
 
             _compositionRoot.Compose(new CqrsServiceRegistration(supportAssemblies));
-            _compositionRoot.Compose(new DataAdoServiceRegistration(supportAssemblies));
+            _compositionRoot.Compose(new AdoServiceRegistration(supportAssemblies));
             _compositionRoot.Compose(new EventSourcingServiceRegistration(supportAssemblies));
             _compositionRoot.Compose(new LocalizationServiceRegistration(supportAssemblies));
-            _compositionRoot.Compose(new LoggingServiceRegistration(supportAssemblies));
-            _compositionRoot.Compose(new ObjectMapperServiceRegistration(supportAssemblies));
-            _compositionRoot.Compose(new ServicesServiceRegistration(supportAssemblies));
+            _compositionRoot.Compose(new Log4NetServiceRegistration(supportAssemblies));
+            _compositionRoot.Compose(new AutoMapperServiceRegistration(supportAssemblies));
+            _compositionRoot.Compose(new ClockServiceRegistration(supportAssemblies));
             _compositionRoot.Compose(new WebApplicationServiceRegistration {
                 Feature = feature,
                 Services = services
