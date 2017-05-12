@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="1.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="1.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Nameless.Skeleton.Common\Nameless.Skeleton.Common.csproj" />
+    <ProjectReference Include="..\..\src\Nameless.Skeleton.Framework\Nameless.Skeleton.Framework.csproj" />
+    <ProjectReference Include="..\Nameless.Skeleton.Framework.Data.Sql.Common\Nameless.Skeleton.Framework.Data.Sql.Common.csproj" />
+  </ItemGroup>
+
+</Project>
