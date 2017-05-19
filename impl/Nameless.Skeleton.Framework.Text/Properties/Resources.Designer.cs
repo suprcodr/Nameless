@@ -62,6 +62,42 @@ namespace Nameless.Skeleton.Framework.Text.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expression property not found..
+        /// </summary>
+        internal static string ExpressionPropertyNotFound {
+            get {
+                return ResourceManager.GetString("ExpressionPropertyNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expression property not found. Expression: {0}..
+        /// </summary>
+        internal static string ExpressionPropertyNotFoundMF {
+            get {
+                return ResourceManager.GetString("ExpressionPropertyNotFoundMF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Indexer accessor not found..
+        /// </summary>
+        internal static string IndexerAccessorNotFound {
+            get {
+                return ResourceManager.GetString("IndexerAccessorNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Indexer accessor not found. Type: {0}..
+        /// </summary>
+        internal static string IndexerAccessorNotFoundMF {
+            get {
+                return ResourceManager.GetString("IndexerAccessorNotFoundMF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid expression..
         /// </summary>
         internal static string InvalidExpression {

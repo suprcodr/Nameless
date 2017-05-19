@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Nameless.Skeleton.Framework.Common.Helpers {
+namespace Nameless.Skeleton.Framework.Helpers {
 
     /// <summary>
     /// Reference article http://www.codeproject.com/KB/tips/SerializedObjectCloner.aspx.

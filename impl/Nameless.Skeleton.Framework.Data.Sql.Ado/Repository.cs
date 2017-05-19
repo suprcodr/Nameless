@@ -5,7 +5,6 @@ using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Nameless.Skeleton.Framework.Data.Sql.Common;
 
 namespace Nameless.Skeleton.Framework.Data.Sql.Ado {
 
@@ -14,8 +13,8 @@ namespace Nameless.Skeleton.Framework.Data.Sql.Ado {
         #region Private Read-Only Fields
 
         private readonly DatabaseSettings _settings;
-        private readonly IDbProvider _dbProvider;
         private readonly IActionInformationExtractorFactory _factory;
+        private readonly IDbProvider _dbProvider;
 
         #endregion Private Read-Only Fields
 
@@ -34,14 +33,14 @@ namespace Nameless.Skeleton.Framework.Data.Sql.Ado {
         /// <param name="settings">The configuration section.</param>
         /// <param name="dbProvider">Data base provider instance.</param>
         /// <param name="factory"></param>
-        public Repository(DatabaseSettings settings, IDbProvider dbProvider, IActionInformationExtractorFactory factory) {
+        public Repository(DatabaseSettings settings, IActionInformationExtractorFactory factory, IDbProvider dbProvider) {
             Prevent.ParameterNull(settings, nameof(settings));
-            Prevent.ParameterNull(dbProvider, nameof(dbProvider));
             Prevent.ParameterNull(factory, nameof(factory));
+            Prevent.ParameterNull(dbProvider, nameof(dbProvider));
 
             _settings = settings;
-            _dbProvider = dbProvider;
             _factory = factory;
+            _dbProvider = dbProvider;
         }
 
         #endregion Public Constructors

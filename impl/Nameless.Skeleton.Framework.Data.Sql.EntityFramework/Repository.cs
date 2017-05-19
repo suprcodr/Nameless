@@ -4,7 +4,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
-using Nameless.Skeleton.Framework.Data.Sql.Common;
 
 namespace Nameless.Skeleton.Framework.Data.Sql.EntityFramework {
 

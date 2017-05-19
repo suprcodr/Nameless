@@ -24,7 +24,7 @@ namespace Nameless.Skeleton.Framework.Text {
 
         private static object InnerEval(object container, string expression) {
             var expressionParts = expression.Split(ExpressionPartSeparator);
-
+            
             return InnerEval(container, expressionParts);
         }
 

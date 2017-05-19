@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 
-namespace Nameless.Skeleton.Framework.Data.Sql.Ado {
+namespace Nameless.Skeleton.Framework.Data.Sql {
 
     /// <summary>
     /// Extension methods for <see cref="IDataReader"/>

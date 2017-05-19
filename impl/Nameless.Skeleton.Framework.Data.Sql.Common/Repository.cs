@@ -3,7 +3,7 @@ using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Nameless.Skeleton.Framework.Data.Sql.Common {
+namespace Nameless.Skeleton.Framework.Data.Sql {
 
     public class Repository : IRepository, IDisposable {
 
@@ -21,7 +21,7 @@ namespace Nameless.Skeleton.Framework.Data.Sql.Common {
         /// Initializes a new instance of <see cref="Repository"/>
         /// </summary>
         /// <param name="decorator">The instance of <see cref="IRepository"/> to decorate.</param>
-        internal Repository(IRepository decorator) {
+        public Repository(IRepository decorator) {
             Prevent.ParameterNull(decorator, nameof(decorator));
 
             var dbRepository = decorator as IDbConnectionAccessor;

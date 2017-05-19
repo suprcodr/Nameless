@@ -1,5 +1,5 @@
 ﻿using System;
-using Nameless.Skeleton.Framework.Properties;
+using Nameless.Skeleton.Framework.Text.Properties;
 
 namespace Nameless.Skeleton.Framework.Text {
 

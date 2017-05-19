@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace Nameless.Skeleton.Framework.Data.Sql.Common {
+namespace Nameless.Skeleton.Framework.Data.Sql {
     public interface IDbConnectionAccessor {
         #region Properties
 

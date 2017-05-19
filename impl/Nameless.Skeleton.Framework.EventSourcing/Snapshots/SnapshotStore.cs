@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Data;
-using Nameless.Skeleton.Framework.Data.Sql.Ado;
+using Nameless.Skeleton.Framework.Data;
 using Nameless.Skeleton.Framework.EventSourcing.Models;
-using SQL = Nameless.Skeleton.Framework.EventSourcing.Resources.Resource;
 
 namespace Nameless.Skeleton.Framework.EventSourcing.Snapshots {
 
@@ -13,7 +11,7 @@ namespace Nameless.Skeleton.Framework.EventSourcing.Snapshots {
 
         #region Private Read-Only Fields
 
-        private readonly IDatabase _database;
+        private readonly IRepository _repository;
 
         #endregion Private Read-Only Fields
 
@@ -22,43 +20,24 @@ namespace Nameless.Skeleton.Framework.EventSourcing.Snapshots {
         /// <summary>
         /// Initializes a new instance of <see cref="SnapshotStore"/>
         /// </summary>
-        public SnapshotStore(IDatabase database) {
-            Prevent.ParameterNull(database, nameof(database));
+        public SnapshotStore(IRepository repository) {
+            Prevent.ParameterNull(repository, nameof(repository));
 
-            _database = database;
+            _repository = repository;
         }
 
         #endregion Public Constructors
 
-        #region Private Methods
-
-        private Snapshot Map(IDataReader reader) {
-            return new SnapshotEntity {
-                SnapshotType = reader.GetStringOrDefault("snapshot_type"),
-                Payload = reader.GetBlobOrDefault("payload"),
-            }.GetSnapshotFromPayload();
-        }
-
-        #endregion Private Methods
-
         #region ISnapshotStore Members
 
         public Snapshot Get(Guid id) {
-            return _database.ExecuteReaderSingle(SQL.GetSnapshot, Map, CommandType.Text, new[] {
-                Parameter.CreateInputParameter("AggregateID", id, DbType.Guid)
-            });
+            return _repository.FindOne<SnapshotEntity>(id).GetSnapshotFromPayload();
         }
 
         public void Save(Snapshot snapshot) {
             var entity = SnapshotEntity.Create(snapshot);
 
-            _database.ExecuteNonQuery(SQL.CreateSnapshot, CommandType.Text, new[] {
-                Parameter.CreateInputParameter(nameof(SnapshotEntity.ID), entity.ID, DbType.Guid),
-                Parameter.CreateInputParameter(nameof(SnapshotEntity.AggregateID), entity.AggregateID, DbType.Guid),
-                Parameter.CreateInputParameter(nameof(SnapshotEntity.Version), entity.Version, DbType.Int32),
-                Parameter.CreateInputParameter(nameof(SnapshotEntity.SnapshotType), entity.SnapshotType),
-                Parameter.CreateInputParameter(nameof(SnapshotEntity.Payload), entity.Payload, DbType.Binary)
-            });
+            _repository.Save(entity);
         }
 
         #endregion ISnapshotStore Members

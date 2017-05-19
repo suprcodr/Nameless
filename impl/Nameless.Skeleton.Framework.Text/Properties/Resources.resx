@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ExpressionPropertyNotFound" xml:space="preserve">
+    <value>Expression property not found.</value>
+  </data>
+  <data name="ExpressionPropertyNotFoundMF" xml:space="preserve">
+    <value>Expression property not found. Expression: {0}.</value>
+  </data>
+  <data name="IndexerAccessorNotFound" xml:space="preserve">
+    <value>Indexer accessor not found.</value>
+  </data>
+  <data name="IndexerAccessorNotFoundMF" xml:space="preserve">
+    <value>Indexer accessor not found. Type: {0}.</value>
+  </data>
   <data name="InvalidExpression" xml:space="preserve">
     <value>Invalid expression.</value>
   </data>

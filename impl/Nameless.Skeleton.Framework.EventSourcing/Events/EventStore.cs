@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using Nameless.Skeleton.Framework.Data.Sql.Ado;
+using System.Linq;
+using Nameless.Skeleton.Framework.Data;
 using Nameless.Skeleton.Framework.EventSourcing.Models;
-using SQL = Nameless.Skeleton.Framework.EventSourcing.Resources.Resource;
 
 namespace Nameless.Skeleton.Framework.EventSourcing.Events {
 
@@ -14,8 +13,8 @@ namespace Nameless.Skeleton.Framework.EventSourcing.Events {
 
         #region Private Read-Only Fields
 
-        private readonly IDatabase _database;
         private readonly IEventPublisher _publisher;
+        private readonly IRepository _repository;
 
         #endregion Private Read-Only Fields
 
@@ -24,51 +23,31 @@ namespace Nameless.Skeleton.Framework.EventSourcing.Events {
         /// <summary>
         /// Initializes a new instance of <see cref="EventStore"/>
         /// </summary>
-        public EventStore(IDatabase database, IEventPublisher publisher) {
-            Prevent.ParameterNull(database, nameof(database));
+        public EventStore(IEventPublisher publisher, IRepository repository) {
             Prevent.ParameterNull(publisher, nameof(publisher));
+            Prevent.ParameterNull(repository, nameof(repository));
 
-            _database = database;
             _publisher = publisher;
+            _repository = repository;
         }
 
         #endregion Public Constructors
-
-        #region Private Methods
-
-        private IEvent Map(IDataReader reader) {
-            return new EventEntity {
-                EventType = reader.GetStringOrDefault("event_type"),
-                Payload = reader.GetBlobOrDefault("payload"),
-            }.GetEventFromPayload();
-        }
-
-        #endregion Private Methods
 
         #region IEventStore Members
 
         /// <inheritdoc />
         public IEnumerable<IEvent> Get(Guid aggregateID, int fromVersion) {
-            return _database.ExecuteReader(SQL.ListEvents, Map, CommandType.Text, new[] {
-                Parameter.CreateInputParameter("AggregateID", aggregateID, DbType.Guid),
-                Parameter.CreateInputParameter("Version", fromVersion)
-            });
+            return _repository
+                .Query<EventEntity>()
+                .Where(_ => _.ID == aggregateID && _.Version >= fromVersion)
+                .Select(_ => _.GetEventFromPayload());
         }
 
         /// <inheritdoc />
         public void Save(params IEvent[] evts) {
             foreach (var evt in evts) {
                 var entity = EventEntity.Create(evt);
-
-                _database.ExecuteNonQuery(SQL.CreateEvent, CommandType.Text, new[] {
-                    Parameter.CreateInputParameter(nameof(EventEntity.ID), entity.ID, DbType.Guid),
-                    Parameter.CreateInputParameter(nameof(EventEntity.AggregateID), entity.AggregateID, DbType.Guid),
-                    Parameter.CreateInputParameter(nameof(EventEntity.Version), entity.Version, DbType.Int32),
-                    Parameter.CreateInputParameter(nameof(EventEntity.TimeStamp), entity.TimeStamp, DbType.DateTimeOffset),
-                    Parameter.CreateInputParameter(nameof(EventEntity.EventType), entity.EventType),
-                    Parameter.CreateInputParameter(nameof(EventEntity.Payload), entity.Payload, DbType.Binary)
-                });
-
+                _repository.Save(entity);
                 _publisher.Publish(evt);
             }
         }
