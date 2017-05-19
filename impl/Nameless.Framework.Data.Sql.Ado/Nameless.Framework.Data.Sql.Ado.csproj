@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.5.0" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="1.1.1" />
+    <PackageReference Include="System.Data.Common" Version="4.3.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Nameless.Common\Nameless.Common.csproj" />
+    <ProjectReference Include="..\..\src\Nameless.Framework\Nameless.Framework.csproj" />
+    <ProjectReference Include="..\Nameless.Framework.Data.Sql.Common\Nameless.Framework.Data.Sql.Common.csproj" />
+    <ProjectReference Include="..\Nameless.Framework.IoC\Nameless.Framework.IoC.csproj" />
+  </ItemGroup>
+
+</Project>
