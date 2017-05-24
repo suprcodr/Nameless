@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Autofac;
-using Nameless.Framework.Services;
+using Nameless.Framework.IoC;
 
-namespace Nameless.Framework.IoC.Modules {
+namespace Nameless.Framework.Services.IoC {
 
     /// <summary>
     /// Autofac module implementation for Nameless.Framework.Services namespace.

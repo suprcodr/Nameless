@@ -60,7 +60,6 @@ namespace Nameless.Framework.Search {
         /// </summary>
         /// <param name="directory">The indexes directory.</param>
         /// <param name="analyzer">The analyzer provider.</param>
-        /// <param name="indexName">The index name.</param>
         public SearchBuilder(LuceneDirectory directory, Analyzer analyzer) {
             if (directory == null) {
                 throw new ArgumentNullException(nameof(directory));
@@ -245,11 +244,15 @@ namespace Nameless.Framework.Search {
         }
 
         /// <inheritdoc />
-        public ISearchBuilder WithField(string field, string value) {
+        public ISearchBuilder WithField(string field, string value, bool useWildcard) {
             CreatePendingClause();
 
             if (!string.IsNullOrWhiteSpace(value)) {
-                _query = new TermQuery(new Term(field, QueryParser.Escape(value)));
+                if (useWildcard) {
+                    _query = new WildcardQuery(new Term(field, value));
+                } else {
+                    _query = new TermQuery(new Term(field, QueryParser.Escape(value)));
+                }
             }
 
             return this;
