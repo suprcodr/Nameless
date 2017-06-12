@@ -3,7 +3,7 @@
     /// <summary>
     /// Lucene Search Settings.
     /// </summary>
-    public class LuceneSettings {
+    public sealed class LuceneSettings {
 
         #region Public Properties
 

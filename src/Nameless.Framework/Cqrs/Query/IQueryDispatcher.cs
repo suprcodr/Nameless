@@ -1,4 +1,7 @@
-﻿namespace Nameless.Framework.Cqrs.Query {
+﻿using System.Threading;
+using System.Threading.Tasks;
+
+namespace Nameless.Framework.Cqrs.Query {
 
     /// <summary>
     /// Query dispatcher interface.
@@ -8,12 +11,13 @@
         #region Methods
 
         /// <summary>
-        /// Sendes a query to be executed.
+        /// Executes a query.
         /// </summary>
         /// <typeparam name="TResult">Type of the result.</typeparam>
         /// <param name="query">The query.</param>
-        /// <returns>The result of the query execution.</returns>
-        TResult Query<TResult>(IQuery<TResult> query);
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The <see cref="Task{TResult}"/> representing the query execution.</returns>
+        Task<TResult> QueryAsync<TResult>(IQuery<TResult> query, CancellationToken cancellationToken);
 
         #endregion Methods
     }

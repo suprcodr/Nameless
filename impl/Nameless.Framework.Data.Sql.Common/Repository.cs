@@ -2,6 +2,8 @@
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Nameless.Framework.Data.Sql {
 
@@ -30,7 +32,7 @@ namespace Nameless.Framework.Data.Sql {
             }
 
             _decorator = decorator;
-            _transaction = dbRepository.Connection.BeginTransaction(IsolationLevel.ReadUncommitted);
+            _transaction = dbRepository.Connection.BeginTransaction();
         }
 
         #endregion Internal Constructors
@@ -52,7 +54,9 @@ namespace Nameless.Framework.Data.Sql {
             if (_disposed) { return; }
             if (disposing) {
                 if (_transaction != null) {
-                    try { _transaction.Commit(); } catch { _transaction.Rollback(); } finally { _transaction.Dispose(); }
+                    try { _transaction.Commit(); }
+                    catch { _transaction.Rollback(); }
+                    finally { _transaction.Dispose(); }
                 }
             }
 
@@ -65,28 +69,28 @@ namespace Nameless.Framework.Data.Sql {
 
         #region IRepository Members
 
-        public void Delete<TEntity>(TEntity entity) where TEntity : class {
-            _decorator.Delete(entity);
+        public Task DeleteAsync<TEntity>(TEntity entity, CancellationToken cancellationToken) where TEntity : class {
+            return _decorator.DeleteAsync(entity, cancellationToken);
         }
 
-        public dynamic ExecuteDirective<TDirective>(dynamic parameters) where TDirective : IDirective {
-            return _decorator.ExecuteDirective(parameters);
+        public Task<dynamic> ExecuteDirectiveAsync<TDirective>(dynamic parameters, CancellationToken cancellationToken) where TDirective : IDirective {
+            return _decorator.ExecuteDirectiveAsync(parameters, cancellationToken);
         }
 
-        public TEntity FindOne<TEntity>(object id) where TEntity : class {
-            return _decorator.FindOne<TEntity>(id);
+        public Task<TEntity> FindOneAsync<TEntity>(object id, CancellationToken cancellationToken) where TEntity : class {
+            return _decorator.FindOneAsync<TEntity>(id, cancellationToken);
         }
 
-        public TEntity FindOne<TEntity>(Expression<Func<TEntity, bool>> where) where TEntity : class {
-            return _decorator.FindOne(where);
+        public Task<TEntity> FindOneAsync<TEntity>(Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken) where TEntity : class {
+            return _decorator.FindOneAsync(where, cancellationToken);
         }
 
         public IQueryable<TEntity> Query<TEntity>() where TEntity : class {
             return _decorator.Query<TEntity>();
         }
 
-        public void Save<TEntity>(TEntity entity) where TEntity : class {
-            _decorator.Save(entity);
+        public Task SaveAsync<TEntity>(TEntity entity, CancellationToken cancellationToken) where TEntity : class {
+            return _decorator.SaveAsync(entity, cancellationToken);
         }
 
         #endregion IRepository Members

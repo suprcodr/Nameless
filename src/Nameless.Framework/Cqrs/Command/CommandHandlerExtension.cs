@@ -11,30 +11,28 @@ namespace Nameless.Framework.Cqrs.Command {
         #region Public Static Methods
 
         /// <summary>
-        /// Executes a command asynchronous.
+        /// Executes a command asynchronously.
         /// </summary>
         /// <typeparam name="TCommand">Type of the command.</typeparam>
         /// <param name="source">The source, in this case, an implementation of <see cref="ICommandHandler{TCommand}"/></param>
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the command execution.</returns>
-        public static Task HandleAsync<TCommand>(this ICommandHandler<TCommand> source, TCommand command)
-            where TCommand : ICommand {
-            return HandleAsync(source, command, CancellationToken.None);
+        public static Task HandleAsync<TCommand>(this ICommandHandler<TCommand> source, TCommand command) where TCommand : ICommand {
+            if (source == null) { return Task.CompletedTask; }
+
+            return source.HandleAsync(command, CancellationToken.None);
         }
 
         /// <summary>
-        /// Executes a command asynchronous.
+        /// Executes a command synchronously.
         /// </summary>
         /// <typeparam name="TCommand">Type of the command.</typeparam>
         /// <param name="source">The source, in this case, an implementation of <see cref="ICommandHandler{TCommand}"/></param>
         /// <param name="command">The command.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task"/> representing the command execution.</returns>
-        public static Task HandleAsync<TCommand>(this ICommandHandler<TCommand> source, TCommand command, CancellationToken cancellationToken)
-            where TCommand : ICommand {
-            Prevent.ParameterNull(source, nameof(source));
+        public static async void Handle<TCommand>(this ICommandHandler<TCommand> source, TCommand command) where TCommand : ICommand {
+            if (source == null) { return; }
 
-            return Task.Run(() => source.Handle(command), cancellationToken);
+            await source.HandleAsync(command, CancellationToken.None);
         }
 
         #endregion Public Static Methods

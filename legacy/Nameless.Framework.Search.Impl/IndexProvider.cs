@@ -8,7 +8,7 @@ namespace Nameless.Framework.Search {
     /// <summary>
     /// Default implementation of <see cref="IIndexProvider"/>
     /// </summary>
-    public class IndexProvider : IIndexProvider {
+    public sealed class IndexProvider : IIndexProvider {
 
         #region Private Static Read-Only Fields
 
@@ -39,15 +39,10 @@ namespace Nameless.Framework.Search {
         /// Initializes a new instance of <see cref="IndexProvider"/>.
         /// </summary>
         /// <param name="settings">The settings.</param>
-        /// <param name="hostingEnvironment">The hosting environment.</param>
         /// <param name="analyzerProvider">The analyzer provider.</param>
         public IndexProvider(IAnalyzerProvider analyzerProvider, LuceneSettings settings) {
-            if (analyzerProvider == null) {
-                throw new ArgumentNullException(nameof(analyzerProvider));
-            }
-            if (settings == null) {
-                throw new ArgumentNullException(nameof(settings));
-            }
+            Prevent.ParameterNull(analyzerProvider, nameof(analyzerProvider));
+            Prevent.ParameterNull(settings, nameof(settings));
 
             _analyzerProvider = analyzerProvider;
             _settings = settings;
@@ -65,23 +60,25 @@ namespace Nameless.Framework.Search {
 
         #region IIndexProvider Members
 
+        /// <inheritdoc />
         public void Delete(string indexName) {
             lock (SyncLock) {
                 if (!Cache.ContainsKey(indexName)) { return; }
 
                 Directory.Delete(Path.Combine(_settings.IndexStorageDirectoryPath, indexName));
-                var disposable = Cache[indexName] as IDisposable;
-                if (disposable != null) {
+                if (Cache[indexName] is IDisposable disposable) {
                     disposable.Dispose();
                 }
                 Cache.Remove(indexName);
             }
         }
 
+        /// <inheritdoc />
         public bool Exists(string indexName) {
             return Cache.ContainsKey(indexName);
         }
 
+        /// <inheritdoc />
         public IIndex GetOrCreate(string indexName) {
             lock (SyncLock) {
                 if (!Cache.ContainsKey(indexName)) {
@@ -92,6 +89,7 @@ namespace Nameless.Framework.Search {
             }
         }
 
+        /// <inheritdoc />
         public IEnumerable<string> List() {
             return Cache.Keys;
         }

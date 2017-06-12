@@ -11,7 +11,7 @@ namespace Nameless.Framework.Network.PubSub {
         #region Private Read-Only Fields
 
         private readonly MethodInfo _methodInfo;
-        private readonly IPublisherSubscriber _pubSub;
+        private readonly IPublisherSubscriber _publisherSubscriber;
         private readonly WeakReference _targetObject;
         private readonly bool _isStatic;
 
@@ -29,13 +29,13 @@ namespace Nameless.Framework.Network.PubSub {
         /// Initializes a new instance of <see cref="Subscription{TMessage}"/>.
         /// </summary>
         /// <param name="handler">The message handler.</param>
-        /// <param name="pubSub">The publisher/subscriber.</param>
-        public Subscription(Action<TMessage> handler, IPublisherSubscriber pubSub) {
+        /// <param name="publisherSubscriber">The publisher/subscriber.</param>
+        public Subscription(Action<TMessage> handler, IPublisherSubscriber publisherSubscriber) {
             Prevent.ParameterNull(handler, nameof(handler));
-            Prevent.ParameterNull(pubSub, nameof(pubSub));
+            Prevent.ParameterNull(publisherSubscriber, nameof(publisherSubscriber));
 
             _methodInfo = handler.GetMethodInfo();
-            _pubSub = pubSub;
+            _publisherSubscriber = publisherSubscriber;
             _targetObject = new WeakReference(handler.Target);
             _isStatic = handler.Target == null;
         }
@@ -57,9 +57,7 @@ namespace Nameless.Framework.Network.PubSub {
 
         private void Dispose(bool disposing) {
             if (_disposed) { return; }
-            if (disposing) {
-                _pubSub.Unsubscribe(this);
-            }
+            if (disposing) { _publisherSubscriber.Unsubscribe(this); }
 
             _disposed = true;
         }

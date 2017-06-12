@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Nameless.Framework.Data.Sql.EntityFramework {
 
@@ -30,7 +32,7 @@ namespace Nameless.Framework.Data.Sql.EntityFramework {
 
         #region IDirective Members
 
-        public abstract dynamic Execute(dynamic parameters);
+        public abstract Task<dynamic> ExecuteAsync(dynamic parameters, CancellationToken cancellationToken);
 
         #endregion IDirective Members
     }

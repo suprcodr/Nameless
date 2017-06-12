@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Nameless.Framework.Network.PubSub {
 
@@ -30,7 +32,8 @@ namespace Nameless.Framework.Network.PubSub {
         /// </summary>
         /// <typeparam name="TMessage">Type of the message.</typeparam>
         /// <param name="message">The message.</param>
-		void Publish<TMessage>(TMessage message);
+        /// <param name="cancellationToken">The cancellation token.</param>
+        Task PublishAsync<TMessage>(TMessage message, CancellationToken cancellationToken);
 
         #endregion Methods
     }

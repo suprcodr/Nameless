@@ -1,4 +1,7 @@
-﻿namespace Nameless.Framework.Cqrs.Command {
+﻿using System.Threading;
+using System.Threading.Tasks;
+
+namespace Nameless.Framework.Cqrs.Command {
 
     /// <summary>
     /// Command dispatcher interface.
@@ -12,8 +15,9 @@
         /// </summary>
         /// <typeparam name="TCommand">Type of the command.</typeparam>
         /// <param name="command">The instance of the command.</param>
-        void Command<TCommand>(TCommand command)
-            where TCommand : ICommand;
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous command execution.</returns>
+        Task CommandAsync<TCommand>(TCommand command, CancellationToken cancellationToken) where TCommand : ICommand;
 
         #endregion Methods
     }

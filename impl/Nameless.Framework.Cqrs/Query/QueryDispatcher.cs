@@ -1,4 +1,6 @@
-﻿using Nameless.Framework.IoC;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Nameless.Framework.IoC;
 
 namespace Nameless.Framework.Cqrs.Query {
 
@@ -22,13 +24,13 @@ namespace Nameless.Framework.Cqrs.Query {
 
         #region IQueryDispatcher Members
 
-        public TResult Query<TResult>(IQuery<TResult> query) {
+        public Task<TResult> QueryAsync<TResult>(IQuery<TResult> query, CancellationToken cancellationToken) {
             Prevent.ParameterNull(query, nameof(query));
 
             var handlerType = typeof(IQueryHandler<,>).MakeGenericType(query.GetType(), typeof(TResult));
             dynamic handler = _resolver.Resolve(handlerType);
 
-            return handler.Handle((dynamic)query);
+            return handler.HandleAsync((dynamic)query, cancellationToken);
         }
 
         #endregion IQueryDispatcher Members

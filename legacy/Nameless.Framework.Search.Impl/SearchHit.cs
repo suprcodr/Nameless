@@ -6,7 +6,7 @@ namespace Nameless.Framework.Search {
     /// <summary>
     /// Default implementation of <see cref="ISearchHit"/>.
     /// </summary>
-    public class SearchHit : ISearchHit {
+    public sealed class SearchHit : ISearchHit {
 
         #region Private Read-Only Fields
 
@@ -23,9 +23,7 @@ namespace Nameless.Framework.Search {
         /// <param name="document">The document.</param>
         /// <param name="score">The score.</param>
         public SearchHit(Document document, float score) {
-            if (document == null) {
-                throw new ArgumentNullException(nameof(document));
-            }
+            Prevent.ParameterNull(document, nameof(document));
 
             _document = document;
             _score = score;
@@ -68,7 +66,7 @@ namespace Nameless.Framework.Search {
         public string GetString(string name) {
             var field = _document.GetField(name);
 
-            return field != null ? field.StringValue : null;
+            return field?.StringValue;
         }
 
         /// <inheritdoc />

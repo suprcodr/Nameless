@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Nameless.Framework.Data {
 
@@ -28,26 +30,28 @@ namespace Nameless.Framework.Data {
 
         #region IRepository Members
 
-        public void Delete<TEntity>(TEntity entity) where TEntity : class {
+        public Task DeleteAsync<TEntity>(TEntity entity, CancellationToken cancellationToken) where TEntity : class {
+            return Task.CompletedTask;
         }
 
-        public dynamic ExecuteDirective<TDirective>(dynamic parameters) where TDirective : IDirective {
+        public Task<dynamic> ExecuteDirectiveAsync<TDirective>(dynamic parameters, CancellationToken cancellationToken) where TDirective : IDirective {
             return null;
         }
 
-        public TEntity FindOne<TEntity>(object id) where TEntity : class {
-            return default(TEntity);
+        public Task<TEntity> FindOneAsync<TEntity>(object id, CancellationToken cancellationToken) where TEntity : class {
+            return Task.FromResult(default(TEntity));
         }
 
-        public TEntity FindOne<TEntity>(Expression<Func<TEntity, bool>> where) where TEntity : class {
-            return default(TEntity);
+        public Task<TEntity> FindOneAsync<TEntity>(Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken) where TEntity : class {
+            return Task.FromResult(default(TEntity));
         }
 
         public IQueryable<TEntity> Query<TEntity>() where TEntity : class {
             return Enumerable.Empty<TEntity>().AsQueryable();
         }
 
-        public void Save<TEntity>(TEntity entity) where TEntity : class {
+        public Task SaveAsync<TEntity>(TEntity entity, CancellationToken cancellationToken) where TEntity : class {
+            return Task.CompletedTask;
         }
 
         #endregion IRepository Members

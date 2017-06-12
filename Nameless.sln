@@ -71,6 +71,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.Text", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.IoC", "impl\Nameless.Framework.IoC\Nameless.Framework.IoC.csproj", "{E077CD44-B480-4205-B2F1-82A1A628D1F4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Common", "legacy\Nameless.Common\Nameless.Common.csproj", "{A5003ED5-E046-4CB6-BA4A-C1794F7FE738}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -197,6 +199,10 @@ Global
 		{E077CD44-B480-4205-B2F1-82A1A628D1F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E077CD44-B480-4205-B2F1-82A1A628D1F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E077CD44-B480-4205-B2F1-82A1A628D1F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5003ED5-E046-4CB6-BA4A-C1794F7FE738}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5003ED5-E046-4CB6-BA4A-C1794F7FE738}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5003ED5-E046-4CB6-BA4A-C1794F7FE738}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5003ED5-E046-4CB6-BA4A-C1794F7FE738}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -234,5 +240,6 @@ Global
 		{718A0FF8-5E39-49F7-A614-D7CFCA7C8390} = {A218ED13-2D01-4D56-8E0E-1CBAE09588BD}
 		{47010F86-B2D8-4E55-BE57-89E6D6F42EFD} = {A218ED13-2D01-4D56-8E0E-1CBAE09588BD}
 		{E077CD44-B480-4205-B2F1-82A1A628D1F4} = {A218ED13-2D01-4D56-8E0E-1CBAE09588BD}
+		{A5003ED5-E046-4CB6-BA4A-C1794F7FE738} = {F90481D1-776B-4DC7-A4AF-802978F95456}
 	EndGlobalSection
 EndGlobal

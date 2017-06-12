@@ -17,7 +17,7 @@
 
         #region Private Constructors
 
-        // Block construction of NullLogger
+        // Block construction of NullPipeline
         private NullPipeline() { }
 
         #endregion Private Constructors

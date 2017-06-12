@@ -57,7 +57,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="EntryPoint.cs" />
+    <Compile Include="Models\SearchParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -74,6 +76,20 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Nameless.Common\Nameless.Common.csproj">
+      <Project>{a5003ed5-e046-4cb6-ba4a-c1794f7fe738}</Project>
+      <Name>Nameless.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nameless.Framework.Search.Impl\Nameless.Framework.Search.Impl.csproj">
+      <Project>{81060b16-98c5-46c8-bebe-debf8e00038f}</Project>
+      <Name>Nameless.Framework.Search.Impl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nameless.Framework.Search\Nameless.Framework.Search.csproj">
+      <Project>{59ef4c78-b941-4cf6-b61e-ff9ab1f9c51d}</Project>
+      <Name>Nameless.Framework.Search</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

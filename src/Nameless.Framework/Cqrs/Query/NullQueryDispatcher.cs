@@ -1,4 +1,7 @@
-﻿namespace Nameless.Framework.Cqrs.Query {
+﻿using System.Threading;
+using System.Threading.Tasks;
+
+namespace Nameless.Framework.Cqrs.Query {
 
     /// <summary>
     /// Null Object Pattern implementation of <see cref="IQueryDispatcher"/>.
@@ -25,8 +28,8 @@
         #region IQueryDispatcher Members
 
         /// <inheritdoc />
-        public TResult Query<TResult>(IQuery<TResult> query) {
-            return default(TResult);
+        public Task<TResult> QueryAsync<TResult>(IQuery<TResult> query, CancellationToken cancellationToken) {
+            return Task.FromResult<TResult>(default(TResult));
         }
 
         #endregion IQueryDispatcher Members

@@ -1,4 +1,7 @@
-﻿namespace Nameless.Framework.Cqrs.Command {
+﻿using System.Threading;
+using System.Threading.Tasks;
+
+namespace Nameless.Framework.Cqrs.Command {
 
     /// <summary>
     /// Null Object Pattern implementation of <see cref="ICommandDispatcher"/>.
@@ -25,7 +28,8 @@
         #region ICommandDispatcher Members
 
         /// <inheritdoc />
-        public void Command<TCommand>(TCommand command) where TCommand : ICommand {
+        public Task CommandAsync<TCommand>(TCommand command, CancellationToken cancellationToken) where TCommand : ICommand {
+            return Task.CompletedTask;
         }
 
         #endregion ICommandDispatcher Members

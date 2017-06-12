@@ -1,4 +1,7 @@
-﻿namespace Nameless.Framework.Data {
+﻿using System.Threading;
+using System.Threading.Tasks;
+
+namespace Nameless.Framework.Data {
 
     /// <summary>
     /// Defines methods for directives.
@@ -11,7 +14,7 @@
         /// Executes the directive.
         /// </summary>
         /// <returns>A dynamic representing the directive execution.</returns>
-        dynamic Execute(dynamic parameters);
+        Task<dynamic> ExecuteAsync(dynamic parameters, CancellationToken cancellationToken);
 
         #endregion Methods
     }

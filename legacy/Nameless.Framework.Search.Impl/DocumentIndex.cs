@@ -6,7 +6,7 @@ namespace Nameless.Framework.Search {
     /// <summary>
     /// Default implementation of <see cref="IDocumentIndex"/>.
     /// </summary>
-    public class DocumentIndex : IDocumentIndex {
+    public sealed class DocumentIndex : IDocumentIndex {
 
         #region Private Read-Only Fields
 
@@ -88,9 +88,7 @@ namespace Nameless.Framework.Search {
 
         /// <inheritdoc />
         public IDocumentIndex Set(string name, string value, DocumentIndexOptions options) {
-            if (string.IsNullOrWhiteSpace(name)) {
-                throw new ArgumentException("Parameter cannot be null, empty or white spaces.", nameof(name));
-            }
+            Prevent.ParameterNullOrWhiteSpace(name, nameof(name));
 
             _entries[name] = new DocumentIndexEntry(
                 value: value,
@@ -102,9 +100,7 @@ namespace Nameless.Framework.Search {
 
         /// <inheritdoc />
         public IDocumentIndex Set(string name, DateTimeOffset value, DocumentIndexOptions options) {
-            if (string.IsNullOrWhiteSpace(name)) {
-                throw new ArgumentException("Parameter cannot be null, empty or white spaces.", nameof(name));
-            }
+            Prevent.ParameterNullOrWhiteSpace(name, nameof(name));
 
             _entries[name] = new DocumentIndexEntry(
                 value: value,
@@ -116,9 +112,7 @@ namespace Nameless.Framework.Search {
 
         /// <inheritdoc />
         public IDocumentIndex Set(string name, int value, DocumentIndexOptions options) {
-            if (string.IsNullOrWhiteSpace(name)) {
-                throw new ArgumentException("Parameter cannot be null, empty or white spaces.", nameof(name));
-            }
+            Prevent.ParameterNullOrWhiteSpace(name, nameof(name));
 
             _entries[name] = new DocumentIndexEntry(
                 value: value,
@@ -130,9 +124,7 @@ namespace Nameless.Framework.Search {
 
         /// <inheritdoc />
         public IDocumentIndex Set(string name, bool value, DocumentIndexOptions options) {
-            if (string.IsNullOrWhiteSpace(name)) {
-                throw new ArgumentException("Parameter cannot be null, empty or white spaces.", nameof(name));
-            }
+            Prevent.ParameterNullOrWhiteSpace(name, nameof(name));
 
             _entries[name] = new DocumentIndexEntry(
                 value: value,
@@ -144,9 +136,7 @@ namespace Nameless.Framework.Search {
 
         /// <inheritdoc />
         public IDocumentIndex Set(string name, double value, DocumentIndexOptions options) {
-            if (string.IsNullOrWhiteSpace(name)) {
-                throw new ArgumentException("Parameter cannot be null, empty or white spaces.", nameof(name));
-            }
+            Prevent.ParameterNullOrWhiteSpace(name, nameof(name));
 
             _entries[name] = new DocumentIndexEntry(
                 value: value,

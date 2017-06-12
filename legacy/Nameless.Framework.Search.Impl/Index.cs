@@ -6,21 +6,33 @@ using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
 using LuceneDirectory = Lucene.Net.Store.Directory;
+using LuceneFSDirectory = Lucene.Net.Store.FSDirectory;
 
 namespace Nameless.Framework.Search {
 
-    public class Index : IIndex, IDisposable {
+    public sealed class Index : IIndex, IDisposable {
+
+        #region Private Constants
+
+        private const string DATE_PATTERN = "yyyy-MM-ddTHH:mm:ssZ";
+
+        #endregion
 
         #region Private Read-Only Fields
 
         private readonly Analyzer _analyzer;
         private readonly string _basePath;
+        private readonly string _name;
+
+        private readonly object _syncLock = new object();
 
         #endregion Private Read-Only Fields
 
         #region Private Fields
 
         private LuceneDirectory _directory;
+        private IndexReader _indexReader;
+        private IndexSearcher _indexSearcher;
         private bool _disposed;
 
         #endregion Private Fields
@@ -41,22 +53,21 @@ namespace Nameless.Framework.Search {
 
         #region Public Constructors
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="Index"/>.
+        /// </summary>
+        /// <param name="analyzer">The Lucene analyzer.</param>
+        /// <param name="basePath">The base path of the Lucene directory.</param>
+        /// <param name="name">The index name.</param>
         public Index(Analyzer analyzer, string basePath, string name) {
-            if (analyzer == null) {
-                throw new ArgumentNullException(nameof(analyzer));
-            }
-            if (string.IsNullOrWhiteSpace(basePath)) {
-                throw new ArgumentException("Parameter cannot be null, empty or white spaces.", nameof(basePath));
-            }
-            if (string.IsNullOrWhiteSpace(name)) {
-                throw new ArgumentException("Parameter cannot be null, empty or white spaces.", nameof(name));
-            }
+            Prevent.ParameterNull(analyzer, nameof(analyzer));
+            Prevent.ParameterNullOrWhiteSpace(basePath, nameof(basePath));
+            Prevent.ParameterNullOrWhiteSpace(name, nameof(name));
 
             _analyzer = analyzer;
             _basePath = basePath;
-
-            Name = name;
-
+            _name = name;
+            
             Initialize();
         }
 
@@ -64,6 +75,9 @@ namespace Nameless.Framework.Search {
 
         #region Destructor
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Index() {
             Dispose(disposing: false);
         }
@@ -73,13 +87,10 @@ namespace Nameless.Framework.Search {
         #region Private Static Methods
 
         private static Document CreateDocument(IDocumentIndex documentIndex) {
+            Prevent.ParameterTypeNotAssignableFrom(documentIndex.GetType(), typeof(DocumentIndex));
+
             var documentIndexImpl = documentIndex as DocumentIndex;
-            if (documentIndexImpl == null) {
-                throw new InvalidCastException($"Parameter {nameof(documentIndex)} must be of type {nameof(DocumentIndex)}");
-            }
-
             var document = new Document();
-
             foreach (var entry in documentIndexImpl.Entries) {
                 if (entry.Value.Value == null) { continue; }
                 var fieldName = entry.Key;
@@ -97,19 +108,16 @@ namespace Nameless.Framework.Search {
                     case DocumentIndex.IndexableType.Text:
                         var textValue = sanitize ? Convert.ToString(fieldValue).RemoveHtmlTags() : Convert.ToString(fieldValue);
                         
-                        if (analyze) {
-                            document.Add(new TextField(fieldName, textValue, store));
-                        } else {
-                            document.Add(new StringField(fieldName, textValue, store));
-                        }
+                        if (analyze) { document.Add(new TextField(fieldName, textValue, store)); }
+                        else { document.Add(new StringField(fieldName, textValue, store)); }
                         break;
 
                     case DocumentIndex.IndexableType.DateTime:
                         var dateValue = string.Empty;
                         if (fieldValue is DateTimeOffset) {
-                            dateValue = ((DateTimeOffset)fieldValue).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ");
+                            dateValue = ((DateTimeOffset)fieldValue).ToUniversalTime().ToString(DATE_PATTERN);
                         } else {
-                            dateValue = ((DateTime)fieldValue).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ");
+                            dateValue = ((DateTime)fieldValue).ToUniversalTime().ToString(DATE_PATTERN);
                         }
                         document.Add(new StringField(fieldName, dateValue, store));
 
@@ -135,7 +143,7 @@ namespace Nameless.Framework.Search {
         #region Private Methods
 
         private void Initialize() {
-            _directory = Lucene.Net.Store.FSDirectory.Open(new DirectoryInfo(Path.Combine(_basePath, Name)));
+            _directory = LuceneFSDirectory.Open(new DirectoryInfo(Path.Combine(_basePath, Name)));
 
             // Creates the index directory
             using (CreateIndexWriter()) { }
@@ -149,15 +157,46 @@ namespace Nameless.Framework.Search {
             return new IndexWriter(_directory, new IndexWriterConfig(IndexProvider.Version, _analyzer));
         }
 
+        private IndexReader CreateIndexReader() {
+            lock (_syncLock) {
+                return _indexReader ?? (_indexReader = DirectoryReader.Open(_directory)); 
+            }
+        }
+
+        private IndexSearcher CreateIndexSearcher() {
+            lock (_syncLock) {
+                return _indexSearcher ?? (_indexSearcher = new IndexSearcher(CreateIndexReader())); 
+            }
+        }
+
+        private void RenewIndex() {
+            lock (_syncLock) {
+                if (_indexReader != null) {
+                    _indexReader.Dispose();
+                    _indexReader = null;
+                }
+
+                if (_indexSearcher != null) {
+                    _indexSearcher = null;
+                }
+            }
+        }
+
         private void Dispose(bool disposing) {
             if (_disposed) { return; }
             if (disposing) {
                 if (_directory != null) {
                     _directory.Dispose();
                 }
+
+                if (_indexReader != null) {
+                    _indexReader.Dispose();
+                }
             }
 
             _directory = null;
+            _indexReader = null;
+            _indexSearcher = null;
             _disposed = true;
         }
 
@@ -165,26 +204,29 @@ namespace Nameless.Framework.Search {
 
         #region IIndex Members
 
-        public string Name { get; }
+        /// <inheritdoc />
+        public string Name {
+            get { return _name; }
+        }
 
+        /// <inheritdoc />
         public bool IsEmpty() {
             return TotalDocuments() <= 0;
         }
 
+        /// <inheritdoc />
         public int TotalDocuments() {
-            if (!IndexDirectoryExists()) {
-                return -1;
-            }
+            if (!IndexDirectoryExists()) { return -1; }
 
-            using (var reader = DirectoryReader.Open(_directory)) {
-                return reader.NumDocs;
-            }
+            return CreateIndexReader().NumDocs;
         }
 
+        /// <inheritdoc />
         public IDocumentIndex NewDocument(string documentID) {
             return new DocumentIndex(documentID);
         }
 
+        /// <inheritdoc />
         public void StoreDocuments(params IDocumentIndex[] documents) {
             if (documents == null) { return; }
             if (documents.Length == 0) { return; }
@@ -195,16 +237,19 @@ namespace Nameless.Framework.Search {
                 foreach (var document in documents) {
                     writer.AddDocument(CreateDocument(document));
                 }
+
+                RenewIndex();
             }
         }
 
+        /// <inheritdoc />
         public void DeleteDocuments(params string[] documentIDs) {
             if (documentIDs == null) { return; }
             if (documentIDs.Length == 0) { return; }
 
             using (var writer = CreateIndexWriter()) {
-                // Process documents by batch as there is a max number of terms a query can contain (1024 by default).
 
+                // Process documents by batch as there is a max number of terms a query can contain (1024 by default).
                 var pageCount = documentIDs.Length / (BatchSize + 1);
                 for (var page = 0; page < pageCount; page++) {
                     var query = new BooleanQuery();
@@ -214,19 +259,23 @@ namespace Nameless.Framework.Search {
                             query.Add(new BooleanClause(new TermQuery(new Term(nameof(ISearchHit.DocumentID), id.ToString())), BooleanClause.Occur.SHOULD));
                         }
                         writer.DeleteDocuments(query);
-                    } catch (Exception) { /* Just skip error */ }
+                    } catch { /* Just skip error */ }
                 }
+
+                RenewIndex();
             }
         }
 
+        /// <inheritdoc />
         public ISearchBuilder CreateSearchBuilder() {
-            return new SearchBuilder(_directory, _analyzer);
+            return new SearchBuilder(_analyzer, CreateIndexSearcher);
         }
 
         #endregion IIndex Members
 
         #region IDisposable Members
 
+        /// <inheritdoc />
         public void Dispose() {
             Dispose(disposing: true);
             GC.SuppressFinalize(this);

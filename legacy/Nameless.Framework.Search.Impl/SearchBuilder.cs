@@ -9,17 +9,16 @@ using Lucene.Net.Index;
 using Lucene.Net.QueryParsers.Classic;
 using Lucene.Net.Search;
 using Lucene.Net.Util;
-using LuceneDirectory = Lucene.Net.Store.Directory;
 
 namespace Nameless.Framework.Search {
 
     /// <summary>
     /// Default implementation of <see cref="ISearchBuilder"/>.
     /// </summary>
-    public class SearchBuilder : ISearchBuilder {
+    public sealed class SearchBuilder : ISearchBuilder {
 
         #region Private Constants
-        
+
         private const double EPSILON = 0.001;
         private const int MAX_RESULTS = short.MaxValue;
 
@@ -27,21 +26,21 @@ namespace Nameless.Framework.Search {
 
         #region Private Read-Only Fields
 
-        private readonly LuceneDirectory _directory;
+        private readonly Analyzer _analyzer;
+        private readonly Func<IndexSearcher> _indexSearcherFactory;
         private readonly IList<BooleanClause> _clauses = new List<BooleanClause>();
         private readonly IList<BooleanClause> _filters = new List<BooleanClause>();
 
         #endregion Private Read-Only Fields
 
         #region Private Fields
-        
-        private Analyzer _analyzer;
+
+        private bool _asFilter;
+        private bool _sortDescending;
         private int _count;
         private int _skip;
-        private string _sort;
         private SortField.Type_e _comparer;
-        private bool _sortDescending;
-        private bool _asFilter;
+        private string _sort;
 
         // pending clause attributes
         private BooleanClause.Occur _occur;
@@ -58,18 +57,14 @@ namespace Nameless.Framework.Search {
         /// <summary>
         /// Initializes a new instance of <see cref="SearchBuilder"/>.
         /// </summary>
-        /// <param name="directory">The indexes directory.</param>
+        /// <param name="indexSearcherFactory">The indexes directory factory.</param>
         /// <param name="analyzer">The analyzer provider.</param>
-        public SearchBuilder(LuceneDirectory directory, Analyzer analyzer) {
-            if (directory == null) {
-                throw new ArgumentNullException(nameof(directory));
-            }
-            if (analyzer == null) {
-                throw new ArgumentNullException(nameof(analyzer));
-            }
+        public SearchBuilder(Analyzer analyzer, Func<IndexSearcher> indexSearcherFactory) {
+            Prevent.ParameterNull(analyzer, nameof(analyzer));
+            Prevent.ParameterNull(indexSearcherFactory, nameof(indexSearcherFactory));
 
-            _directory = directory;
             _analyzer = analyzer;
+            _indexSearcherFactory = indexSearcherFactory;
 
             _count = MAX_RESULTS;
             _skip = 0;
@@ -90,7 +85,7 @@ namespace Nameless.Framework.Search {
             if (string.IsNullOrEmpty(text)) {
                 return result;
             }
-            
+
             using (var stringReader = new StringReader(text)) {
                 using (var tokenStream = analyzer.TokenStream(field, stringReader)) {
                     tokenStream.Reset();
@@ -123,22 +118,18 @@ namespace Nameless.Framework.Search {
 
         private void CreatePendingClause() {
             if (_query == null) { return; }
-            
+
             // comparing floating-point numbers using an epsilon value
-            if (Math.Abs(_boost - 0) > EPSILON) {
-                _query.Boost = _boost;
-            }
+            if (Math.Abs(_boost - 0) > EPSILON) { _query.Boost = _boost; }
 
             if (!_notAnalyzed) {
-                var termQuery = _query as TermQuery;
-                if (termQuery != null) {
+                if (_query is TermQuery termQuery) {
                     var term = termQuery.Term;
                     var analyzedText = AnalyzeText(_analyzer, term.Field, term.Text()).FirstOrDefault();
                     _query = new TermQuery(new Term(term.Field, analyzedText));
                 }
 
-                var termRangeQuery = _query as TermRangeQuery;
-                if (termRangeQuery != null) {
+                if (_query is TermRangeQuery termRangeQuery) {
                     var lowerTerm = AnalyzeText(_analyzer, termRangeQuery.Field, termRangeQuery.LowerTerm.Utf8ToString()).FirstOrDefault();
                     var upperTerm = AnalyzeText(_analyzer, termRangeQuery.Field, termRangeQuery.UpperTerm.Utf8ToString()).FirstOrDefault();
 
@@ -147,8 +138,7 @@ namespace Nameless.Framework.Search {
             }
 
             if (!_exactMatch) {
-                var termQuery = _query as TermQuery;
-                if (termQuery != null) {
+                if (_query is TermQuery termQuery) {
                     var term = termQuery.Term;
                     _query = new PrefixQuery(new Term(term.Field, term.Text()));
                 }
@@ -205,21 +195,11 @@ namespace Nameless.Framework.Search {
 
         /// <inheritdoc />
         public ISearchBuilder Parse(string query, bool escape = true, params string[] defaultFields) {
-            if (string.IsNullOrWhiteSpace(query)) {
-                throw new ArgumentNullException("Parameter cannot be null, empty or white spaces.", nameof(query));
-            }
+            Prevent.ParameterNullOrWhiteSpace(query, nameof(query));
+            Prevent.ParameterNull(defaultFields, nameof(defaultFields));
+            if (defaultFields.Length == 0) { throw new ArgumentException("Default fields can't be empty."); }
 
-            if (defaultFields == null) {
-                throw new ArgumentNullException(nameof(defaultFields));
-            }
-
-            if (defaultFields.Length == 0) {
-                throw new ArgumentException("Default fields can't be empty.");
-            }
-
-            if (escape) {
-                query = QueryParserBase.Escape(query);
-            }
+            if (escape) { query = QueryParserBase.Escape(query); }
 
             foreach (var defaultField in defaultFields) {
                 CreatePendingClause();
@@ -424,79 +404,59 @@ namespace Nameless.Framework.Search {
         public IEnumerable<ISearchHit> Search() {
             var query = CreateQuery();
 
-            using (var reader = DirectoryReader.Open(_directory)) {
-                IndexSearcher searcher;
-                try { searcher = new IndexSearcher(reader); }
-                catch { return Enumerable.Empty<ISearchHit>(); /* index might not exist if it has been rebuilt */ }
+            var sort = !string.IsNullOrEmpty(_sort)
+                ? new Sort(new SortField(_sort, _comparer, _sortDescending))
+                : Sort.RELEVANCE;
+            var collector = TopFieldCollector.Create(
+                sort: sort,
+                numHits: _count + _skip,
+                fillFields: false,
+                trackDocScores: true,
+                trackMaxScore: false,
+                docsScoredInOrder: true);
 
-                var sort = !string.IsNullOrEmpty(_sort)
-                    ? new Sort(new SortField(_sort, _comparer, _sortDescending))
-                    : Sort.RELEVANCE;
-                var collector = TopFieldCollector.Create(
-                    sort: sort,
-                    numHits: _count + _skip,
-                    fillFields: false,
-                    trackDocScores: true,
-                    trackMaxScore: false,
-                    docsScoredInOrder: true);
+            var indexSearcher = _indexSearcherFactory();
+            indexSearcher.Search(query, collector);
 
-                searcher.Search(query, collector);
+            var results = collector.TopDocs().ScoreDocs
+                .Skip(_skip)
+                .Select(scoreDoc => new SearchHit(indexSearcher.Doc(scoreDoc.Doc), scoreDoc.Score))
+                .ToList();
 
-                var results = collector.TopDocs().ScoreDocs
-                    .Skip(_skip)
-                    .Select(scoreDoc => new SearchHit(searcher.Doc(scoreDoc.Doc), scoreDoc.Score))
-                    .ToList();
-
-                return results;
-            }   
+            return results;
         }
 
         /// <inheritdoc />
         public ISearchHit GetDocument(Guid documentID) {
             var query = new TermQuery(new Term(nameof(ISearchHit.DocumentID), documentID.ToString()));
+            var indexSearcher = _indexSearcherFactory();
+            var hits = indexSearcher.Search(query, 1);
 
-            using (var reader = DirectoryReader.Open(_directory)) {
-                var searcher = new IndexSearcher(reader);
-                var hits = searcher.Search(query, 1);
-
-                return hits.ScoreDocs.Length > 0
-                    ? new SearchHit(searcher.Doc(hits.ScoreDocs[0].Doc), hits.ScoreDocs[0].Score)
-                    : null;
-            }
+            return hits.ScoreDocs.Length > 0
+                ? new SearchHit(indexSearcher.Doc(hits.ScoreDocs[0].Doc), hits.ScoreDocs[0].Score)
+                : null;
         }
 
         /// <inheritdoc />
         public ISearchBit GetBits() {
             var query = CreateQuery();
+            var filter = new QueryWrapperFilter(query);
+            var indexSearcher = _indexSearcherFactory();
+            var context = (AtomicReaderContext)indexSearcher.IndexReader.Context;
+            var bits = filter.GetDocIdSet(context, context.AtomicReader.LiveDocs);
+            var documentSetIDInterator = new OpenBitSetDISI(bits.GetIterator(), indexSearcher.IndexReader.MaxDoc);
 
-            using (var reader = DirectoryReader.Open(_directory)) {
-                IndexSearcher searcher;
-                try { searcher = new IndexSearcher(reader); }
-                catch { return null; /* index might not exist if it has been rebuilt */ }
-
-                var filter = new QueryWrapperFilter(query);
-                var context = (AtomicReaderContext)reader.Context;
-                var bits = filter.GetDocIdSet(context, context.AtomicReader.LiveDocs);
-                var documentSetIDInterator = new OpenBitSetDISI(bits.GetIterator(), searcher.IndexReader.MaxDoc);
-
-                return new SearchBit(documentSetIDInterator);
-            }
+            return new SearchBit(documentSetIDInterator);
         }
 
         /// <inheritdoc />
         public int Count() {
             var query = CreateQuery();
+            var indexSearcher = _indexSearcherFactory();
+            var hits = indexSearcher.Search(query, short.MaxValue);
+            var length = hits.ScoreDocs.Length;
 
-            using (var reader = DirectoryReader.Open(_directory)) {
-                IndexSearcher searcher;
-                try { searcher = new IndexSearcher(reader); }
-                catch { return 0; /* index might not exist if it has been rebuilt */ }
-
-                var hits = searcher.Search(query, short.MaxValue);
-                var length = hits.ScoreDocs.Length;
-
-                return Math.Min(length - _skip, _count);
-            }
+            return Math.Min(length - _skip, _count);
         }
 
         #endregion ISearchBuilder Members

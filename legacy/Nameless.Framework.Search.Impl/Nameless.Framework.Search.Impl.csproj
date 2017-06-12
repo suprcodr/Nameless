@@ -71,6 +71,10 @@
     <Compile Include="StringExtension.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Nameless.Common\Nameless.Common.csproj">
+      <Project>{a5003ed5-e046-4cb6-ba4a-c1794f7fe738}</Project>
+      <Name>Nameless.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Nameless.Framework.Search\Nameless.Framework.Search.csproj">
       <Project>{59ef4c78-b941-4cf6-b61e-ff9ab1f9c51d}</Project>
       <Name>Nameless.Framework.Search</Name>

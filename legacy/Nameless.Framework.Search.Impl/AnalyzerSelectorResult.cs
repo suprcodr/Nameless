@@ -5,7 +5,7 @@ namespace Nameless.Framework.Search {
     /// <summary>
     /// Represents a Lucene analyzer selector result.
     /// </summary>
-    public class AnalyzerSelectorResult {
+    public sealed class AnalyzerSelectorResult {
 
         #region Public Properties
 

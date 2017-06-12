@@ -3,6 +3,8 @@ using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace Nameless.Framework.Data.Sql.EntityFramework {
@@ -34,7 +36,7 @@ namespace Nameless.Framework.Data.Sql.EntityFramework {
 
         #region IRepository Members
 
-        public dynamic ExecuteDirective<TDirective>(dynamic parameters) where TDirective : IDirective {
+        public Task<dynamic> ExecuteDirectiveAsync<TDirective>(dynamic parameters, CancellationToken cancellationToken) where TDirective : IDirective {
             Prevent.ParameterNull(parameters, nameof(parameters));
 
             if (!typeof(Directive).GetTypeInfo().IsAssignableFrom(typeof(TDirective))) {
@@ -43,31 +45,31 @@ namespace Nameless.Framework.Data.Sql.EntityFramework {
 
             var directive = (IDirective)Activator.CreateInstance(typeof(TDirective), new object[] { _dbContext });
 
-            return directive.Execute(parameters);
+            return directive.ExecuteAsync(parameters, cancellationToken);
         }
 
-        public void Delete<TEntity>(TEntity entity) where TEntity : class {
+        public Task DeleteAsync<TEntity>(TEntity entity, CancellationToken cancellationToken) where TEntity : class {
             _dbContext.Set<TEntity>().Remove(entity);
-            _dbContext.SaveChanges();
+            return _dbContext.SaveChangesAsync();
         }
 
-        public TEntity FindOne<TEntity>(Expression<Func<TEntity, bool>> where) where TEntity : class {
+        public Task<TEntity> FindOneAsync<TEntity>(Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken) where TEntity : class {
             Prevent.ParameterNull(where, nameof(where));
 
-            return _dbContext.Set<TEntity>().SingleOrDefault(where);
+            return _dbContext.Set<TEntity>().SingleOrDefaultAsync(where);
         }
 
-        public TEntity FindOne<TEntity>(object id) where TEntity : class {
+        public Task<TEntity> FindOneAsync<TEntity>(object id, CancellationToken cancellationToken) where TEntity : class {
             Prevent.ParameterNull(id, nameof(id));
 
-            return _dbContext.Set<TEntity>().Find(id);
+            return _dbContext.Set<TEntity>().FindAsync(id);
         }
 
         public IQueryable<TEntity> Query<TEntity>() where TEntity : class {
             return _dbContext.Set<TEntity>();
         }
 
-        public void Save<TEntity>(TEntity entity) where TEntity : class {
+        public Task SaveAsync<TEntity>(TEntity entity, CancellationToken cancellationToken) where TEntity : class {
             Prevent.ParameterNull(entity, nameof(entity));
 
             var entry = _dbContext.Set<TEntity>().Attach(entity);
@@ -81,7 +83,7 @@ namespace Nameless.Framework.Data.Sql.EntityFramework {
                     _dbContext.Set<TEntity>().Update(entity);
                     break;
             }
-            _dbContext.SaveChanges();
+            return _dbContext.SaveChangesAsync();
         }
 
         #endregion IRepository Members

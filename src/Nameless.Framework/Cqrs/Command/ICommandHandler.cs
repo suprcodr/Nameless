@@ -1,4 +1,7 @@
-﻿namespace Nameless.Framework.Cqrs.Command {
+﻿using System.Threading;
+using System.Threading.Tasks;
+
+namespace Nameless.Framework.Cqrs.Command {
 
     /// <summary>
     /// Command handler interface.
@@ -13,7 +16,9 @@
         /// Handles the command.
         /// </summary>
         /// <param name="command">The command instance.</param>
-        void Handle(TCommand command);
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous command handler operation.</returns>
+        Task HandleAsync(TCommand command, CancellationToken cancellationToken);
 
         #endregion Methods
     }

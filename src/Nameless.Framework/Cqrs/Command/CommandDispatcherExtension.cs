@@ -17,24 +17,8 @@ namespace Nameless.Framework.Cqrs.Command {
         /// <param name="source">The source, in this case, an implementation of <see cref="ICommandDispatcher"/></param>
         /// <param name="command">The command.</param>
         /// <returns>A <see cref="Task"/> representing the command execution.</returns>
-        public static Task SendAsync<TCommand>(this ICommandDispatcher source, TCommand command)
-            where TCommand : ICommand {
-            return SendAsync(source, command, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// Sendes a command asynchronous.
-        /// </summary>
-        /// <typeparam name="TCommand">Type of the command.</typeparam>
-        /// <param name="source">The source, in this case, an implementation of <see cref="ICommandDispatcher"/></param>
-        /// <param name="command">The command.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="Task"/> representing the command execution.</returns>
-        public static Task SendAsync<TCommand>(this ICommandDispatcher source, TCommand command, CancellationToken cancellationToken)
-            where TCommand : ICommand {
-            Prevent.ParameterNull(source, nameof(source));
-
-            return Task.Run(() => source.Command(command), cancellationToken);
+        public static Task CommandAsync<TCommand>(this ICommandDispatcher source, TCommand command) where TCommand : ICommand {
+            return source.CommandAsync(command, CancellationToken.None);
         }
 
         #endregion Public Static Methods

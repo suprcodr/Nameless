@@ -2,13 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Nameless.Framework.Network.PubSub {
 
     /// <summary>
     /// Default implementation of <see cref="IPublisherSubscriber"/>.
     /// </summary>
-    public sealed class PublisherSubscriber : IPublisherSubscriber, IDisposable {
+    public sealed class PublisherSubscriber : IPublisherSubscriber {
 
         #region Private Static Read-Only Fields
 
@@ -19,40 +21,8 @@ namespace Nameless.Framework.Network.PubSub {
         #region Private Fields
 
         private IDictionary<Type, IList> _subscriptions = new Dictionary<Type, IList>();
-        private bool _disposed;
 
         #endregion Private Fields
-
-        #region Destructors
-
-        /// <summary>
-        /// Destructor.
-        /// </summary>
-        ~PublisherSubscriber() {
-            Dispose(disposing: false);
-        }
-
-        #endregion Destructors
-
-        #region Private Methods
-
-        private void Dispose(bool disposing) {
-            if (_disposed) { return; }
-            if (disposing) {
-                lock (SyncLock) {
-                    _subscriptions.Each(subscriptionList => {
-                        subscriptionList.Value.Each(subscription => {
-                            subscription.TryDispose();
-                        });
-                    });
-                    _subscriptions.Clear();
-                }
-            }
-            _subscriptions = null;
-            _disposed = true;
-        }
-
-        #endregion Private Methods
 
         #region IPublisherSubscriber Members
 
@@ -86,32 +56,25 @@ namespace Nameless.Framework.Network.PubSub {
         }
 
         /// <inheritdoc />
-        public void Publish<TMessage>(TMessage message) {
+        public Task PublishAsync<TMessage>(TMessage message, CancellationToken cancellationToken) {
             Prevent.ParameterNull(message, nameof(message));
 
-            var messageType = typeof(TMessage);
-            if (_subscriptions.ContainsKey(messageType)) {
-                lock (SyncLock) {
-                    foreach (var subscription in _subscriptions[messageType].OfType<ISubscription<TMessage>>()) {
-                        var handler = subscription.CreateHandler();
-                        if (handler != null) {
-                            handler.Invoke(message);
+            return Task.Run(() => {
+                var messageType = typeof(TMessage);
+                if (_subscriptions.ContainsKey(messageType)) {
+                    lock (SyncLock) {
+                        foreach (var subscription in _subscriptions[messageType].OfType<ISubscription<TMessage>>()) {
+                            if (cancellationToken.IsCancellationRequested) { break; }
+                            var handler = subscription.CreateHandler();
+                            if (handler != null) {
+                                handler.Invoke(message);
+                            }
                         }
                     }
                 }
-            }
+            });
         }
 
         #endregion IPublisherSubscriber Members
-
-        #region IDisposable Members
-
-        /// <inheritdoc />
-        public void Dispose() {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        #endregion IDisposable Members
     }
 }
