@@ -1,5 +1,4 @@
 ﻿using System.Threading;
-using System.Threading.Tasks;
 
 namespace Nameless.Framework.Cqrs.Query {
 
@@ -16,9 +15,9 @@ namespace Nameless.Framework.Cqrs.Query {
         /// <typeparam name="TResult">Type of the result.</typeparam>
         /// <param name="source">The instance of <see cref="IQueryDispatcher"/></param>
         /// <param name="query">The query.</param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the query execution.</returns>
-        public static Task<TResult> QueryAsync<TResult>(this IQueryDispatcher source, IQuery<TResult> query) {
-            return source.QueryAsync(query, CancellationToken.None);
+        /// <returns>The query result.</returns>
+        public static TResult Query<TResult>(this IQueryDispatcher source, IQuery<TResult> query) {
+            return source.QueryAsync(query, CancellationToken.None).WaitForResult();
         }
 
         #endregion Public Static Methods

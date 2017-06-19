@@ -24,7 +24,7 @@ namespace Nameless.Framework.Cqrs.Command {
 
         #region ICommandDispatcher Members
 
-        public Task CommandAsync<TCommand>(TCommand command, CancellationToken cancellationToken) where TCommand : ICommand {
+        public Task CommandAsync<TCommand>(TCommand command, CancellationToken cancellationToken = default(CancellationToken)) where TCommand : ICommand {
             Prevent.ParameterNull(command, nameof(command));
 
             var handlerType = typeof(ICommandHandler<>).MakeGenericType(command.GetType());

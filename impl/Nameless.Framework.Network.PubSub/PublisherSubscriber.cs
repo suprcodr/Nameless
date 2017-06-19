@@ -56,7 +56,7 @@ namespace Nameless.Framework.Network.PubSub {
         }
 
         /// <inheritdoc />
-        public Task PublishAsync<TMessage>(TMessage message, CancellationToken cancellationToken) {
+        public Task PublishAsync<TMessage>(TMessage message, CancellationToken cancellationToken = default(CancellationToken)) {
             Prevent.ParameterNull(message, nameof(message));
 
             return Task.Run(() => {
@@ -65,10 +65,7 @@ namespace Nameless.Framework.Network.PubSub {
                     lock (SyncLock) {
                         foreach (var subscription in _subscriptions[messageType].OfType<ISubscription<TMessage>>()) {
                             if (cancellationToken.IsCancellationRequested) { break; }
-                            var handler = subscription.CreateHandler();
-                            if (handler != null) {
-                                handler.Invoke(message);
-                            }
+                            subscription.CreateHandler()?.Invoke(message);
                         }
                     }
                 }

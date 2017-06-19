@@ -18,7 +18,7 @@ namespace Nameless.Framework.Cqrs.Query {
         /// <param name="query">The query.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The <see cref="Task{TResult}"/> representing the query execution.</returns>
-        Task<TResult> HandleAsync(TQuery query, CancellationToken cancellationToken);
+        Task<TResult> HandleAsync(TQuery query, CancellationToken cancellationToken = default(CancellationToken));
 
         #endregion Methods
     }

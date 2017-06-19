@@ -33,7 +33,7 @@ namespace Nameless.Framework.Network.PubSub {
         /// <typeparam name="TMessage">Type of the message.</typeparam>
         /// <param name="message">The message.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        Task PublishAsync<TMessage>(TMessage message, CancellationToken cancellationToken);
+        Task PublishAsync<TMessage>(TMessage message, CancellationToken cancellationToken = default(CancellationToken));
 
         #endregion Methods
     }

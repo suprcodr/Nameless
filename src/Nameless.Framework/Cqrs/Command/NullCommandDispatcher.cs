@@ -28,7 +28,7 @@ namespace Nameless.Framework.Cqrs.Command {
         #region ICommandDispatcher Members
 
         /// <inheritdoc />
-        public Task CommandAsync<TCommand>(TCommand command, CancellationToken cancellationToken) where TCommand : ICommand {
+        public Task CommandAsync<TCommand>(TCommand command, CancellationToken cancellationToken = default(CancellationToken)) where TCommand : ICommand {
             return Task.CompletedTask;
         }
 

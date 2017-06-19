@@ -1,5 +1,4 @@
 ﻿using System.Threading;
-using System.Threading.Tasks;
 
 namespace Nameless.Framework.Cqrs.Command {
 
@@ -11,14 +10,13 @@ namespace Nameless.Framework.Cqrs.Command {
         #region Public Static Methods
 
         /// <summary>
-        /// Sendes a command asynchronous.
+        /// Sends a command.
         /// </summary>
         /// <typeparam name="TCommand">Type of the command.</typeparam>
         /// <param name="source">The source, in this case, an implementation of <see cref="ICommandDispatcher"/></param>
         /// <param name="command">The command.</param>
-        /// <returns>A <see cref="Task"/> representing the command execution.</returns>
-        public static Task CommandAsync<TCommand>(this ICommandDispatcher source, TCommand command) where TCommand : ICommand {
-            return source.CommandAsync(command, CancellationToken.None);
+        public static void Command<TCommand>(this ICommandDispatcher source, TCommand command) where TCommand : ICommand {
+            source.CommandAsync(command, CancellationToken.None).WaitForResult();
         }
 
         #endregion Public Static Methods

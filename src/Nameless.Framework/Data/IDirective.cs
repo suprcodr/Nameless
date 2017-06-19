@@ -14,7 +14,7 @@ namespace Nameless.Framework.Data {
         /// Executes the directive.
         /// </summary>
         /// <returns>A dynamic representing the directive execution.</returns>
-        Task<dynamic> ExecuteAsync(dynamic parameters, CancellationToken cancellationToken);
+        Task<dynamic> ExecuteAsync(dynamic parameters, CancellationToken cancellationToken = default(CancellationToken));
 
         #endregion Methods
     }

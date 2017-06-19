@@ -18,7 +18,7 @@ namespace Nameless.Framework.Cqrs.Command {
         /// <param name="command">The command instance.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous command handler operation.</returns>
-        Task HandleAsync(TCommand command, CancellationToken cancellationToken);
+        Task HandleAsync(TCommand command, CancellationToken cancellationToken = default(CancellationToken));
 
         #endregion Methods
     }

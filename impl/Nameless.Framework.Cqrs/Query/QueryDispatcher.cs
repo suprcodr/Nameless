@@ -24,7 +24,7 @@ namespace Nameless.Framework.Cqrs.Query {
 
         #region IQueryDispatcher Members
 
-        public Task<TResult> QueryAsync<TResult>(IQuery<TResult> query, CancellationToken cancellationToken) {
+        public Task<TResult> QueryAsync<TResult>(IQuery<TResult> query, CancellationToken cancellationToken = default(CancellationToken)) {
             Prevent.ParameterNull(query, nameof(query));
 
             var handlerType = typeof(IQueryHandler<,>).MakeGenericType(query.GetType(), typeof(TResult));

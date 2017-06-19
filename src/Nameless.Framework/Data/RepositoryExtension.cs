@@ -1,72 +1,77 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Nameless.Framework.Data {
 
+    /// <summary>
+    /// Extension methods for <see cref="IRepository"/>
+    /// </summary>
     public static class RepositoryExtension {
 
         #region Public Static Methods
 
-        public static Task SaveAsync<TEntity>(this IRepository source, TEntity entity) where TEntity : class {
-            if (source == null) { return Task.CompletedTask; }
-
-            return source.SaveAsync(entity, CancellationToken.None);
-        }
-
-        public static async void Save<TEntity>(this IRepository source, TEntity entity) where TEntity : class {
+        /// <summary>
+        /// Saves the entity.
+        /// </summary>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        /// <param name="source">The source, in this case, the implementation of <see cref="IRepository"/>.</param>
+        /// <param name="entity">The entity instance.</param>
+        public static void Save<TEntity>(this IRepository source, TEntity entity) where TEntity : class {
             if (source == null) { return; }
 
-            await source.SaveAsync(entity);
+            source.SaveAsync(entity).WaitForResult();
         }
 
-        public static Task DeleteAsync<TEntity>(this IRepository source, TEntity entity) where TEntity : class {
-            if (source == null) { return Task.CompletedTask; }
-
-            return source.DeleteAsync(entity, CancellationToken.None);
-        }
-
-        public static async void Delete<TEntity>(this IRepository source, TEntity entity) where TEntity : class {
+        /// <summary>
+        /// Deletes the entity.
+        /// </summary>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        /// <param name="source">The source, in this case, the implementation of <see cref="IRepository"/>.</param>
+        /// <param name="entity">The entity instance.</param>
+        public static void Delete<TEntity>(this IRepository source, TEntity entity) where TEntity : class {
             if (source == null) { return; }
 
-            await source.DeleteAsync(entity);
+            source.DeleteAsync(entity).WaitForResult();
         }
 
-        public static Task<TEntity> FindOneAsync<TEntity>(this IRepository source, object id) where TEntity : class {
-            if (source == null) { return Task.FromResult(default(TEntity)); }
-
-            return source.FindOneAsync<TEntity>(id, CancellationToken.None);
-        }
-
-        public static async Task<TEntity> FindOne<TEntity>(this IRepository source, object id) where TEntity : class {
+        /// <summary>
+        /// Finds one entity by its ID.
+        /// </summary>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        /// <param name="source">The source, in this case, the implementation of <see cref="IRepository"/>.</param>
+        /// <param name="id">The entity ID.</param>
+        /// <returns>The result.</returns>
+        public static TEntity FindOne<TEntity>(this IRepository source, object id) where TEntity : class {
             if (source == null) { return default(TEntity); }
 
-            return await source.FindOneAsync<TEntity>(id);
+            return source.FindOneAsync<TEntity>(id).WaitForResult();
         }
 
-        public static Task<TEntity> FindOneAsync<TEntity>(this IRepository source, Expression<Func<TEntity, bool>> where) where TEntity : class {
-            if (source == null) { return Task.FromResult(default(TEntity)); }
-
-            return source.FindOneAsync(where, CancellationToken.None);
-        }
-
-        public static async Task<TEntity> FindOne<TEntity>(this IRepository source, Expression<Func<TEntity, bool>> where) where TEntity : class {
+        /// <summary>
+        /// Finds one entity by the expression.
+        /// </summary>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        /// <param name="source">The source, in this case, the implementation of <see cref="IRepository"/>.</param>
+        /// <param name="where">The WHERE clause.</param>
+        /// <returns>The result.</returns>
+        public static TEntity FindOne<TEntity>(this IRepository source, Expression<Func<TEntity, bool>> where) where TEntity : class {
             if (source == null) { return default(TEntity); }
 
-            return await source.FindOneAsync(where);
+            return source.FindOneAsync(where).WaitForResult();
         }
 
-        public static Task<dynamic> ExecuteDirectiveAsync<TDirective>(this IRepository source, dynamic parameters) where TDirective : IDirective {
-            if (source == null) { return Task.FromResult(default(dynamic)); }
-
-            return source.ExecuteDirectiveAsync(parameters, CancellationToken.None);
-        }
-
-        public static async Task<dynamic> ExecuteDirective<TDirective>(this IRepository source, dynamic parameters) where TDirective : IDirective {
+        /// <summary>
+        /// Executes one directive.
+        /// </summary>
+        /// <typeparam name="TDirective">The directive type.</typeparam>
+        /// <param name="source">The source, in this case, the implementation of <see cref="IRepository"/>.</param>
+        /// <param name="parameters">The directive parameters.</param>
+        /// <returns>The result.</returns>
+        public static dynamic ExecuteDirective<TDirective>(this IRepository source, dynamic parameters) where TDirective : IDirective {
             if (source == null) { return default(dynamic); }
-            
-            return await source.ExecuteDirectiveAsync(parameters, CancellationToken.None);
+
+            return source.ExecuteDirectiveAsync(parameters, CancellationToken.None).WaitForResult();
         }
 
         #endregion Public Static Methods

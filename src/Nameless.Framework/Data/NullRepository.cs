@@ -23,34 +23,40 @@ namespace Nameless.Framework.Data {
 
         #region Private Constructors
 
-        // Block construction of NullLogger
+        // Block construction of NullRepository
         private NullRepository() { }
 
         #endregion Private Constructors
 
         #region IRepository Members
 
-        public Task DeleteAsync<TEntity>(TEntity entity, CancellationToken cancellationToken) where TEntity : class {
+        /// <inheritdoc />
+        public Task DeleteAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default(CancellationToken)) where TEntity : class {
             return Task.CompletedTask;
         }
 
-        public Task<dynamic> ExecuteDirectiveAsync<TDirective>(dynamic parameters, CancellationToken cancellationToken) where TDirective : IDirective {
+        /// <inheritdoc />
+        public Task<dynamic> ExecuteDirectiveAsync<TDirective>(dynamic parameters, CancellationToken cancellationToken = default(CancellationToken)) where TDirective : IDirective {
             return null;
         }
 
-        public Task<TEntity> FindOneAsync<TEntity>(object id, CancellationToken cancellationToken) where TEntity : class {
+        /// <inheritdoc />
+        public Task<TEntity> FindOneAsync<TEntity>(object id, CancellationToken cancellationToken = default(CancellationToken)) where TEntity : class {
             return Task.FromResult(default(TEntity));
         }
 
-        public Task<TEntity> FindOneAsync<TEntity>(Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken) where TEntity : class {
+        /// <inheritdoc />
+        public Task<TEntity> FindOneAsync<TEntity>(Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken = default(CancellationToken)) where TEntity : class {
             return Task.FromResult(default(TEntity));
         }
 
+        /// <inheritdoc />
         public IQueryable<TEntity> Query<TEntity>() where TEntity : class {
             return Enumerable.Empty<TEntity>().AsQueryable();
         }
 
-        public Task SaveAsync<TEntity>(TEntity entity, CancellationToken cancellationToken) where TEntity : class {
+        /// <inheritdoc />
+        public Task SaveAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default(CancellationToken)) where TEntity : class {
             return Task.CompletedTask;
         }
 

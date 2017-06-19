@@ -28,8 +28,8 @@ namespace Nameless.Framework.Cqrs.Query {
         #region IQueryDispatcher Members
 
         /// <inheritdoc />
-        public Task<TResult> QueryAsync<TResult>(IQuery<TResult> query, CancellationToken cancellationToken) {
-            return Task.FromResult<TResult>(default(TResult));
+        public Task<TResult> QueryAsync<TResult>(IQuery<TResult> query, CancellationToken cancellationToken = default(CancellationToken)) {
+            return Task.FromResult(default(TResult));
         }
 
         #endregion IQueryDispatcher Members
