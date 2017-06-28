@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 
 namespace Nameless.Framework.Cqrs.Command {
 
@@ -15,8 +16,9 @@ namespace Nameless.Framework.Cqrs.Command {
         /// <typeparam name="TCommand">Type of the command.</typeparam>
         /// <param name="source">The source, in this case, an implementation of <see cref="ICommandDispatcher"/></param>
         /// <param name="command">The command.</param>
-        public static void Command<TCommand>(this ICommandDispatcher source, TCommand command) where TCommand : ICommand {
-            source.CommandAsync(command, CancellationToken.None).WaitForResult();
+        /// <param name="progress">The progress notifier.</param>
+        public static void Command<TCommand>(this ICommandDispatcher source, TCommand command, IProgress<int> progress = null) where TCommand : ICommand {
+            source.CommandAsync(command, progress, CancellationToken.None).WaitForResult();
         }
 
         #endregion Public Static Methods

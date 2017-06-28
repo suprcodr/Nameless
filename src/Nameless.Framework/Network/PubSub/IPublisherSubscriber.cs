@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Nameless.Framework.Network.PubSub {
 
@@ -12,7 +10,7 @@ namespace Nameless.Framework.Network.PubSub {
         #region Methods
 
         /// <summary>
-        /// Subscribes a handler to a topic.
+        /// Subscribes a handler for notification.
         /// </summary>
         /// <typeparam name="TMessage">Type of the message.</typeparam>
         /// <param name="handler">The handler.</param>
@@ -20,7 +18,7 @@ namespace Nameless.Framework.Network.PubSub {
         ISubscription<TMessage> Subscribe<TMessage>(Action<TMessage> handler);
 
         /// <summary>
-        /// Unsubscribes the handler of a topic.
+        /// Unsubscribes a handler from notification.
         /// </summary>
         /// <typeparam name="TMessage">Type of the message.</typeparam>
         /// <param name="subscription">The subscription.</param>
@@ -28,12 +26,11 @@ namespace Nameless.Framework.Network.PubSub {
 		bool Unsubscribe<TMessage>(ISubscription<TMessage> subscription);
 
         /// <summary>
-        /// Publishes a data notification for a specific topic.
+        /// Publishes a message.
         /// </summary>
         /// <typeparam name="TMessage">Type of the message.</typeparam>
         /// <param name="message">The message.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        Task PublishAsync<TMessage>(TMessage message, CancellationToken cancellationToken = default(CancellationToken));
+        void Publish<TMessage>(TMessage message);
 
         #endregion Methods
     }

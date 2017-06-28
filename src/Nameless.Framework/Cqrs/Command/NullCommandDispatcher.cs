@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Nameless.Framework.Cqrs.Command {
@@ -28,7 +29,7 @@ namespace Nameless.Framework.Cqrs.Command {
         #region ICommandDispatcher Members
 
         /// <inheritdoc />
-        public Task CommandAsync<TCommand>(TCommand command, CancellationToken cancellationToken = default(CancellationToken)) where TCommand : ICommand {
+        public Task CommandAsync<TCommand>(TCommand command, IProgress<int> progress = null, CancellationToken cancellationToken = default(CancellationToken)) where TCommand : ICommand {
             return Task.CompletedTask;
         }
 

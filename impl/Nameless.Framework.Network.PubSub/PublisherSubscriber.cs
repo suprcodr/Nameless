@@ -2,8 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Nameless.Framework.Network.PubSub {
 
@@ -56,20 +54,19 @@ namespace Nameless.Framework.Network.PubSub {
         }
 
         /// <inheritdoc />
-        public Task PublishAsync<TMessage>(TMessage message, CancellationToken cancellationToken = default(CancellationToken)) {
+        public void Publish<TMessage>(TMessage message) {
             Prevent.ParameterNull(message, nameof(message));
 
-            return Task.Run(() => {
-                var messageType = typeof(TMessage);
-                if (_subscriptions.ContainsKey(messageType)) {
-                    lock (SyncLock) {
-                        foreach (var subscription in _subscriptions[messageType].OfType<ISubscription<TMessage>>()) {
-                            if (cancellationToken.IsCancellationRequested) { break; }
-                            subscription.CreateHandler()?.Invoke(message);
-                        }
+            var messageType = typeof(TMessage);
+            if (_subscriptions.ContainsKey(messageType)) {
+                lock (SyncLock) {
+                    foreach (var subscription in _subscriptions[messageType].OfType<ISubscription<TMessage>>()) {
+                        var handler = subscription.CreateHandler();
+                        if (handler == null) { continue; }
+                        handler(message);
                     }
                 }
-            });
+            }
         }
 
         #endregion IPublisherSubscriber Members

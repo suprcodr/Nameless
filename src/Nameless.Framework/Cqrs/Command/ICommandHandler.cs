@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Nameless.Framework.Cqrs.Command {
@@ -16,9 +17,10 @@ namespace Nameless.Framework.Cqrs.Command {
         /// Handles the command.
         /// </summary>
         /// <param name="command">The command instance.</param>
+        /// <param name="progress">The progress notifier.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous command handler operation.</returns>
-        Task HandleAsync(TCommand command, CancellationToken cancellationToken = default(CancellationToken));
+        Task HandleAsync(TCommand command, IProgress<int> progress = null, CancellationToken cancellationToken = default(CancellationToken));
 
         #endregion Methods
     }

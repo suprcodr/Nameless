@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Nameless.Framework.IoC;
 
@@ -24,13 +25,13 @@ namespace Nameless.Framework.Cqrs.Command {
 
         #region ICommandDispatcher Members
 
-        public Task CommandAsync<TCommand>(TCommand command, CancellationToken cancellationToken = default(CancellationToken)) where TCommand : ICommand {
+        public Task CommandAsync<TCommand>(TCommand command, IProgress<int> progress = null, CancellationToken cancellationToken = default(CancellationToken)) where TCommand : ICommand {
             Prevent.ParameterNull(command, nameof(command));
 
             var handlerType = typeof(ICommandHandler<>).MakeGenericType(command.GetType());
             dynamic handler = _resolver.Resolve(handlerType);
 
-            return handler.HandleAsync((dynamic)command, cancellationToken);
+            return handler.HandleAsync((dynamic)command, progress, cancellationToken);
         }
 
         #endregion ICommandDispatcher Members

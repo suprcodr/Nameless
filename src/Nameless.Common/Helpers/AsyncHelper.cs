@@ -21,11 +21,8 @@ namespace Nameless.Helpers {
             var synch = new ExclusiveSynchronizationContext();
             SynchronizationContext.SetSynchronizationContext(synch);
             synch.Post(async _ => {
-                try {
-                    await item();
-                } finally {
-                    synch.EndMessageLoop();
-                }
+                try { await item(); }
+                finally { synch.EndMessageLoop(); }
             }, null);
             synch.BeginMessageLoop();
 
@@ -43,18 +40,15 @@ namespace Nameless.Helpers {
             SynchronizationContext.SetSynchronizationContext(synch);
             T result = default(T);
             synch.Post(async _ => {
-                try {
-                    result = await item();
-                } finally {
-                    synch.EndMessageLoop();
-                }
+                try { result = await item(); }
+                finally { synch.EndMessageLoop(); }
             }, null);
             synch.BeginMessageLoop();
             SynchronizationContext.SetSynchronizationContext(oldContext);
             return result;
         }
 
-        #endregion
+        #endregion Public Static Methods
 
         #region Private Inner Classes
 
@@ -83,11 +77,8 @@ namespace Nameless.Helpers {
                             task = _items.Dequeue();
                         }
                     }
-                    if (task != null) {
-                        task.Item1(task.Item2);
-                    } else {
-                        _workItemsWaiting.WaitOne();
-                    }
+                    if (task != null) { task.Item1(task.Item2); }
+                    else { _workItemsWaiting.WaitOne(); }
                 }
             }
 
