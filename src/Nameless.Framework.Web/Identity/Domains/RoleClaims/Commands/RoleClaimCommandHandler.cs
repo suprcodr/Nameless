@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Data;
 using Nameless.Framework.Cqrs.Command;
+using Nameless.Framework.Data;
 using Nameless.Framework.Data.Sql.Ado;
 using Nameless.Framework.Web.Identity.Domains.Resources;
+using Nameless.Framework.Web.Identity.Models;
 
 namespace Nameless.Framework.Web.Identity.Domains.RoleClaims.Commands {
 
@@ -12,16 +14,16 @@ namespace Nameless.Framework.Web.Identity.Domains.RoleClaims.Commands {
 
         #region Private Read-Only Fields
 
-        private readonly IDatabase _database;
+        private readonly IRepository _repository;
 
         #endregion Private Read-Only Fields
 
         #region Public Constructors
 
-        public RoleClaimCommandHandler(IDatabase database) {
-            Prevent.ParameterNull(database, nameof(database));
+        public RoleClaimCommandHandler(IRepository repository) {
+            Prevent.ParameterNull(repository, nameof(repository));
 
-            _database = database;
+            _repository = repository;
         }
 
         #endregion Public Constructors
@@ -29,7 +31,7 @@ namespace Nameless.Framework.Web.Identity.Domains.RoleClaims.Commands {
         #region ICommandHandler<AddClaimsToRoleCommand> Members
 
         public void Handle(AddClaimToRoleCommand message) {
-            _database.ExecuteNonQuery(SQL.Instance.AddClaimToRole, parameters: new[] {
+            _repository.ExecuteNonQuery(SQL.Instance.AddClaimToRole, parameters: new[] {
                     Parameter.CreateInputParameter("RoleClaimId", Guid.NewGuid(), DbType.Guid),
                     Parameter.CreateInputParameter(nameof(message.Claim.Type), message.Claim.Type),
                     Parameter.CreateInputParameter(nameof(message.Claim.Value), message.Claim.Value),
@@ -43,7 +45,7 @@ namespace Nameless.Framework.Web.Identity.Domains.RoleClaims.Commands {
 
         public void Handle(RemoveRoleClaimsCommand message) {
             message.Claims.Each(claim => {
-                _database.ExecuteNonQuery(SQL.Instance.RemoveRoleClaims, parameters: new[] {
+                _repository.ExecuteNonQuery(SQL.Instance.RemoveRoleClaims, parameters: new[] {
                     Parameter.CreateInputParameter(nameof(claim.Type), claim.Type),
                     Parameter.CreateInputParameter(nameof(claim.Value), claim.Value),
                     Parameter.CreateInputParameter(nameof(message.RoleId), message.RoleId, DbType.Guid)
@@ -56,7 +58,7 @@ namespace Nameless.Framework.Web.Identity.Domains.RoleClaims.Commands {
         #region ICommandHandler<ReplaceRoleClaimCommand> Members
 
         public void Handle(ReplaceRoleClaimCommand message) {
-            _database.ExecuteNonQuery(SQL.Instance.ReplaceRoleClaim, parameters: new[] {
+            _repository.ExecuteNonQuery(SQL.Instance.ReplaceRoleClaim, parameters: new[] {
                     Parameter.CreateInputParameter("NewType", message.NewClaim.Type),
                     Parameter.CreateInputParameter("NewValue", message.NewClaim.Value),
                     Parameter.CreateInputParameter(nameof(message.RoleId), message.RoleId, DbType.Guid),

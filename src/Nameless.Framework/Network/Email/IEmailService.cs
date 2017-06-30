@@ -1,4 +1,7 @@
-﻿namespace Nameless.Framework.Network.Email {
+﻿using System.Threading;
+using System.Threading.Tasks;
+
+namespace Nameless.Framework.Network.Email {
 
     /// <summary>
     /// Defines the methods for the e-mail service.
@@ -11,7 +14,11 @@
         /// Sends the message.
         /// </summary>
         /// <param name="message">The message.</param>
-        void Send(Message message);
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// A <see cref="Task"/> representing the method execution.
+        /// </returns>
+        Task SendAsync(Message message, CancellationToken cancellationToken = default(CancellationToken));
 
         #endregion Methods
     }

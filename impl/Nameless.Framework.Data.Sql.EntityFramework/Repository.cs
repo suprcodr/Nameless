@@ -36,7 +36,7 @@ namespace Nameless.Framework.Data.Sql.EntityFramework {
 
         #region IRepository Members
 
-        public Task<dynamic> ExecuteDirectiveAsync<TDirective>(dynamic parameters, CancellationToken cancellationToken) where TDirective : IDirective {
+        public Task<dynamic> ExecuteDirectiveAsync<TDirective>(dynamic parameters, CancellationToken cancellationToken = default(CancellationToken)) where TDirective : IDirective {
             Prevent.ParameterNull(parameters, nameof(parameters));
 
             if (!typeof(Directive).GetTypeInfo().IsAssignableFrom(typeof(TDirective))) {
@@ -48,28 +48,28 @@ namespace Nameless.Framework.Data.Sql.EntityFramework {
             return directive.ExecuteAsync(parameters, cancellationToken);
         }
 
-        public Task DeleteAsync<TEntity>(TEntity entity, CancellationToken cancellationToken) where TEntity : class {
+        public Task DeleteAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default(CancellationToken)) where TEntity : class {
             _dbContext.Set<TEntity>().Remove(entity);
-            return _dbContext.SaveChangesAsync();
+            return _dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public Task<TEntity> FindOneAsync<TEntity>(Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken) where TEntity : class {
+        public Task<TEntity> FindOneAsync<TEntity>(Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken = default(CancellationToken)) where TEntity : class {
             Prevent.ParameterNull(where, nameof(where));
 
-            return _dbContext.Set<TEntity>().SingleOrDefaultAsync(where);
+            return _dbContext.Set<TEntity>().SingleOrDefaultAsync(where, cancellationToken);
         }
 
-        public Task<TEntity> FindOneAsync<TEntity>(object id, CancellationToken cancellationToken) where TEntity : class {
+        public Task<TEntity> FindOneAsync<TEntity>(object id, CancellationToken cancellationToken = default(CancellationToken)) where TEntity : class {
             Prevent.ParameterNull(id, nameof(id));
 
-            return _dbContext.Set<TEntity>().FindAsync(id);
+            return _dbContext.Set<TEntity>().FindAsync(id, cancellationToken);
         }
 
         public IQueryable<TEntity> Query<TEntity>() where TEntity : class {
             return _dbContext.Set<TEntity>();
         }
 
-        public Task SaveAsync<TEntity>(TEntity entity, CancellationToken cancellationToken) where TEntity : class {
+        public Task SaveAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default(CancellationToken)) where TEntity : class {
             Prevent.ParameterNull(entity, nameof(entity));
 
             var entry = _dbContext.Set<TEntity>().Attach(entity);
@@ -83,7 +83,7 @@ namespace Nameless.Framework.Data.Sql.EntityFramework {
                     _dbContext.Set<TEntity>().Update(entity);
                     break;
             }
-            return _dbContext.SaveChangesAsync();
+            return _dbContext.SaveChangesAsync(cancellationToken);
         }
 
         #endregion IRepository Members

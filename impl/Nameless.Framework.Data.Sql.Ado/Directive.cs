@@ -1,4 +1,6 @@
 ﻿using System.Data;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Nameless.Framework.Data.Sql.Ado {
 
@@ -30,7 +32,7 @@ namespace Nameless.Framework.Data.Sql.Ado {
 
         #region IDirective Members
 
-        public abstract dynamic Execute(dynamic parameters);
+        public abstract Task<dynamic> ExecuteAsync(dynamic parameters, CancellationToken cancellationToken = default(CancellationToken));
 
         #endregion IDirective Members
     }

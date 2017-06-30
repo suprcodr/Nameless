@@ -2,7 +2,7 @@
 
 namespace Nameless.Framework.Data.Sql.Ado {
 
-    public class ActionInformationExtractorFactory : IActionInformationExtractorFactory {
+    public class CommandQueryFactory : ICommandQueryFactory {
 
         #region Private Read-Only Fields
 
@@ -12,7 +12,7 @@ namespace Nameless.Framework.Data.Sql.Ado {
 
         #region Public Constructors
 
-        public ActionInformationExtractorFactory(IResolver resolver) {
+        public CommandQueryFactory(IResolver resolver) {
             Prevent.ParameterNull(resolver, nameof(resolver));
 
             _resolver = resolver;
@@ -22,8 +22,8 @@ namespace Nameless.Framework.Data.Sql.Ado {
 
         #region IActionInformationExtractorFactory Members
 
-        public IActionInformationExtractor<TEntity> Create<TEntity>() where TEntity : class {
-            return _resolver.Resolve<IActionInformationExtractor<TEntity>>();
+        public ICommandQuery<TEntity> Create<TEntity>() where TEntity : class {
+            return _resolver.Resolve<ICommandQuery<TEntity>>();
         }
 
         #endregion IActionInformationExtractorFactory Members

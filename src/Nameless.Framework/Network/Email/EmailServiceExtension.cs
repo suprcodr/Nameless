@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
 
 namespace Nameless.Framework.Network.Email {
 
@@ -10,13 +10,14 @@ namespace Nameless.Framework.Network.Email {
         #region Public Static Methods
 
         /// <summary>
-        /// Sends message asynchronous.
+        /// Sends message.
         /// </summary>
         /// <param name="source">The source <see cref="IEmailService"/>.</param>
         /// <param name="message">The message.</param>
-        /// <returns></returns>
-        public static Task SendAsync(this IEmailService source, Message message) {
-            return Task.Run(() => source.Send(message));
+        public static void Send(this IEmailService source, Message message) {
+            if (source == null) { return; }
+
+            source.SendAsync(message, CancellationToken.None).Wait();
         }
 
         #endregion Public Static Methods

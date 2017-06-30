@@ -40,19 +40,19 @@ namespace Nameless.Framework.Data.Sql.Ado.IoC {
         public LifetimeScopeType DbProviderLifetimeScope { get; set; } = LifetimeScopeType.PerScope;
 
         /// <summary>
-        /// Gets or sets the <see cref="IActionInformationExtractorFactory"/> implementation.
+        /// Gets or sets the <see cref="ICommandQueryFactory"/> implementation.
         /// </summary>
-        /// <remarks>Default is <see cref="ActionInformationExtractorFactory"/>.</remarks>
-        public Type ActionInformationExtractorFactoryImplementation { get; set; } = typeof(ActionInformationExtractorFactory);
+        /// <remarks>Default is <see cref="CommandQueryFactory"/>.</remarks>
+        public Type ActionInformationExtractorFactoryImplementation { get; set; } = typeof(CommandQueryFactory);
 
         /// <summary>
-        /// Gets or sets the <see cref="IActionInformationExtractorFactory"/> <see cref="LifetimeScopeType"/>.
+        /// Gets or sets the <see cref="ICommandQueryFactory"/> <see cref="LifetimeScopeType"/>.
         /// </summary>
         /// <remarks>Default is <see cref="LifetimeScopeType.PerScope"/>.</remarks>
         public LifetimeScopeType ActionInformationExtractorFactoryLifetimeScope { get; set; } = LifetimeScopeType.PerScope;
 
         /// <summary>
-        /// Gets or sets the <see cref="IActionInformationExtractor{TEntity}"/> implementations.
+        /// Gets or sets the <see cref="ICommandQuery{TEntity}"/> implementations.
         /// </summary>
         public Type[] ActionInformationExtractorImplementations { get; set; } = Type.EmptyTypes;
 
@@ -94,8 +94,8 @@ namespace Nameless.Framework.Data.Sql.Ado.IoC {
 
             Builder.RegisterType(GetDbProviderImplementation()).As<IDbProvider>().SetLifetimeScope(DbProviderLifetimeScope);
 
-            Builder.RegisterType(GetActionInformationExtractorFactoryImplementation()).As<IActionInformationExtractorFactory>().SetLifetimeScope(ActionInformationExtractorFactoryLifetimeScope);
-            Builder.RegisterTypes(GetActionInformationExtractorImplementations()).AsClosedTypesOf(typeof(IActionInformationExtractor<>)).SetLifetimeScope(RepositoryLifetimeScope);
+            Builder.RegisterType(GetActionInformationExtractorFactoryImplementation()).As<ICommandQueryFactory>().SetLifetimeScope(ActionInformationExtractorFactoryLifetimeScope);
+            Builder.RegisterTypes(GetActionInformationExtractorImplementations()).AsClosedTypesOf(typeof(ICommandQuery<>)).SetLifetimeScope(RepositoryLifetimeScope);
         }
 
         #endregion Public Override Methods
@@ -123,7 +123,7 @@ namespace Nameless.Framework.Data.Sql.Ado.IoC {
                 return ActionInformationExtractorFactoryImplementation;
             }
 
-            return GetImplementationsFromSupportAssemblies(typeof(IActionInformationExtractorFactory)).SingleOrDefault();
+            return GetImplementationsFromSupportAssemblies(typeof(ICommandQueryFactory)).SingleOrDefault();
         }
 
         private Type[] GetActionInformationExtractorImplementations() {
@@ -131,7 +131,7 @@ namespace Nameless.Framework.Data.Sql.Ado.IoC {
                 return ActionInformationExtractorImplementations;
             }
 
-            return GetImplementationsFromSupportAssemblies(typeof(IActionInformationExtractor<>));
+            return GetImplementationsFromSupportAssemblies(typeof(ICommandQuery<>));
         }
 
         #endregion Private Methods

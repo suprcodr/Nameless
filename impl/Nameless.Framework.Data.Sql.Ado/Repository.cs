@@ -5,6 +5,8 @@ using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Nameless.Framework.Data.Sql.Ado {
 
@@ -12,9 +14,9 @@ namespace Nameless.Framework.Data.Sql.Ado {
 
         #region Private Read-Only Fields
 
+        private readonly ICommandQueryFactory _factory;
         private readonly DatabaseSettings _settings;
-        private readonly IActionInformationExtractorFactory _factory;
-        private readonly IDbProvider _dbProvider;
+        private readonly IDbProvider _provider;
 
         #endregion Private Read-Only Fields
 
@@ -31,16 +33,16 @@ namespace Nameless.Framework.Data.Sql.Ado {
         /// Initializes a new instance of <see cref="Repository"/>.
         /// </summary>
         /// <param name="settings">The configuration section.</param>
-        /// <param name="dbProvider">Data base provider instance.</param>
+        /// <param name="provider">Data base provider instance.</param>
         /// <param name="factory"></param>
-        public Repository(DatabaseSettings settings, IActionInformationExtractorFactory factory, IDbProvider dbProvider) {
+        public Repository(ICommandQueryFactory factory, DatabaseSettings settings, IDbProvider provider) {
             Prevent.ParameterNull(settings, nameof(settings));
             Prevent.ParameterNull(factory, nameof(factory));
-            Prevent.ParameterNull(dbProvider, nameof(dbProvider));
+            Prevent.ParameterNull(provider, nameof(provider));
 
             _settings = settings;
             _factory = factory;
-            _dbProvider = dbProvider;
+            _provider = provider;
         }
 
         #endregion Public Constructors
@@ -57,7 +59,7 @@ namespace Nameless.Framework.Data.Sql.Ado {
 
         private DbConnection GetConnection() {
             if (_connection == null) {
-                _connection = _dbProvider.GetFactory().CreateConnection();
+                _connection = _provider.GetFactory().CreateConnection();
 
                 _connection.ConnectionString = _settings.ConnectionString;
                 _connection.Open();
@@ -67,7 +69,7 @@ namespace Nameless.Framework.Data.Sql.Ado {
         }
 
         private DbParameter ConvertParameter(Parameter parameter) {
-            var result = _dbProvider.GetFactory().CreateParameter();
+            var result = _provider.GetFactory().CreateParameter();
 
             result.ParameterName = (!parameter.Name.StartsWith("@") ? string.Concat("@", parameter.Name) : parameter.Name);
             result.DbType = parameter.Type;
@@ -144,16 +146,18 @@ namespace Nameless.Framework.Data.Sql.Ado {
 
         #region IRepository Members
 
-        public void Delete<TEntity>(TEntity entity) where TEntity : class {
-            var actionInformation = _factory.Create<TEntity>().ForSave(entity);
+        public Task DeleteAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default(CancellationToken)) where TEntity : class {
+            return Task.Run(() => {
+                var command = _factory.Create<TEntity>().ForDelete(entity);
 
-            ExecuteNonQuery(
-                commandText: actionInformation.Text,
-                commandType: actionInformation.Type,
-                parameters: actionInformation.Parameters.ToArray());
+                ExecuteNonQuery(
+                    commandText: command.GetSql(),
+                    commandType: command.GetCommandType(),
+                    parameters: command.GetParameters());
+            });
         }
 
-        public dynamic ExecuteDirective<TDirective>(dynamic parameters) where TDirective : IDirective {
+        public Task<dynamic> ExecuteDirectiveAsync<TDirective>(dynamic parameters, CancellationToken cancellationToken = default(CancellationToken)) where TDirective : IDirective {
             Prevent.ParameterNull(parameters, nameof(parameters));
 
             if (!typeof(Directive).GetTypeInfo().IsAssignableFrom(typeof(TDirective))) {
@@ -162,46 +166,52 @@ namespace Nameless.Framework.Data.Sql.Ado {
 
             var directive = (IDirective)Activator.CreateInstance(typeof(TDirective), new object[] { _connection });
 
-            return directive.Execute(parameters);
+            return directive.ExecuteAsync(parameters);
         }
 
-        public TEntity FindOne<TEntity>(object id) where TEntity : class {
-            var actionInformation = _factory.Create<TEntity>().ForFindOneByID(id);
+        public Task<TEntity> FindOneAsync<TEntity>(object id, CancellationToken cancellationToken = default(CancellationToken)) where TEntity : class {
+            return Task.Run(() => {
+                var query = _factory.Create<TEntity>().ForFindOneByID(id);
 
-            return ExecuteReader(
-                commandText: actionInformation.Text,
-                commandType: actionInformation.Type,
-                mapper: actionInformation.Mapper,
-                parameters: actionInformation.Parameters.ToArray()).SingleOrDefault();
+                return ExecuteReader(
+                    commandText: query.Sql,
+                    commandType: query.CommandType,
+                    mapper: query.Mapper,
+                    parameters: query.Parameters.ToArray()).SingleOrDefault();
+            });
         }
 
-        public TEntity FindOne<TEntity>(Expression<Func<TEntity, bool>> where) where TEntity : class {
-            var actionInformation = _factory.Create<TEntity>().ForFindOneByExpression(where);
+        public Task<TEntity> FindOneAsync<TEntity>(Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken = default(CancellationToken)) where TEntity : class {
+            return Task.Run(() => {
+                var query = _factory.Create<TEntity>().ForFindOneByExpression(where);
 
-            return ExecuteReader(
-                commandText: actionInformation.Text,
-                commandType: actionInformation.Type,
-                mapper: actionInformation.Mapper,
-                parameters: actionInformation.Parameters.ToArray()).SingleOrDefault();
+                return ExecuteReader(
+                    commandText: query.Sql,
+                    commandType: query.CommandType,
+                    mapper: query.Mapper,
+                    parameters: query.Parameters.ToArray()).SingleOrDefault();
+            });
         }
 
         public IQueryable<TEntity> Query<TEntity>() where TEntity : class {
-            var actionInformation = _factory.Create<TEntity>().ForQuery();
+            var query = _factory.Create<TEntity>().ForQuery();
 
             return ExecuteReader(
-                commandText: actionInformation.Text,
-                commandType: actionInformation.Type,
-                mapper: actionInformation.Mapper,
-                parameters: actionInformation.Parameters.ToArray()).AsQueryable();
+                commandText: query.Sql,
+                commandType: query.CommandType,
+                mapper: query.Mapper,
+                parameters: query.Parameters.ToArray()).AsQueryable();
         }
 
-        public void Save<TEntity>(TEntity entity) where TEntity : class {
-            var actionInformation = _factory.Create<TEntity>().ForSave(entity);
+        public Task SaveAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default(CancellationToken)) where TEntity : class {
+            return Task.Run(() => {
+                var command = _factory.Create<TEntity>().ForSave(entity);
 
-            ExecuteNonQuery(
-                commandText: actionInformation.Text,
-                commandType: actionInformation.Type,
-                parameters: actionInformation.Parameters.ToArray());
+                ExecuteNonQuery(
+                    commandText: command.GetSql(),
+                    commandType: command.GetCommandType(),
+                    parameters: command.GetParameters());
+            });
         }
 
         #endregion IRepository Members

@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using MongoDB.Driver;
 
 namespace Nameless.Framework.Data.NoSql.Mongo {
@@ -34,47 +36,47 @@ namespace Nameless.Framework.Data.NoSql.Mongo {
 
         #region IRepository Members
 
-        public void Delete<TEntity>(TEntity entity) where TEntity : class {
+        public Task DeleteAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default(CancellationToken)) where TEntity : class {
             var collection = GetCollection<TEntity>();
             var name = IDAttribute.GetName<TEntity>();
             var id = IDAttribute.GetValue(entity);
             var queryID = Builders<TEntity>.Filter.Eq(name, id);
 
-            GetCollection<TEntity>().DeleteOne(queryID);
+            return GetCollection<TEntity>().DeleteOneAsync(queryID, cancellationToken);
         }
 
-        public dynamic ExecuteDirective<TDirective>(dynamic parameters) where TDirective : IDirective {
+        public Task<dynamic> ExecuteDirectiveAsync<TDirective>(dynamic parameters, CancellationToken cancellationToken = default(CancellationToken)) where TDirective : IDirective {
             if (!typeof(Directive).GetTypeInfo().IsAssignableFrom(typeof(TDirective))) {
                 throw new InvalidOperationException($"Directive must inherit from \"{typeof(Directive)}\"");
             }
 
             var directive = (IDirective)Activator.CreateInstance(typeof(TDirective), new object[] { _database });
 
-            return directive.Execute(parameters);
+            return directive.ExecuteAsync(parameters, cancellationToken);
         }
 
-        public TEntity FindOne<TEntity>(object id) where TEntity : class {
+        public Task<TEntity> FindOneAsync<TEntity>(object id, CancellationToken cancellationToken = default(CancellationToken)) where TEntity : class {
             var name = IDAttribute.GetName<TEntity>();
             var queryID = Builders<TEntity>.Filter.Eq(name, id);
 
-            return GetCollection<TEntity>().Find(queryID).SingleOrDefault();
+            return GetCollection<TEntity>().FindSync(queryID).SingleAsync(cancellationToken);
         }
 
-        public TEntity FindOne<TEntity>(Expression<Func<TEntity, bool>> where) where TEntity : class {
-            return GetCollection<TEntity>().Find(where).SingleOrDefault();
+        public Task<TEntity> FindOneAsync<TEntity>(Expression<Func<TEntity, bool>> where, CancellationToken cancellationToken = default(CancellationToken)) where TEntity : class {
+            return GetCollection<TEntity>().FindSync(where).SingleAsync(cancellationToken);
         }
 
         public IQueryable<TEntity> Query<TEntity>() where TEntity : class {
             return GetCollection<TEntity>().AsQueryable();
         }
 
-        public void Save<TEntity>(TEntity entity) where TEntity : class {
+        public Task SaveAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default(CancellationToken)) where TEntity : class {
             var collection = GetCollection<TEntity>();
             var name = IDAttribute.GetName<TEntity>();
             var id = IDAttribute.GetValue(entity);
             var queryID = Builders<TEntity>.Filter.Eq(name, id);
 
-            GetCollection<TEntity>().ReplaceOne(queryID, entity, new UpdateOptions { IsUpsert = true });
+            return GetCollection<TEntity>().ReplaceOneAsync(queryID, entity, new UpdateOptions { IsUpsert = true });
         }
 
         #endregion IRepository Members

@@ -42,7 +42,7 @@ namespace Nameless.Framework.Search {
         /// <summary>
         /// GEts the default minimun date time.
         /// </summary>
-        public static readonly DateTime DefaultMinDateTime = new DateTime(1980, 1, 1);
+        public static readonly DateTime DateTimeMinimunValue = new DateTime(1980, 1, 1);
 
         /// <summary>
         /// Gets the batch size.
@@ -250,13 +250,13 @@ namespace Nameless.Framework.Search {
             using (var writer = CreateIndexWriter()) {
 
                 // Process documents by batch as there is a max number of terms a query can contain (1024 by default).
-                var pageCount = documentIDs.Length / (BatchSize + 1);
+                var pageCount = (documentIDs.Length / BatchSize) + 1;
                 for (var page = 0; page < pageCount; page++) {
                     var query = new BooleanQuery();
                     try {
                         var batch = documentIDs.Skip(page * BatchSize).Take(BatchSize);
                         foreach (var id in batch) {
-                            query.Add(new BooleanClause(new TermQuery(new Term(nameof(ISearchHit.DocumentID), id.ToString())), BooleanClause.Occur.SHOULD));
+                            query.Add(new BooleanClause(new TermQuery(new Term(nameof(ISearchHit.DocumentID), id)), BooleanClause.Occur.SHOULD));
                         }
                         writer.DeleteDocuments(query);
                     } catch { /* Just skip error */ }

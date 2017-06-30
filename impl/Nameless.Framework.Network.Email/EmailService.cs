@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
@@ -59,53 +61,58 @@ namespace Nameless.Framework.Network.Email {
         #region IEmailService
 
         /// <inheritdoc />
-        public void Send(Message message) {
-            SmtpClient client = null;
+        public Task SendAsync(Message message, CancellationToken cancellationToken = default(CancellationToken)) {
+            return Task.Run(() => {
+                SmtpClient client = null;
 
-            try {
-                client = new SmtpClient();
+                try {
+                    client = new SmtpClient();
 
-                if (_emailSettings.UsePort) {
-                    client.Connect(_emailSettings.SmtpServer, _emailSettings.Port, SecureSocketOptions.SslOnConnect);
-                } else {
-                    client.Connect(_emailSettings.SmtpServer, options: SecureSocketOptions.SslOnConnect);
+                    if (_emailSettings.UseCredentials) {
+                        client.AuthenticationMechanisms.Remove("XOAUTH2");
+                        client.Authenticate(_emailSettings.CredentialUserName, _emailSettings.CredentialPassword);
+                    }
+
+                    if (_emailSettings.UsePort) {
+                        client.Connect(_emailSettings.SmtpServer, _emailSettings.Port, SecureSocketOptions.SslOnConnect);
+                    } else {
+                        client.Connect(_emailSettings.SmtpServer, options: SecureSocketOptions.SslOnConnect);
+                    }
+
+                    var processedBody = MessageBodyPreProcessor.Process(message.Body, message.BodyData);
+                    var mail = new MimeMessage {
+                        Body = new TextPart(TextFormat.Plain) {
+                            Text = processedBody
+                        },
+                        Sender = MailboxAddress.Parse(message.Sender),
+                        Subject = message.Subject
+                    };
+
+                    switch (message.Priority) {
+                        case MessagePriority.Medium:
+                            mail.Priority = MimeKit.MessagePriority.Normal;
+                            break;
+
+                        case MessagePriority.Low:
+                            mail.Priority = MimeKit.MessagePriority.NonUrgent;
+                            break;
+
+                        case MessagePriority.High:
+                            mail.Priority = MimeKit.MessagePriority.Urgent;
+                            break;
+                    }
+
+                    mail.From.Add(InternetAddress.Parse(message.From));
+                    message.Bcc.Each(_ => mail.Bcc.Add(InternetAddress.Parse(_)));
+                    message.Cc.Each(_ => mail.Cc.Add(InternetAddress.Parse(_)));
+                    message.To.Each(_ => mail.To.Add(InternetAddress.Parse(_)));
+
+                    cancellationToken.ThrowIfCancellationRequested();
+                    client.Send(mail, cancellationToken);
                 }
-
-                if (_emailSettings.UseCredentials) {
-                    client.AuthenticationMechanisms.Remove("XOAUTH2");
-                    client.Authenticate(_emailSettings.CredentialUserName, _emailSettings.CredentialPassword);
-                }
-
-                var processedBody = MessageBodyPreProcessor.Process(message.Body, message.BodyData);
-                var mail = new MimeMessage {
-                    Body = new TextPart(TextFormat.Plain) {
-                        Text = processedBody
-                    },
-                    Sender = MailboxAddress.Parse(message.Sender),
-                    Subject = message.Subject
-                };
-
-                switch (message.Priority) {
-                    case MessagePriority.Medium:
-                        mail.Priority = MimeKit.MessagePriority.Normal;
-                        break;
-
-                    case MessagePriority.Low:
-                        mail.Priority = MimeKit.MessagePriority.NonUrgent;
-                        break;
-
-                    case MessagePriority.High:
-                        mail.Priority = MimeKit.MessagePriority.Urgent;
-                        break;
-                }
-
-                mail.From.Add(InternetAddress.Parse(message.From));
-                message.Bcc.Each(_ => mail.Bcc.Add(InternetAddress.Parse(_)));
-                message.Cc.Each(_ => mail.Cc.Add(InternetAddress.Parse(_)));
-                message.To.Each(_ => mail.To.Add(InternetAddress.Parse(_)));
-
-                client.Send(mail);
-            } catch (Exception ex) { Logger.Error(ex.Message, ex); throw; } finally { if (client != null) { client.Dispose(); } }
+                catch (Exception ex) { Logger.Error(ex.Message, ex); throw; }
+                finally { if (client != null) { client.Dispose(); } }
+            }, cancellationToken);
         }
 
         #endregion IEmailService

@@ -12,7 +12,7 @@
 
         #region Public Properties
 
-        public string ConnectionString { get; set; } = "";
+        public string ConnectionString { get; set; } = string.Empty;
 
         #endregion Public Properties
     }

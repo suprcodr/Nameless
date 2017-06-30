@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Data;
-using Nameless.Framework.Data.Sql.Ado;
+using Nameless.Framework.Data.Sql;
 using Nameless.Helpers;
 using Nameless.Framework.Web.Identity.Models;
 

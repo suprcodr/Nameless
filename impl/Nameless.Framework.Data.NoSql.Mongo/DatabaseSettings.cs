@@ -1,6 +1,6 @@
 ﻿namespace Nameless.Framework.Data.NoSql.Mongo {
 
-    public sealed class MongoDbSettings {
+    public sealed class DatabaseSettings {
 
         #region Public Properties
 
