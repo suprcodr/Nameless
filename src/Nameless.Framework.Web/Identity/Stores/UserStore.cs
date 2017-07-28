@@ -5,9 +5,9 @@ using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using Nameless.Framework.Cqrs.Query;
-using Nameless.Framework.Cqrs.Command;
-using Nameless.Framework.Cqrs.Query;
+using Nameless.Framework.CQRS;
+using Nameless.Framework.CQRS.Command;
+using Nameless.Framework.CQRS.Query;
 using Nameless.Framework.Web.Identity.Domains.UserClaims.Commands;
 using Nameless.Framework.Web.Identity.Domains.UserClaims.Queries;
 using Nameless.Framework.Web.Identity.Domains.UserLogins.Commands;
@@ -67,12 +67,8 @@ namespace Nameless.Framework.Web.Identity.Stores {
         public Task<IList<Claim>> GetClaimsAsync(User user, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return Task.Run<IList<Claim>>(() => {
-                return _queryDispatcher.Query(new GetUserClaimsQuery {
-                    UserId = user.Id
-                })
-                .Select(_ => _.ConvertFromUserClaim())
-                .ToList();
+            return _queryDispatcher.QueryAsync(new GetUserClaimsQuery {
+                UserID = user.ID
             }, cancellationToken);
         }
 
@@ -85,7 +81,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 _commandDispatcher.Command(new AddClaimsToUserCommand {
-                    UserId = user.Id,
+                    UserId = user.ID,
                     Claims = claims.Select(_ => _.ConvertToUserClaim())
                 });
             }, cancellationToken);
@@ -99,7 +95,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 _commandDispatcher.Command(new ReplaceUserClaimCommand {
-                    UserId = user.Id,
+                    UserId = user.ID,
                     OldClaim = new UserClaim { Type = claim.Type, Value = claim.Value },
                     NewClaim = new UserClaim { Type = newClaim.Type, Value = newClaim.Value }
                 });
@@ -113,7 +109,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 _commandDispatcher.Command(new RemoveUserClaimsCommand {
-                    UserId = user.Id,
+                    UserId = user.ID,
                     Claims = claims.Select(_ => _.ConvertToUserClaim())
                 });
             }, cancellationToken);
@@ -139,7 +135,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             Prevent.ParameterNullOrWhiteSpace(email, nameof(email));
 
             return Task.Run(() => {
-                _commandDispatcher.Command(new SetUserEmailCommand { UserId = user.Id, Email = email });
+                _commandDispatcher.Command(new SetUserEmailCommand { UserId = user.ID, Email = email });
             }, cancellationToken);
         }
 
@@ -148,7 +144,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
 
             return Task.Run(() => {
-                return _queryDispatcher.Query(new GetUserEmailQuery { UserId = user.Id });
+                return _queryDispatcher.Query(new GetUserEmailQuery { UserId = user.ID });
             }, cancellationToken);
         }
 
@@ -157,7 +153,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
 
             return Task.Run(() => {
-                return _queryDispatcher.Query(new GetUserEmailConfirmedQuery { UserId = user.Id });
+                return _queryDispatcher.Query(new GetUserEmailConfirmedQuery { UserId = user.ID });
             }, cancellationToken);
         }
 
@@ -166,7 +162,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
 
             return Task.Run(() => {
-                _commandDispatcher.Command(new SetUserEmailConfirmedCommand { UserId = user.Id, Confirmed = confirmed });
+                _commandDispatcher.Command(new SetUserEmailConfirmedCommand { UserId = user.ID, Confirmed = confirmed });
             }, cancellationToken);
         }
 
@@ -184,7 +180,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
 
             return Task.Run(() => {
-                return _queryDispatcher.Query(new GetUserNormalizedEmailQuery { UserId = user.Id });
+                return _queryDispatcher.Query(new GetUserNormalizedEmailQuery { UserId = user.ID });
             }, cancellationToken);
         }
 
@@ -194,7 +190,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             Prevent.ParameterNullOrWhiteSpace(normalizedEmail, nameof(normalizedEmail));
 
             return Task.Run(() => {
-                _commandDispatcher.Command(new SetUserNormalizedEmailCommand { UserId = user.Id, NormalizedEmail = normalizedEmail });
+                _commandDispatcher.Command(new SetUserNormalizedEmailCommand { UserId = user.ID, NormalizedEmail = normalizedEmail });
             }, cancellationToken);
         }
 
@@ -207,7 +203,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
 
             return Task.Run(() => {
-                return _queryDispatcher.Query(new GetUserLockoutEndDateQuery { UserId = user.Id });
+                return _queryDispatcher.Query(new GetUserLockoutEndDateQuery { UserId = user.ID });
             }, cancellationToken);
         }
 
@@ -217,7 +213,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 _commandDispatcher.Command(new SetUserLockoutEndDateCommand {
-                    UserId = user.Id,
+                    UserId = user.ID,
                     LockoutEndDate = lockoutEnd
                 });
             }, cancellationToken);
@@ -228,9 +224,9 @@ namespace Nameless.Framework.Web.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
 
             return Task.Run(() => {
-                _commandDispatcher.Command(new IncrementUserAccessFailedCountCommand { UserId = user.Id });
+                _commandDispatcher.Command(new IncrementUserAccessFailedCountCommand { UserId = user.ID });
 
-                return _queryDispatcher.Query(new GetUserAccessFailedCountQuery { UserId = user.Id });
+                return _queryDispatcher.Query(new GetUserAccessFailedCountQuery { UserId = user.ID });
             }, cancellationToken);
         }
 
@@ -239,7 +235,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
 
             return Task.Run(() => {
-                _commandDispatcher.Command(new ResetUserAccessFailedCountCommand { UserId = user.Id });
+                _commandDispatcher.Command(new ResetUserAccessFailedCountCommand { UserId = user.ID });
             }, cancellationToken);
         }
 
@@ -248,7 +244,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
 
             return Task.Run(() => {
-                return _queryDispatcher.Query(new GetUserAccessFailedCountQuery { UserId = user.Id });
+                return _queryDispatcher.Query(new GetUserAccessFailedCountQuery { UserId = user.ID });
             }, cancellationToken);
         }
 
@@ -257,7 +253,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
 
             return Task.Run(() => {
-                return _queryDispatcher.Query(new GetUserLockoutEnabledQuery { UserId = user.Id });
+                return _queryDispatcher.Query(new GetUserLockoutEnabledQuery { UserId = user.ID });
             }, cancellationToken);
         }
 
@@ -267,7 +263,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 _commandDispatcher.Command(new SetUserLockoutEnabledCommand {
-                    UserId = user.Id,
+                    UserId = user.ID,
                     Enabled = enabled
                 });
             }, cancellationToken);
@@ -284,7 +280,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 _commandDispatcher.Command(new AddLoginToUserCommand {
-                    UserId = user.Id,
+                    UserId = user.ID,
                     LoginProvider = login.LoginProvider,
                     ProviderKey = login.ProviderKey
                 });
@@ -299,7 +295,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 _commandDispatcher.Command(new RemoveLoginFromUserCommand {
-                    UserId = user.Id,
+                    UserId = user.ID,
                     LoginProvider = loginProvider
                 });
             }, cancellationToken);
@@ -311,7 +307,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run<IList<UserLoginInfo>>(() => {
                 return _queryDispatcher
-                    .Query(new GetUserLoginsQuery { UserId = user.Id })
+                    .Query(new GetUserLoginsQuery { UserId = user.ID })
                     .Select(_ => _.ConvertFromUserLogin())
                     .ToList();
             }, cancellationToken);
@@ -338,7 +334,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 _commandDispatcher.Command(new SetUserPasswordHashCommand {
-                    UserId = user.Id,
+                    UserId = user.ID,
                     PasswordHash = passwordHash
                 });
             }, cancellationToken);
@@ -349,7 +345,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
 
             return Task.Run(() => {
-                return _queryDispatcher.Query(new GetUserPasswordHashQuery { UserId = user.Id });
+                return _queryDispatcher.Query(new GetUserPasswordHashQuery { UserId = user.ID });
             }, cancellationToken);
         }
 
@@ -358,7 +354,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
 
             return Task.Run(() => {
-                return _queryDispatcher.Query(new UserHasPasswordHashQuery { UserId = user.Id });
+                return _queryDispatcher.Query(new UserHasPasswordHashQuery { UserId = user.ID });
             }, cancellationToken);
         }
 
@@ -373,7 +369,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 _commandDispatcher.Command(new SetUserPhoneNumberCommand {
-                    UserId = user.Id,
+                    UserId = user.ID,
                     PhoneNumber = phoneNumber
                 });
             }, cancellationToken);
@@ -384,7 +380,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
 
             return Task.Run(() => {
-                return _queryDispatcher.Query(new GetUserPhoneNumberQuery { UserId = user.Id });
+                return _queryDispatcher.Query(new GetUserPhoneNumberQuery { UserId = user.ID });
             }, cancellationToken);
         }
 
@@ -393,7 +389,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
 
             return Task.Run(() => {
-                return _queryDispatcher.Query(new GetUserPhoneNumberConfirmedQuery { UserId = user.Id });
+                return _queryDispatcher.Query(new GetUserPhoneNumberConfirmedQuery { UserId = user.ID });
             }, cancellationToken);
         }
 
@@ -403,7 +399,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 _commandDispatcher.Command(new SetUserPhoneNumberConfirmedCommand {
-                    UserId = user.Id,
+                    UserId = user.ID,
                     Confirmed = confirmed
                 });
             }, cancellationToken);
@@ -420,7 +416,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 _commandDispatcher.Command(new SetUserSecurityStampCommand {
-                    UserId = user.Id,
+                    UserId = user.ID,
                     SecurityStamp = stamp
                 });
             }, cancellationToken);
@@ -431,7 +427,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
 
             return Task.Run(() => {
-                return _queryDispatcher.Query(new GetUserSecurityStampQuery { UserId = user.Id });
+                return _queryDispatcher.Query(new GetUserSecurityStampQuery { UserId = user.ID });
             }, cancellationToken);
         }
 
@@ -461,7 +457,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 _commandDispatcher.Command(new DeleteUserCommand {
-                    UserId = user.Id
+                    UserId = user.ID
                 });
 
                 return IdentityResult.Success;
@@ -495,7 +491,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
 
             return Task.Run(() => {
-                return _queryDispatcher.Query(new GetUserNormalizedUserNameQuery { UserId = user.Id });
+                return _queryDispatcher.Query(new GetUserNormalizedUserNameQuery { UserId = user.ID });
             }, cancellationToken);
         }
 
@@ -515,7 +511,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
 
             return Task.Run(() => {
-                return _queryDispatcher.Query(new GetUserUserNameQuery { UserId = user.Id });
+                return _queryDispatcher.Query(new GetUserUserNameQuery { UserId = user.ID });
             }, cancellationToken);
         }
 
@@ -526,7 +522,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 _commandDispatcher.Command(new SetUserNormalizedUserNameCommand {
-                    UserId = user.Id,
+                    UserId = user.ID,
                     NormalizedUserName = normalizedName
                 });
             }, cancellationToken);
@@ -539,7 +535,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 _commandDispatcher.Command(new SetUserUserNameCommand {
-                    UserId = user.Id,
+                    UserId = user.ID,
                     UserName = userName
                 });
             }, cancellationToken);
@@ -551,7 +547,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 _commandDispatcher.Command(new UpdateUserCommand {
-                    UserId = user.Id,
+                    UserId = user.ID,
                     FullName = user.FullName,
                     ProfilePicture = user.ProfilePicture
                 });
@@ -569,7 +565,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
 
             return Task.Run(() => {
-                return _queryDispatcher.Query(new GetUserTwoFactorEnabledQuery { UserId = user.Id });
+                return _queryDispatcher.Query(new GetUserTwoFactorEnabledQuery { UserId = user.ID });
             }, cancellationToken);
         }
 
@@ -579,7 +575,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 _commandDispatcher.Command(new SetUserTwoFactorEnabledCommand {
-                    UserId = user.Id,
+                    UserId = user.ID,
                     Enabled = enabled
                 });
             }, cancellationToken);
@@ -596,7 +592,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 _commandDispatcher.Command(new AddUserToRoleCommand {
-                    UserId = user.Id,
+                    UserId = user.ID,
                     RoleName = roleName
                 });
             }, cancellationToken);
@@ -609,7 +605,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 _commandDispatcher.Command(new RemoveUserFromRoleCommand {
-                    UserId = user.Id,
+                    UserId = user.ID,
                     RoleName = roleName
                 });
             }, cancellationToken);
@@ -621,7 +617,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run<IList<string>>(() => {
                 return _queryDispatcher.Query(new GetUserRolesQuery {
-                    UserId = user.Id
+                    UserId = user.ID
                 }).ToList();
             }, cancellationToken);
         }
@@ -633,7 +629,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 return _queryDispatcher.Query(new IsUserInRoleQuery {
-                    UserId = user.Id,
+                    UserId = user.ID,
                     RoleName = roleName
                 });
             }, cancellationToken);

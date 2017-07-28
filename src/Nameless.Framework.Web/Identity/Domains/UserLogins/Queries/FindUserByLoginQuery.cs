@@ -1,4 +1,4 @@
-﻿using Nameless.Framework.Cqrs.Query;
+﻿using Nameless.Framework.CQRS.Query;
 using Nameless.Framework.Web.Identity.Models;
 
 namespace Nameless.Framework.Web.Identity.Domains.UserLogins.Queries {

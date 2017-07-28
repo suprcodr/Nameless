@@ -13,10 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Common", "src\Name
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework", "src\Nameless.Framework\Nameless.Framework.csproj", "{1C360011-41F9-4E05-8C30-EC5316F4E123}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.Impl", "src\Nameless.Framework.Impl\Nameless.Framework.Impl.csproj", "{90667755-E35A-4CC9-89AA-09BDA266DEEF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.Web", "src\Nameless.Framework.Web\Nameless.Framework.Web.csproj", "{C74B7FB3-9CE7-46D0-B27B-79AE082E00B3}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.Search", "legacy\Nameless.Framework.Search\Nameless.Framework.Search.csproj", "{59EF4C78-B941-4CF6-B61E-FF9AB1F9C51D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.Search.Impl", "legacy\Nameless.Framework.Search.Impl\Nameless.Framework.Search.Impl.csproj", "{81060B16-98C5-46C8-BEBE-DEBF8E00038F}"
@@ -31,7 +27,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.Impl.Uni
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Impl", "Impl", "{A218ED13-2D01-4D56-8E0E-1CBAE09588BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.Data.Sql.Ado", "impl\Nameless.Framework.Data.Sql.Ado\Nameless.Framework.Data.Sql.Ado.csproj", "{5A3939AF-D5C0-47C8-B029-284DD9C59BEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.Data.Ado", "impl\Nameless.Framework.Data.Ado\Nameless.Framework.Data.Ado.csproj", "{5A3939AF-D5C0-47C8-B029-284DD9C59BEB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.Localization", "impl\Nameless.Framework.Localization\Nameless.Framework.Localization.csproj", "{0448A2FD-4F0C-4E14-B777-A06559D9C722}"
 EndProject
@@ -39,13 +35,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.Basis.Pi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.Basis.Specifications", "impl\Nameless.Framework.Basis.Specifications\Nameless.Framework.Basis.Specifications.csproj", "{4BD716ED-8A9B-4C7F-8581-F9B668ABFBA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.Cqrs", "impl\Nameless.Framework.Cqrs\Nameless.Framework.Cqrs.csproj", "{BD0A5C9C-1EAC-4E15-BE3A-424C5DB14E52}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.CQRS", "impl\Nameless.Framework.Cqrs\Nameless.Framework.CQRS.csproj", "{BD0A5C9C-1EAC-4E15-BE3A-424C5DB14E52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.Data.NoSql.Mongo", "impl\Nameless.Framework.Data.NoSql.Mongo\Nameless.Framework.Data.NoSql.Mongo.csproj", "{5A975379-6E48-4CE6-8AB1-13FB00DFE0E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.Data.Generic.Mongo", "impl\Nameless.Framework.Data.Generic.Mongo\Nameless.Framework.Data.Generic.Mongo.csproj", "{5A975379-6E48-4CE6-8AB1-13FB00DFE0E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.Data.Sql.Common", "impl\Nameless.Framework.Data.Sql.Common\Nameless.Framework.Data.Sql.Common.csproj", "{3ED0F0A0-AC1B-4CB2-8E66-1C2078D8520B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.Data.Sql.EntityFramework", "impl\Nameless.Framework.Data.Sql.EntityFramework\Nameless.Framework.Data.Sql.EntityFramework.csproj", "{391A5CA7-21BB-4DD5-877D-9F3485D71E0D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.Data.Generic.EntityFramework", "impl\Nameless.Framework.Data.Generic.EntityFramework\Nameless.Framework.Data.Generic.EntityFramework.csproj", "{391A5CA7-21BB-4DD5-877D-9F3485D71E0D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.ErrorHandling", "impl\Nameless.Framework.ErrorHandling\Nameless.Framework.ErrorHandling.csproj", "{463E8EC0-A2F1-43FA-AAA2-BC038FC8602D}"
 EndProject
@@ -75,6 +69,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Common", "legacy\N
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.Drawing", "impl\Nameless.Framework.Drawing\Nameless.Framework.Drawing.csproj", "{ED07E51C-3AF9-420A-992D-352D7776D14D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.WebApplication.Core", "src\Nameless.WebApplication.Core\Nameless.WebApplication.Core.csproj", "{9B09DF74-33CC-497B-9AF5-C4C87536147B}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Nameless.WebApplication.Database", "src\Nameless.WebApplication.Database\Nameless.WebApplication.Database.sqlproj", "{7C770C75-9B16-4BEC-9F38-FBFD5D337160}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.Caching", "impl\Nameless.Framework.Caching\Nameless.Framework.Caching.csproj", "{4CE73E76-E225-4219-9EE0-7B364189417F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -89,14 +89,6 @@ Global
 		{1C360011-41F9-4E05-8C30-EC5316F4E123}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C360011-41F9-4E05-8C30-EC5316F4E123}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C360011-41F9-4E05-8C30-EC5316F4E123}.Release|Any CPU.Build.0 = Release|Any CPU
-		{90667755-E35A-4CC9-89AA-09BDA266DEEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90667755-E35A-4CC9-89AA-09BDA266DEEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90667755-E35A-4CC9-89AA-09BDA266DEEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90667755-E35A-4CC9-89AA-09BDA266DEEF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C74B7FB3-9CE7-46D0-B27B-79AE082E00B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C74B7FB3-9CE7-46D0-B27B-79AE082E00B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C74B7FB3-9CE7-46D0-B27B-79AE082E00B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C74B7FB3-9CE7-46D0-B27B-79AE082E00B3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{59EF4C78-B941-4CF6-B61E-FF9AB1F9C51D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{59EF4C78-B941-4CF6-B61E-FF9AB1F9C51D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59EF4C78-B941-4CF6-B61E-FF9AB1F9C51D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -145,10 +137,6 @@ Global
 		{5A975379-6E48-4CE6-8AB1-13FB00DFE0E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A975379-6E48-4CE6-8AB1-13FB00DFE0E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A975379-6E48-4CE6-8AB1-13FB00DFE0E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3ED0F0A0-AC1B-4CB2-8E66-1C2078D8520B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3ED0F0A0-AC1B-4CB2-8E66-1C2078D8520B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3ED0F0A0-AC1B-4CB2-8E66-1C2078D8520B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3ED0F0A0-AC1B-4CB2-8E66-1C2078D8520B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{391A5CA7-21BB-4DD5-877D-9F3485D71E0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{391A5CA7-21BB-4DD5-877D-9F3485D71E0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{391A5CA7-21BB-4DD5-877D-9F3485D71E0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -209,6 +197,20 @@ Global
 		{ED07E51C-3AF9-420A-992D-352D7776D14D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED07E51C-3AF9-420A-992D-352D7776D14D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED07E51C-3AF9-420A-992D-352D7776D14D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B09DF74-33CC-497B-9AF5-C4C87536147B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B09DF74-33CC-497B-9AF5-C4C87536147B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B09DF74-33CC-497B-9AF5-C4C87536147B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B09DF74-33CC-497B-9AF5-C4C87536147B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C770C75-9B16-4BEC-9F38-FBFD5D337160}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C770C75-9B16-4BEC-9F38-FBFD5D337160}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C770C75-9B16-4BEC-9F38-FBFD5D337160}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{7C770C75-9B16-4BEC-9F38-FBFD5D337160}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C770C75-9B16-4BEC-9F38-FBFD5D337160}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C770C75-9B16-4BEC-9F38-FBFD5D337160}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{4CE73E76-E225-4219-9EE0-7B364189417F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CE73E76-E225-4219-9EE0-7B364189417F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CE73E76-E225-4219-9EE0-7B364189417F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CE73E76-E225-4219-9EE0-7B364189417F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -217,8 +219,6 @@ Global
 		{F90481D1-776B-4DC7-A4AF-802978F95456} = {1571CA50-4B2C-4FAE-A591-4ADB1853904B}
 		{59CF0C6C-5AC7-4265-B428-782507455B6A} = {1571CA50-4B2C-4FAE-A591-4ADB1853904B}
 		{1C360011-41F9-4E05-8C30-EC5316F4E123} = {1571CA50-4B2C-4FAE-A591-4ADB1853904B}
-		{90667755-E35A-4CC9-89AA-09BDA266DEEF} = {1571CA50-4B2C-4FAE-A591-4ADB1853904B}
-		{C74B7FB3-9CE7-46D0-B27B-79AE082E00B3} = {1571CA50-4B2C-4FAE-A591-4ADB1853904B}
 		{59EF4C78-B941-4CF6-B61E-FF9AB1F9C51D} = {F90481D1-776B-4DC7-A4AF-802978F95456}
 		{81060B16-98C5-46C8-BEBE-DEBF8E00038F} = {F90481D1-776B-4DC7-A4AF-802978F95456}
 		{275A48E2-99CB-46F8-BFA2-76DC2F8AE3E8} = {F90481D1-776B-4DC7-A4AF-802978F95456}
@@ -232,7 +232,6 @@ Global
 		{4BD716ED-8A9B-4C7F-8581-F9B668ABFBA8} = {A218ED13-2D01-4D56-8E0E-1CBAE09588BD}
 		{BD0A5C9C-1EAC-4E15-BE3A-424C5DB14E52} = {A218ED13-2D01-4D56-8E0E-1CBAE09588BD}
 		{5A975379-6E48-4CE6-8AB1-13FB00DFE0E1} = {A218ED13-2D01-4D56-8E0E-1CBAE09588BD}
-		{3ED0F0A0-AC1B-4CB2-8E66-1C2078D8520B} = {A218ED13-2D01-4D56-8E0E-1CBAE09588BD}
 		{391A5CA7-21BB-4DD5-877D-9F3485D71E0D} = {A218ED13-2D01-4D56-8E0E-1CBAE09588BD}
 		{463E8EC0-A2F1-43FA-AAA2-BC038FC8602D} = {A218ED13-2D01-4D56-8E0E-1CBAE09588BD}
 		{C11893BB-D6BB-4089-85EC-2C1D8BE1DC64} = {A218ED13-2D01-4D56-8E0E-1CBAE09588BD}
@@ -248,5 +247,8 @@ Global
 		{E077CD44-B480-4205-B2F1-82A1A628D1F4} = {A218ED13-2D01-4D56-8E0E-1CBAE09588BD}
 		{A5003ED5-E046-4CB6-BA4A-C1794F7FE738} = {F90481D1-776B-4DC7-A4AF-802978F95456}
 		{ED07E51C-3AF9-420A-992D-352D7776D14D} = {A218ED13-2D01-4D56-8E0E-1CBAE09588BD}
+		{9B09DF74-33CC-497B-9AF5-C4C87536147B} = {1571CA50-4B2C-4FAE-A591-4ADB1853904B}
+		{7C770C75-9B16-4BEC-9F38-FBFD5D337160} = {1571CA50-4B2C-4FAE-A591-4ADB1853904B}
+		{4CE73E76-E225-4219-9EE0-7B364189417F} = {A218ED13-2D01-4D56-8E0E-1CBAE09588BD}
 	EndGlobalSection
 EndGlobal

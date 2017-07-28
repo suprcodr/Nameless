@@ -3,7 +3,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using Xunit;
 
-namespace Nameless.Framework.Data.NoSql.Mongo {
+namespace Nameless.Framework.Data.Generic.NoSql.Mongo {
 
     public class RepositoryTest {
 

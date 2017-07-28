@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace Nameless.Framework.Cqrs.Query {
+namespace Nameless.Framework.CQRS.Query {
 
     /// <summary>
     /// Null Object Pattern implementation of <see cref="IQueryDispatcher"/>.

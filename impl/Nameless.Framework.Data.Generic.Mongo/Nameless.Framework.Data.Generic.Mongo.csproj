@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.6.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.4.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Nameless.Common\Nameless.Common.csproj" />
+    <ProjectReference Include="..\..\src\Nameless.Framework\Nameless.Framework.csproj" />
+    <ProjectReference Include="..\Nameless.Framework.IoC\Nameless.Framework.IoC.csproj" />
+  </ItemGroup>
+
+</Project>

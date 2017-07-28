@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Identity;
 
 namespace Nameless.Framework.Web.Identity.Models {
 
@@ -26,16 +27,36 @@ namespace Nameless.Framework.Web.Identity.Models {
 
         #endregion Public Virtual Properties
 
-        #region Public Methods
+        #region Public Static Methods
 
-        public bool Equals(UserLogin obj) {
+        public static UserLoginInfo ToUserLoginInfo(UserLogin userLogin) {
+            if (userLogin == null) { return null; }
+
+            return new UserLoginInfo(userLogin.LoginProvider, userLogin.ProviderKey, userLogin.DisplayName);
+        }
+
+        public static UserLogin ToUserLogin(UserLoginInfo userLoginInfo) {
+            if (userLoginInfo == null) { return null; }
+
+            return new UserLogin {
+                DisplayName = userLoginInfo.ProviderDisplayName,
+                LoginProvider = userLoginInfo.LoginProvider,
+                ProviderKey = userLoginInfo.ProviderKey
+            };
+        }
+
+        #endregion Public Static Methods
+
+        #region Public Virtual Methods
+
+        public virtual bool Equals(UserLogin obj) {
             return obj != null &&
                    string.Equals(obj.LoginProvider, LoginProvider, StringComparison.CurrentCultureIgnoreCase) &&
                    string.Equals(obj.ProviderKey, ProviderKey, StringComparison.CurrentCulture) &&
                    string.Equals(obj.DisplayName, DisplayName, StringComparison.CurrentCulture);
         }
 
-        #endregion Public Methods
+        #endregion Public Virtual Methods
 
         #region Public Override Methods
 

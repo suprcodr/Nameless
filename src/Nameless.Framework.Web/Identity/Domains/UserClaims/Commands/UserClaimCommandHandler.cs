@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
-using Nameless.Framework.Cqrs.Command;
-using Nameless.Framework.Data.Sql.Ado;
+using Nameless.Framework.CQRS.Command;
+using Nameless.Framework.Data.Generic.Sql.Ado;
 using Nameless.Framework.Web.Identity.Domains.Resources;
 
 namespace Nameless.Framework.Web.Identity.Domains.UserClaims.Commands {

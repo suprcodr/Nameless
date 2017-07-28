@@ -23,7 +23,7 @@ namespace Nameless.Framework.Web.Identity.Models {
         /// <summary>
         /// Gets the role ID.
         /// </summary>
-        public virtual Guid Id {
+        public virtual Guid ID {
             get { return _id; }
         }
 
@@ -71,5 +71,13 @@ namespace Nameless.Framework.Web.Identity.Models {
         }
 
         #endregion Public Constructors
+
+        #region Internal Constructors
+
+        internal Role(Guid id) {
+            _id = id;
+        }
+
+        #endregion
     }
 }

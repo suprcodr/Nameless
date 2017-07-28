@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Localization;
 using Nameless.WebApplication.Areas.UserManagement.Models.Account;
 using Nameless.WebApplication.Controllers;
-using Nameless.Framework.Web;
-using Nameless.Framework.Web.Identity;
-using Nameless.Framework.Web.Identity.Models;
+using Nameless.WebApplication.Core;
+using Nameless.WebApplication.Core.Identity;
+using Nameless.WebApplication.Core.Identity.Models;
 
 namespace Nameless.WebApplication.Areas.UserManagement.Controllers {
 
@@ -113,7 +113,7 @@ namespace Nameless.WebApplication.Areas.UserManagement.Controllers {
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
                     // Send an email with this link
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                    var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account", new { userId = user.ID, code = code }, protocol: HttpContext.Request.Scheme);
 
                     await _communicationService.SendEmailAsync(model.Email, "Confirm your account", $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
                     await _signInManager.SignInAsync(user, isPersistent: false);
@@ -239,7 +239,7 @@ namespace Nameless.WebApplication.Areas.UserManagement.Controllers {
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
                 // Send an email with this link
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { userId = user.ID, code = code }, protocol: HttpContext.Request.Scheme);
                 await _communicationService.SendEmailAsync(model.Email, "Reset Password", $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
                 return View(nameof(ForgotPasswordConfirmation));
             }

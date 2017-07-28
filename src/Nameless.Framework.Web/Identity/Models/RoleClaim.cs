@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Claims;
 
 namespace Nameless.Framework.Web.Identity.Models {
 
@@ -20,7 +21,7 @@ namespace Nameless.Framework.Web.Identity.Models {
         /// <summary>
         /// Gets the role claim ID.
         /// </summary>
-        public virtual Guid Id {
+        public virtual Guid ID {
             get { return _id; }
         }
 
@@ -41,13 +42,47 @@ namespace Nameless.Framework.Web.Identity.Models {
 
         #endregion Public Virtual Properties
 
+        #region Public Constructors
+
+        public RoleClaim() {
+        }
+
+        #endregion Public Constructors
+
+        #region Internal Constructors
+
+        internal RoleClaim(Guid id) {
+            _id = id;
+        }
+
+        #endregion Internal Constructors
+
+        #region Public Static Methods
+
+        public static RoleClaim ToRoleClaim(Claim claim) {
+            if (claim == null) { return null; }
+
+            return new RoleClaim {
+                Type = claim.Type,
+                Value = claim.Value
+            };
+        }
+
+        public static Claim ToClaim(RoleClaim roleClaim) {
+            if (roleClaim == null) { return null; }
+
+            return new Claim(roleClaim.Type, roleClaim.Value);
+        }
+
+        #endregion Public Static Methods
+
         #region Public Virtual Methods
 
         public virtual bool Equals(RoleClaim obj) {
             return obj != null &&
                    obj.Type == Type &&
                    obj.Value == Value &&
-                   (obj.Role != null ? obj.Role.Id : Guid.Empty) == (Role != null ? Role.Id : Guid.Empty);
+                   (obj.Role != null ? obj.Role.ID : Guid.Empty) == (Role != null ? Role.ID : Guid.Empty);
         }
 
         #endregion Public Virtual Methods
@@ -61,7 +96,7 @@ namespace Nameless.Framework.Web.Identity.Models {
 
         /// <inheritdoc />
         public override int GetHashCode() {
-            return Id.GetHashCode();
+            return ID.GetHashCode();
         }
 
         #endregion Public Override Methods

@@ -1,12 +1,12 @@
 {
-    "name": "skeleton_web_application",
-    "description": "A simple skeleton for web applications",
+    "name": "webapplication",
+    "description": "A simple web application",
     "main": "server.js",
     "authors": [
         "Marco Antonio Orestes Teixeira"
     ],
     "license": "MIT",
-    "homepage": "https://marcoaoteixeira.github.io/projects/skeleton",
+    "homepage": "https://marcoaoteixeira.github.io/projects/nameless",
     "private": true,
     "ignore": [
         "**/.*",

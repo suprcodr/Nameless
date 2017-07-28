@@ -1,7 +1,7 @@
 {
-    "name": "skeleton",
+    "name": "webapplication",
     "version": "1.0.0",
-    "description": "A simple skeleton for web applications",
+    "description": "A simple web application",
     "main": "server.js",
     "devDependencies": {
         "bower": "^1.8.0",
@@ -23,7 +23,6 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [
-        "skeleton",
         "web",
         "application"
     ],

@@ -1,7 +1,7 @@
 ﻿namespace Nameless.Framework.EventSourcing.Messaging {
 
     /// <summary>
-    /// Defines methods/properties/events for a message.
+    /// Interface for message implementation.
     /// </summary>
     public interface IMessage { }
 }

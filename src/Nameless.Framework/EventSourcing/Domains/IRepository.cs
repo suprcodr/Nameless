@@ -3,7 +3,7 @@
 namespace Nameless.Framework.EventSourcing.Domains {
 
     /// <summary>
-    /// Defines methods/properties/events to implement a repository for event store system.
+    /// Interface for event repository accessor.
     /// </summary>
     public interface IRepository {
 

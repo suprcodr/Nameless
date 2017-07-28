@@ -1,4 +1,4 @@
-﻿namespace Nameless.Framework.Cqrs.Query {
+﻿namespace Nameless.Framework.CQRS.Query {
 
     /// <summary>
     /// Query interfacec.

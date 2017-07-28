@@ -4,7 +4,7 @@ using Nameless.Framework.EventSourcing.Events;
 namespace Nameless.Framework.EventSourcing.Bus {
 
     /// <summary>
-    /// Defines methods/properties/events to a BUS.
+    /// Interface for BUS implementation.
     /// </summary>
-    public interface IBus : ICommandSender, IEventPublisher { }
+    public interface IBus : ICommandDispatcher, IEventPublisher { }
 }

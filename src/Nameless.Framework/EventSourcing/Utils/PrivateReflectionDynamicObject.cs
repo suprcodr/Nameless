@@ -66,7 +66,9 @@ namespace Nameless.Framework.EventSourcing {
             var member = type
                 .GetMethods(CurrentBindingFlags)
                 .FirstOrDefault(method => method.Name == name &&
-                                          method.GetParameters().Select(parameter => parameter.ParameterType).SequenceEqual(argumentTypes));
+                                          method.GetParameters()
+                                            .Select(parameter => parameter.ParameterType)
+                                            .SequenceEqual(argumentTypes));
 
             if (member != null) { return member; }
 

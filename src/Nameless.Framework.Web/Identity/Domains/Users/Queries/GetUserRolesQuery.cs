@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Nameless.Framework.Cqrs.Query;
+using Nameless.Framework.CQRS.Query;
 
 namespace Nameless.Framework.Web.Identity.Domains.Users.Queries {
 

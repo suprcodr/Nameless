@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace Nameless.Framework.Cqrs.Query {
+namespace Nameless.Framework.CQRS.Query {
 
     /// <summary>
     /// Extension methods for <see cref="IQueryHandler{TQuery, TResult}"/>.
@@ -18,7 +18,7 @@ namespace Nameless.Framework.Cqrs.Query {
         /// <param name="query">The query.</param>
         /// <returns>The query result.</returns>
         public static TResult Handle<TQuery, TResult>(this IQueryHandler<TQuery, TResult> source, TQuery query) where TQuery : IQuery<TResult> {
-            return source.HandleAsync(query, CancellationToken.None).WaitForResult();
+            return source.HandleAsync(query, CancellationToken.None).WaitWithResult();
         }
 
         #endregion Public Static Methods

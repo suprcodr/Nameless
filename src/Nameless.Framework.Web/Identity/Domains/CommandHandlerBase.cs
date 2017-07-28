@@ -1,41 +1,32 @@
-﻿using Nameless.Framework.Cqrs.Command;
-using Nameless.Framework.Data;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Nameless.Framework.CQRS.Command;
+using Nameless.Framework.Data.Generic;
 
 namespace Nameless.Framework.Web.Identity.Domains {
 
     public abstract class CommandHandlerBase<TCommand> : ICommandHandler<TCommand> where TCommand : ICommand {
 
-        #region Private Read-Only Fields
+        #region Protected Properties
 
-        private readonly IRepository _repository;
+        protected IRepository Repository { get; }
 
-        #endregion Private Read-Only Fields
+        #endregion Protected Properties
 
         #region Protected Constructors
 
         protected CommandHandlerBase(IRepository repository) {
             Prevent.ParameterNull(repository, nameof(repository));
 
-            _repository = repository;
+            Repository = repository;
         }
 
         #endregion Protected Constructors
 
-        #region Protected Methods
-
-        protected void Save<TEntity>(TEntity entity) where TEntity : class {
-            _repository.Save(entity);
-        }
-
-        protected void Delete<TEntity>(TEntity entity) where TEntity : class {
-            _repository.Delete(entity);
-        }
-
-        #endregion Protected Methods
-
         #region ICommandHandler<TCommand> Members
 
-        public abstract void Handle(TCommand command);
+        public abstract Task HandleAsync(TCommand command, CancellationToken cancellationToken = default(CancellationToken), IProgress<int> progress = null);
 
         #endregion ICommandHandler<TCommand> Members
     }

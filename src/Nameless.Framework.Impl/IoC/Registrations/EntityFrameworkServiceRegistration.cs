@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Autofac;
-using Nameless.Framework.Data;
-using Nameless.Framework.Data.Sql.EF;
+using Nameless.Framework.Data.Generic;
+using Nameless.Framework.Data.Generic.Sql.EF;
 
 namespace Nameless.Framework.IoC.Modules {
 

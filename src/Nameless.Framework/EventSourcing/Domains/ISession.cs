@@ -3,7 +3,7 @@
 namespace Nameless.Framework.EventSourcing.Domains {
 
     /// <summary>
-    /// Defines methods/properties/events to implement a session.
+    /// Interface for session state.
     /// </summary>
     public interface ISession {
 

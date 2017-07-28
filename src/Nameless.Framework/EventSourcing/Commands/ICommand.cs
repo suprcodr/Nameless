@@ -3,7 +3,7 @@
 namespace Nameless.Framework.EventSourcing.Commands {
 
     /// <summary>
-    /// Defines methods/properties/events to a command.
+    /// Interface that identifies a command.
     /// </summary>
     public interface ICommand : IMessage {
 

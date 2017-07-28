@@ -5,8 +5,8 @@ using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using Nameless.Framework.Cqrs.Command;
-using Nameless.Framework.Cqrs.Query;
+using Nameless.Framework.CQRS.Command;
+using Nameless.Framework.CQRS.Query;
 using Nameless.Framework.Web.Identity.Domains.RoleClaims.Commands;
 using Nameless.Framework.Web.Identity.Domains.Roles.Commands;
 using Nameless.Framework.Web.Identity.Domains.Roles.Queries;
@@ -60,7 +60,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 _commandDispatcher.Command(new AddClaimToRoleCommand {
-                    RoleId = role.Id,
+                    RoleId = role.ID,
                     Claim = claim.ConvertToRoleClaim()
                 });
             }, cancellationToken);
@@ -126,7 +126,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             return Task.Run(() => {
                 try {
                     _commandDispatcher.Command(new DeleteRoleCommand {
-                        RoleId = role.Id
+                        RoleId = role.ID
                     });
                 } catch (Exception ex) {
                     return IdentityResult.Failed(new IdentityError { Description = ex.Message });
@@ -163,7 +163,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             Prevent.ParameterNull(role, nameof(role));
 
             return Task.Run<IList<Claim>>(() => {
-                return _queryDispatcher.Query(new GetRoleClaimsQuery { RoleId = role.Id })
+                return _queryDispatcher.Query(new GetRoleClaimsQuery { RoleId = role.ID })
                         .Select(_ => _.ConvertFromRoleClaim())
                         .ToList();
             }, cancellationToken);
@@ -174,7 +174,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             Prevent.ParameterNull(role, nameof(role));
 
             return Task.Run(() => {
-                return _queryDispatcher.Query(new GetRoleNormalizedRoleNameQuery { RoleId = role.Id });
+                return _queryDispatcher.Query(new GetRoleNormalizedRoleNameQuery { RoleId = role.ID });
             }, cancellationToken);
         }
 
@@ -192,7 +192,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             Prevent.ParameterNull(role, nameof(role));
 
             return Task.Run(() => {
-                return _queryDispatcher.Query(new GetRoleRoleNameQuery { RoleId = role.Id });
+                return _queryDispatcher.Query(new GetRoleRoleNameQuery { RoleId = role.ID });
             }, cancellationToken);
         }
 
@@ -203,7 +203,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 _commandDispatcher.Command(new RemoveRoleClaimCommand {
-                    RoleId = role.Id,
+                    RoleId = role.ID,
                     Type = claim.Type,
                     Value = claim.Value
                 });
@@ -217,7 +217,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 _commandDispatcher.Command(new SetRoleNormalizedRoleNameCommand {
-                    RoleId = role.Id,
+                    RoleId = role.ID,
                     NormalizedName = normalizedName
                 });
             }, cancellationToken);
@@ -230,7 +230,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
 
             return Task.Run(() => {
                 _commandDispatcher.Command(new SetRoleRoleNameCommand {
-                    RoleId = role.Id,
+                    RoleId = role.ID,
                     Name = roleName
                 });
             }, cancellationToken);
@@ -243,7 +243,7 @@ namespace Nameless.Framework.Web.Identity.Stores {
             return Task.Run(() => {
                 try {
                     _commandDispatcher.Command(new UpdateRoleCommand {
-                        RoleId = role.Id,
+                        RoleId = role.ID,
                         ConcurrencyStamp = role.ConcurrencyStamp,
                         Name = role.Name,
                         NormalizedName = role.NormalizedName

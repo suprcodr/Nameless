@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Nameless.Framework.Data;
+using Nameless.Framework.Data.Generic;
 using Nameless.Framework.EventSourcing.Models;
 
 namespace Nameless.Framework.EventSourcing.Events {
@@ -46,8 +46,7 @@ namespace Nameless.Framework.EventSourcing.Events {
         /// <inheritdoc />
         public void Save(params IEvent[] evts) {
             foreach (var evt in evts) {
-                var entity = EventEntity.Create(evt);
-                _repository.Save(entity);
+                _repository.Save(EventEntity.Create(evt));
                 _publisher.Publish(evt);
             }
         }

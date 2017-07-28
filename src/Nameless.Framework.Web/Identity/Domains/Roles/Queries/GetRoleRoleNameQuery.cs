@@ -1,5 +1,5 @@
 ﻿using System;
-using Nameless.Framework.Cqrs.Query;
+using Nameless.Framework.CQRS.Query;
 
 namespace Nameless.Framework.Web.Identity.Domains.Roles.Queries {
 

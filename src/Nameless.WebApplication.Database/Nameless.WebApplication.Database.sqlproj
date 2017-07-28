@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>Nameless.WebApplication.Database</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{7c770c75-9b16-4bec-9f38-fbfd5d337160}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql120DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>Nameless.WebApplication.Database</RootNamespace>
+    <AssemblyName>Nameless.WebApplication.Database</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <GenerateCreateScript>True</GenerateCreateScript>
+    <IncludeSchemaNameInFileName>True</IncludeSchemaNameInFileName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="Identity" />
+    <Folder Include="Application" />
+    <Folder Include="Identity\Tables" />
+    <Folder Include="Application\Tables" />
+    <Folder Include="EventSourcing" />
+    <Folder Include="EventSourcing\Tables" />
+    <Folder Include="EventSourcing\StoredProcedures" />
+    <Folder Include="Application\StoredProcedures" />
+    <Folder Include="Identity\StoredProcedures" />
+    <Folder Include="Identity\StoredProcedures\RolesClaims" />
+    <Folder Include="Identity\StoredProcedures\RolesClaims\Commands" />
+    <Folder Include="Identity\StoredProcedures\RolesClaims\Queries" />
+    <Folder Include="Identity\StoredProcedures\Roles" />
+    <Folder Include="Identity\StoredProcedures\Roles\Commands" />
+    <Folder Include="Identity\StoredProcedures\Roles\Queries" />
+    <Folder Include="Identity\StoredProcedures\UsersClaims" />
+    <Folder Include="Identity\StoredProcedures\UsersClaims\Commands" />
+    <Folder Include="Identity\StoredProcedures\UsersClaims\Queries" />
+    <Folder Include="Identity\StoredProcedures\UsersLogins" />
+    <Folder Include="Identity\StoredProcedures\UsersLogins\Commands" />
+    <Folder Include="Identity\StoredProcedures\UsersLogins\Queries" />
+    <Folder Include="Identity\StoredProcedures\Users" />
+    <Folder Include="Identity\StoredProcedures\Users\Commands" />
+    <Folder Include="Identity\StoredProcedures\Users\Queries" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Identity\Tables\dbo.roles.sql" />
+    <Build Include="Application\Tables\dbo.owners.sql" />
+    <Build Include="EventSourcing\Tables\dbo.events.sql" />
+    <Build Include="EventSourcing\Tables\dbo.snapshots.sql" />
+    <Build Include="Application\StoredProcedures\dbo.SaveOwner.sql" />
+    <Build Include="Application\StoredProcedures\dbo.ListOwners.sql" />
+    <Build Include="Application\StoredProcedures\dbo.GetOwner.sql" />
+    <Build Include="Application\StoredProcedures\dbo.FindOwners.sql" />
+    <Build Include="Application\StoredProcedures\dbo.RemoveOwner.sql" />
+    <None Include="Identity\StoredProcedures\RolesClaims\Commands\AddClaimToRole.sql" />
+    <None Include="Identity\StoredProcedures\RolesClaims\Commands\RemoveRoleClaims.sql" />
+    <None Include="Identity\StoredProcedures\RolesClaims\Queries\GetRoleClaims.sql" />
+    <None Include="Identity\StoredProcedures\Roles\Commands\CreateRole.sql" />
+    <None Include="Identity\StoredProcedures\Roles\Commands\DeleteRole.sql" />
+    <None Include="Identity\StoredProcedures\Roles\Commands\RemoveRoleClaim.sql" />
+    <None Include="Identity\StoredProcedures\Roles\Commands\SetRoleNormalizedRoleName.sql" />
+    <None Include="Identity\StoredProcedures\Roles\Commands\SetRoleRoleName.sql" />
+    <None Include="Identity\StoredProcedures\Roles\Commands\UpdateRole.sql" />
+    <None Include="Identity\StoredProcedures\Roles\Queries\FindRoleByID.sql" />
+    <None Include="Identity\StoredProcedures\Roles\Queries\FindRoleByName.sql" />
+    <None Include="Identity\StoredProcedures\Roles\Queries\GetRoleClaims.sql" />
+    <None Include="Identity\StoredProcedures\Roles\Queries\GetRoleNormalizedRoleName.sql" />
+    <None Include="Identity\StoredProcedures\Roles\Queries\GetRoleRoleID.sql" />
+    <None Include="Identity\StoredProcedures\Roles\Queries\GetRoleRoleName.sql" />
+    <None Include="Identity\StoredProcedures\UsersClaims\Commands\AddClaimsToUser.sql" />
+    <None Include="Identity\StoredProcedures\UsersClaims\Commands\RemoveUserClaims.sql" />
+    <None Include="Identity\StoredProcedures\UsersClaims\Commands\ReplaceUserClaim.sql" />
+    <None Include="Identity\StoredProcedures\UsersClaims\Queries\GetUserClaims.sql" />
+    <None Include="Identity\StoredProcedures\UsersLogins\Commands\AddLoginToUser.sql" />
+    <None Include="Identity\StoredProcedures\UsersLogins\Commands\RemoveLoginFromUser.sql" />
+    <None Include="Identity\StoredProcedures\UsersLogins\Queries\FindUserByLogin.sql" />
+    <None Include="Identity\StoredProcedures\UsersLogins\Queries\GetUserLogins.sql" />
+    <None Include="Identity\StoredProcedures\Users\Commands\CreateUser.sql" />
+    <None Include="Identity\StoredProcedures\Users\Commands\DeleteUser.sql" />
+    <None Include="Identity\StoredProcedures\Users\Commands\IncrementUserAccessFailedCount.sql" />
+    <None Include="Identity\StoredProcedures\Users\Commands\ResetUserAccessFailedCount.sql" />
+    <None Include="Identity\StoredProcedures\Users\Commands\SetUserEmail.sql" />
+    <None Include="Identity\StoredProcedures\Users\Commands\SetUserEmailConfirmed.sql" />
+    <None Include="Identity\StoredProcedures\Users\Commands\SetUserLockoutEnabled.sql" />
+    <None Include="Identity\StoredProcedures\Users\Commands\SetUserLockoutEndDate.sql" />
+    <None Include="Identity\StoredProcedures\Users\Commands\SetUserNormalizedEmail.sql" />
+    <None Include="Identity\StoredProcedures\Users\Commands\SetUserNormalizedUserName.sql" />
+    <None Include="Identity\StoredProcedures\Users\Commands\SetUserPasswordHash.sql" />
+    <None Include="Identity\StoredProcedures\Users\Commands\SetUserPhoneNumber.sql" />
+    <None Include="Identity\StoredProcedures\Users\Commands\SetUserPhoneNumberConfirmed.sql" />
+    <None Include="Identity\StoredProcedures\Users\Commands\SetUserSecurityStamp.sql" />
+    <None Include="Identity\StoredProcedures\Users\Commands\SetUserTwoFactorEnabled.sql" />
+    <None Include="Identity\StoredProcedures\Users\Commands\SetUserUserName.sql" />
+    <None Include="Identity\StoredProcedures\Users\Commands\UpdateUser.sql" />
+    <None Include="Identity\StoredProcedures\Users\Queries\FindUserByEmail.sql" />
+    <None Include="Identity\StoredProcedures\Users\Queries\FindUserById.sql" />
+    <None Include="Identity\StoredProcedures\Users\Queries\FindUserByNormalizedUserName.sql" />
+    <None Include="Identity\StoredProcedures\Users\Queries\GetUserAccessFailedCount.sql" />
+    <None Include="Identity\StoredProcedures\Users\Queries\GetUserEmail.sql" />
+    <None Include="Identity\StoredProcedures\Users\Queries\GetUserEmailConfirmed.sql" />
+    <None Include="Identity\StoredProcedures\Users\Queries\GetUserId.sql" />
+    <None Include="Identity\StoredProcedures\Users\Queries\GetUserLockoutEnabled.sql" />
+    <None Include="Identity\StoredProcedures\Users\Queries\GetUserLockoutEndDate.sql" />
+    <None Include="Identity\StoredProcedures\Users\Queries\GetUserNormalizedEmail.sql" />
+    <None Include="Identity\StoredProcedures\Users\Queries\GetUserNormalizedUserName.sql" />
+    <None Include="Identity\StoredProcedures\Users\Queries\GetUserPasswordHash.sql" />
+    <None Include="Identity\StoredProcedures\Users\Queries\GetUserPhoneNumber.sql" />
+    <None Include="Identity\StoredProcedures\Users\Queries\GetUserPhoneNumberConfirmed.sql" />
+    <None Include="Identity\StoredProcedures\Users\Queries\GetUserSecurityStamp.sql" />
+    <None Include="Identity\StoredProcedures\Users\Queries\GetUsersFromClaim.sql" />
+    <None Include="Identity\StoredProcedures\Users\Queries\GetUserTwoFactorEnabled.sql" />
+    <None Include="Identity\StoredProcedures\Users\Queries\GetUserUserName.sql" />
+    <None Include="Identity\StoredProcedures\Users\Queries\UserHasPasswordHash.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Identity\Tables\dbo.roles_claims.sql" />
+    <Build Include="Identity\Tables\dbo.users.sql" />
+    <Build Include="Identity\Tables\dbo.users_claims.sql" />
+    <Build Include="Identity\Tables\dbo.users_logins.sql" />
+    <Build Include="Identity\Tables\dbo.users_roles.sql" />
+    <Build Include="Identity\Tables\dbo.users_tokens.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EventSourcing\StoredProcedures\GetSnapShot.sql" />
+    <None Include="EventSourcing\StoredProcedures\CreateSnapShot.sql" />
+    <None Include="EventSourcing\StoredProcedures\CreateEvent.sql" />
+    <None Include="EventSourcing\StoredProcedures\ListEvents.sql" />
+  </ItemGroup>
+</Project>

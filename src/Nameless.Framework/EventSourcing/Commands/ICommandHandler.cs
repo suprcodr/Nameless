@@ -6,5 +6,5 @@ namespace Nameless.Framework.EventSourcing.Commands {
     /// Command handler interface.
     /// </summary>
     /// <typeparam name="TCommand">Type of the command.</typeparam>
-    public interface ICommandHandler<in TCommand> : IHandle<TCommand> where TCommand : ICommand { }
+    public interface ICommandHandler<in TCommand> : IHandler<TCommand> where TCommand : ICommand { }
 }

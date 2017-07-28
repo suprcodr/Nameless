@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Nameless.Common\Nameless.Common.csproj" />
-    <ProjectReference Include="..\..\src\Nameless.Framework.Impl\Nameless.Framework.Impl.csproj" />
     <ProjectReference Include="..\..\src\Nameless.Framework\Nameless.Framework.csproj" />
   </ItemGroup>
 

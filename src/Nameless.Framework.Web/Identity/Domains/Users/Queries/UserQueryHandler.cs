@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using Nameless.Framework.Cqrs.Query;
-using Nameless.Framework.Data.Sql.Ado;
+using Nameless.Framework.CQRS.Query;
+using Nameless.Framework.Data.Generic.Sql.Ado;
 using Nameless.Framework.Web.Identity.Domains.Resources;
 using Nameless.Framework.Web.Identity.Models;
 

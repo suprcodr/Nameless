@@ -1,5 +1,5 @@
 ﻿using System;
-using Nameless.Framework.Cqrs.Command;
+using Nameless.Framework.CQRS.Command;
 
 namespace Nameless.Framework.Web.Identity.Domains.Users.Commands {
 

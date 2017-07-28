@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Data;
-using Nameless.Framework.Cqrs.Query;
-using Nameless.Framework.Data.Sql.Ado;
-using Nameless.Framework.Web.Identity.Domains.Resources;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Nameless.Framework.CQRS.Query;
+using Nameless.Framework.Data.Generic;
 using Nameless.Framework.Web.Identity.Models;
 
 namespace Nameless.Framework.Web.Identity.Domains.RoleClaims.Queries {
@@ -11,25 +12,25 @@ namespace Nameless.Framework.Web.Identity.Domains.RoleClaims.Queries {
 
         #region Private Read-Only Fields
 
-        private readonly IDatabase _database;
+        private readonly IRepository _repository;
 
         #endregion Private Read-Only Fields
 
         #region Public Constructors
 
-        public RoleClaimQueryHandler(IDatabase database) {
-            Prevent.ParameterNull(database, nameof(database));
+        public RoleClaimQueryHandler(IRepository repository) {
+            Prevent.ParameterNull(repository, nameof(repository));
 
-            _database = database;
+            _repository = repository;
         }
 
         #endregion Public Constructors
 
         #region IQueryHandler<ListRoleClaimsQuery, IEnumerable<RoleClaim>> Members
 
-        public IEnumerable<RoleClaim> Handle(GetRoleClaimsQuery query) {
-            return _database.ExecuteReader((string)SQL.Instance.GetRoleClaims, Mappers.GetRoleClaims, parameters: new[] {
-                Parameter.CreateInputParameter(nameof(query.RoleId), query.RoleId, DbType.Guid)
+        public Task<IEnumerable<RoleClaim>> HandleAsync(GetRoleClaimsQuery query, CancellationToken cancellationToken = default(CancellationToken)) {
+            return Task.Run(() => {
+                return _repository.Query<RoleClaim>().AsEnumerable();
             });
         }
 

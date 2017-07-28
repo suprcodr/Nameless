@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace Nameless.Framework.Cqrs.Command {
+namespace Nameless.Framework.CQRS.Command {
 
     /// <summary>
     /// Extension methods for <see cref="ICommandDispatcher"/>.
@@ -18,7 +18,7 @@ namespace Nameless.Framework.Cqrs.Command {
         /// <param name="command">The command.</param>
         /// <param name="progress">The progress notifier.</param>
         public static void Command<TCommand>(this ICommandDispatcher source, TCommand command, IProgress<int> progress = null) where TCommand : ICommand {
-            source.CommandAsync(command, progress, CancellationToken.None).WaitForResult();
+            source.CommandAsync(command, progress, CancellationToken.None).Wait();
         }
 
         #endregion Public Static Methods

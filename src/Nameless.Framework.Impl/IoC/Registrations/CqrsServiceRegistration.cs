@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Autofac;
-using Nameless.Framework.Cqrs.Command;
-using Nameless.Framework.Cqrs.Query;
+using Nameless.Framework.CQRS.Command;
+using Nameless.Framework.CQRS.Query;
 
 namespace Nameless.Framework.IoC.Modules {
 
     /// <summary>
-    /// Autofac module implementation for Nameless.Framework.Cqrs namespace.
+    /// Autofac module implementation for Nameless.Framework.CQRS namespace.
     /// </summary>
     public class CqrsServiceRegistration : ServiceRegistrationBase {
 

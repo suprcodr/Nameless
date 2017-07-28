@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Nameless.Framework.Cqrs.Command {
+namespace Nameless.Framework.CQRS.Command {
 
     /// <summary>
     /// Null Object Pattern implementation of <see cref="ICommandDispatcher"/>.

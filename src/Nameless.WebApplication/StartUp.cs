@@ -18,7 +18,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
-using Nameless.Framework.Data.Sql.Ado;
+using Nameless.Framework.Data.Generic.Sql.Ado;
 using Nameless.Framework.IoC;
 using Nameless.Framework.IoC.Modules;
 using Nameless.Framework.Web;

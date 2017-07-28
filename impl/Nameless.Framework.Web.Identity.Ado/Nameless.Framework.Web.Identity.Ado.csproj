@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Nameless.Common\Nameless.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UserLogins\" />
+    <Folder Include="Users\" />
+    <Folder Include="UserClaims\" />
+    <Folder Include="Roles\" />
+  </ItemGroup>
+
+</Project>

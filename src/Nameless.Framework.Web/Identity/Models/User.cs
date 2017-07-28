@@ -28,7 +28,7 @@ namespace Nameless.Framework.Web.Identity.Models {
         /// <summary>
         /// Gets the user Id.
         /// </summary>
-        public virtual Guid Id {
+        public virtual Guid ID {
             get { return _id; }
         }
 
@@ -157,7 +157,7 @@ namespace Nameless.Framework.Web.Identity.Models {
         #region Public Methods
 
         public bool Equals(User obj) {
-            return obj != null && obj.Id == Id;
+            return obj != null && obj.ID == ID;
         }
 
         #endregion Public Methods
@@ -171,7 +171,7 @@ namespace Nameless.Framework.Web.Identity.Models {
 
         /// <inheritdoc />
         public override int GetHashCode() {
-            return Id.GetHashCode();
+            return ID.GetHashCode();
         }
 
         #endregion Public Override Methods

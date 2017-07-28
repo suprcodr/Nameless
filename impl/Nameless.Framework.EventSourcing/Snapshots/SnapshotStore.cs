@@ -1,5 +1,5 @@
 ﻿using System;
-using Nameless.Framework.Data;
+using Nameless.Framework.Data.Generic;
 using Nameless.Framework.EventSourcing.Models;
 
 namespace Nameless.Framework.EventSourcing.Snapshots {
@@ -35,9 +35,7 @@ namespace Nameless.Framework.EventSourcing.Snapshots {
         }
 
         public void Save(Snapshot snapshot) {
-            var entity = SnapshotEntity.Create(snapshot);
-
-            _repository.Save(entity);
+            _repository.Save(SnapshotEntity.Create(snapshot));
         }
 
         #endregion ISnapshotStore Members

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace Nameless.Framework.Cqrs.Command {
+namespace Nameless.Framework.CQRS.Command {
 
     /// <summary>
     /// Extension methods for <see cref="ICommandHandler{TCommand}"/>
@@ -20,7 +20,7 @@ namespace Nameless.Framework.Cqrs.Command {
         public static void Handle<TCommand>(this ICommandHandler<TCommand> source, TCommand command, IProgress<int> progress = null) where TCommand : ICommand {
             if (source == null) { return; }
 
-            source.HandleAsync(command, null, CancellationToken.None).WaitForResult();
+            source.HandleAsync(command, CancellationToken.None, progress).Wait();
         }
 
         #endregion Public Static Methods

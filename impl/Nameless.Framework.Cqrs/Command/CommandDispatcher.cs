@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Nameless.Framework.IoC;
 
-namespace Nameless.Framework.Cqrs.Command {
+namespace Nameless.Framework.CQRS.Command {
 
     public class CommandDispatcher : ICommandDispatcher {
 

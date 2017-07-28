@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Claims;
 
 namespace Nameless.Framework.Web.Identity.Models {
 
@@ -20,7 +21,7 @@ namespace Nameless.Framework.Web.Identity.Models {
         /// <summary>
         /// Gets the user claim ID.
         /// </summary>
-        public virtual Guid Id {
+        public virtual Guid ID {
             get { return _id; }
         }
 
@@ -41,13 +42,32 @@ namespace Nameless.Framework.Web.Identity.Models {
 
         #endregion Public Virtual Properties
 
+        #region Public Static Methods
+
+        public static UserClaim ToUserClaim(Claim claim) {
+            if (claim == null) { return null; }
+
+            return new UserClaim {
+                Type = claim.Type,
+                Value = claim.Value
+            };
+        }
+
+        public static Claim ToClaim(UserClaim userClaim) {
+            if (userClaim == null) { return null; }
+
+            return new Claim(userClaim.Type, userClaim.Value);
+        }
+
+        #endregion Public Static Methods
+
         #region Public Virtual Methods
 
         public virtual bool Equals(UserClaim obj) {
             return obj != null &&
                    obj.Type == Type &&
                    obj.Value == Value &&
-                   (obj.User != null ? obj.User.Id : Guid.Empty) == (User != null ? User.Id : Guid.Empty);
+                   (obj.User != null ? obj.User.ID : Guid.Empty) == (User != null ? User.ID : Guid.Empty);
         }
 
         #endregion Public Virtual Methods
@@ -61,7 +81,7 @@ namespace Nameless.Framework.Web.Identity.Models {
 
         /// <inheritdoc />
         public override int GetHashCode() {
-            return Id.GetHashCode();
+            return ID.GetHashCode();
         }
 
         #endregion Public Override Methods

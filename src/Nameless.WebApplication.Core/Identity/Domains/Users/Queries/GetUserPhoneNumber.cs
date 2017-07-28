@@ -1,0 +1,44 @@
+﻿using System;
+using System.Data;
+using System.Threading;
+using System.Threading.Tasks;
+using Nameless.Framework.CQRS.Query;
+using Nameless.Framework.Data.Ado;
+
+namespace Nameless.WebApplication.Core.Identity.Domains.Users.Queries {
+
+    public sealed class GetUserPhoneNumberQuery : IQuery<string> {
+
+        #region Public Properties
+
+        public Guid UserID { get; set; }
+
+        #endregion Public Properties
+    }
+
+    public sealed class GetUserPhoneNumberQueryHandler : QueryHandlerBase<GetUserPhoneNumberQuery, string> {
+
+        #region Public Constructors
+
+        public GetUserPhoneNumberQueryHandler(IDatabase database)
+            : base(database) { }
+
+        #endregion Public Constructors
+
+        #region Public Override Methods
+
+        public override Task<string> HandleAsync(GetUserPhoneNumberQuery query, CancellationToken cancellationToken = default(CancellationToken)) {
+            return Task.Run(() => {
+                return Database.ExecuteScalar<string>(
+                    commandText: EntitySchema.Users.StoredProcedures.GetUserPhoneNumber,
+                    commandType: CommandType.StoredProcedure,
+                    parameters: new[] {
+                        Parameter.CreateInputParameter(EntitySchema.Users.Fields.ID, query.UserID, DbType.Guid)
+                    }
+                );
+            }, cancellationToken);
+        }
+
+        #endregion Public Override Methods
+    }
+}

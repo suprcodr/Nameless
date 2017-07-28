@@ -4,7 +4,7 @@ using Nameless.Framework.EventSourcing.Messaging;
 namespace Nameless.Framework.EventSourcing.Events {
 
     /// <summary>
-    /// Defines methods/properties/events for an event/message.
+    /// Interface for an event.
     /// </summary>
     public interface IEvent : IMessage {
 

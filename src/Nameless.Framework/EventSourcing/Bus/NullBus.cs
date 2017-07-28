@@ -4,22 +4,39 @@ using Nameless.Framework.EventSourcing.Events;
 namespace Nameless.Framework.EventSourcing.Bus {
 
     /// <summary>
-    /// Null Object Pattern implementation of <see cref="IBus"/>.
+    /// Null Object Pattern implementation for IBus. (see: https://en.wikipedia.org/wiki/Null_Object_pattern)
     /// </summary>
-    /// <remarks>https://en.wikipedia.org/wiki/Null_Object_pattern</remarks>
-    public sealed class NullBus : IBus {
+    internal sealed class NullBus : IBus {
 
-        #region Public Static Read-Only Fields
+        #region Private Static Read-Only Fields
+
+        private static readonly IBus _instance = new NullBus();
+
+        #endregion Private Static Read-Only Fields
+
+        #region Public Static Properties
 
         /// <summary>
-        /// Gets the static instance of <see cref="IBus"/>.
+        /// Gets the unique instance of NullBus.
         /// </summary>
-        public static readonly IBus Instance = new NullBus();
+        public static IBus Instance {
+            get { return _instance; }
+        }
 
-        #endregion Public Static Read-Only Fields
+        #endregion Public Static Properties
+
+        #region Static Constructors
+
+        // Explicit static constructor to tell the C# compiler
+        // not to mark type as beforefieldinit
+        static NullBus() {
+        }
+
+        #endregion Static Constructors
 
         #region Private Constructors
 
+        // Prevents the class from being constructed.
         private NullBus() {
         }
 
@@ -27,12 +44,9 @@ namespace Nameless.Framework.EventSourcing.Bus {
 
         #region IBus Members
 
-        /// <inheritdoc />
-        ///
-        public void Send<TCommand>(TCommand command) where TCommand : ICommand {
+        public void Dispatch<TCommand>(TCommand command) where TCommand : ICommand {
         }
 
-        /// <inheritdoc />
         public void Publish<TEvent>(TEvent evt) where TEvent : IEvent {
         }
 

@@ -4,20 +4,20 @@ using System.Collections.Generic;
 namespace Nameless.Framework.EventSourcing.Events {
 
     /// <summary>
-    /// Defines methods/properties/events to persists or restore an event.
+    /// Interface for event store implementation.
     /// </summary>
     public interface IEventStore {
 
         #region Methods
 
         /// <summary>
-        /// Saves the event.
+        /// Saves the events.
         /// </summary>
         /// <param name="evts">The collection event.</param>
         void Save(params IEvent[] evts);
 
         /// <summary>
-        /// Retrieves all events for the aggregate ID, from specified version.
+        /// Retrieves all events for the aggregate ID, from specific version.
         /// </summary>
         /// <param name="aggregateID">The aggregate ID.</param>
         /// <param name="fromVersion">Specified version to find.</param>

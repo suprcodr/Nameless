@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Data;
-using Nameless.Framework.Cqrs.Command;
-using Nameless.Framework.Data;
-using Nameless.Framework.Data.Sql.Ado;
+using System.Threading;
+using System.Threading.Tasks;
+using Nameless.Framework.CQRS.Command;
+using Nameless.Framework.Data.Generic;
+using Nameless.Framework.Data.Generic.Sql.Ado;
 using Nameless.Framework.Web.Identity.Domains.Resources;
 using Nameless.Framework.Web.Identity.Models;
 
@@ -30,7 +32,9 @@ namespace Nameless.Framework.Web.Identity.Domains.RoleClaims.Commands {
 
         #region ICommandHandler<AddClaimsToRoleCommand> Members
 
-        public void Handle(AddClaimToRoleCommand message) {
+        public Task HandleAsync(AddClaimToRoleCommand message, CancellationToken cancellationToken = default(CancellationToken), IProgress<int> progress = null) {
+            return _repository.Save(new AddClaimToRole)
+
             _repository.ExecuteNonQuery(SQL.Instance.AddClaimToRole, parameters: new[] {
                     Parameter.CreateInputParameter("RoleClaimId", Guid.NewGuid(), DbType.Guid),
                     Parameter.CreateInputParameter(nameof(message.Claim.Type), message.Claim.Type),

@@ -4,7 +4,7 @@ using Nameless.Framework.EventSourcing.Domains;
 namespace Nameless.Framework.EventSourcing.Snapshots {
 
     /// <summary>
-    /// Defines methods/properties/events to implement a snapshot strategy.
+    /// Interface for snapshot strategy implementation.
     /// </summary>
     public interface ISnapshotStrategy {
 

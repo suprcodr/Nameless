@@ -1,4 +1,4 @@
-﻿namespace Nameless.Framework.Cqrs.Command {
+﻿namespace Nameless.Framework.CQRS.Command {
 
     /// <summary>
     /// Command interface.

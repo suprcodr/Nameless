@@ -1,5 +1,5 @@
-﻿using Nameless.Framework.Cqrs.Query;
-using Nameless.Framework.Data;
+﻿using Nameless.Framework.CQRS.Query;
+using Nameless.Framework.Data.Generic;
 using Nameless.Framework.Web.Identity.Models;
 
 namespace Nameless.Framework.Web.Identity.Domains.Users.Queries {

@@ -1,17 +1,17 @@
 ﻿namespace Nameless.Framework.EventSourcing.Domains {
 
     /// <summary>
-    /// Defines methods/properties/events to create an aggregate factory.
+    /// Interface for a aggregate factory.
     /// </summary>
     public interface IAggregateFactory {
 
         #region Methods
 
         /// <summary>
-        /// Creates an aggregate root instance.
+        /// Creates an aggregate.
         /// </summary>
-        /// <typeparam name="TAggregate">Type of the aggregate root.</typeparam>
-        /// <returns>The aggregate root instance.</returns>
+        /// <typeparam name="TAggregate">Type of the aggregate.</typeparam>
+        /// <returns>The aggregate instance.</returns>
         TAggregate Create<TAggregate>() where TAggregate : AggregateRoot;
 
         #endregion Methods

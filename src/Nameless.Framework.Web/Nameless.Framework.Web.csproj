@@ -32,8 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\impl\Nameless.Framework.Data.Sql.Ado\Nameless.Framework.Data.Sql.Ado.csproj" />
-    <ProjectReference Include="..\..\impl\Nameless.Framework.Data.Sql.Common\Nameless.Framework.Data.Sql.Common.csproj" />
     <ProjectReference Include="..\Nameless.Common\Nameless.Common.csproj" />
     <ProjectReference Include="..\Nameless.Framework\Nameless.Framework.csproj" />
   </ItemGroup>

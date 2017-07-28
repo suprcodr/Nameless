@@ -1,35 +1,42 @@
 ﻿using System.Collections.Generic;
-using System.Data;
-using Nameless.Framework.Cqrs.Query;
-using Nameless.Framework.Data.Sql.Ado;
-using Nameless.Framework.Web.Identity.Domains.Resources;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading;
+using System.Threading.Tasks;
+using Nameless.Framework.CQRS.Query;
+using Nameless.Framework.Data.Generic;
 using Nameless.Framework.Web.Identity.Models;
 
 namespace Nameless.Framework.Web.Identity.Domains.UserClaims.Queries {
 
-    public class UserClaimQueryHandler : IQueryHandler<GetUserClaimsQuery, IEnumerable<UserClaim>> {
+    public class UserClaimQueryHandler : IQueryHandler<GetUserClaimsQuery, IList<Claim>> {
 
         #region Private Read-Only Fields
 
-        private readonly IDatabase _database;
+        private readonly IRepository _repository;
 
         #endregion Private Read-Only Fields
 
         #region Public Constructors
 
-        public UserClaimQueryHandler(IDatabase database) {
-            Prevent.ParameterNull(database, nameof(database));
+        public UserClaimQueryHandler(IRepository repository) {
+            Prevent.ParameterNull(repository, nameof(repository));
 
-            _database = database;
+            _repository = repository;
         }
 
         #endregion Public Constructors
 
         #region IQueryHandler<ListUserClaimsQuery, IEnumerable<UserClaim>> Members
 
-        public IEnumerable<UserClaim> Handle(GetUserClaimsQuery query) {
-            return _database.ExecuteReader((string)SQL.Instance.GetUserClaims, Mappers.GetUserClaims, parameters: new[] {
-                Parameter.CreateInputParameter(nameof(query.UserId), query.UserId, DbType.Guid)
+        public Task<IList<Claim>> HandleAsync(GetUserClaimsQuery query, CancellationToken cancellationToken = default(CancellationToken)) {
+            return Task.Run(() => {
+                IList<Claim> claims = _repository
+                    .FindAll<UserClaim>(_ => _.User.ID == query.UserID)
+                    .Select(UserClaim.ToClaim)
+                    .ToList();
+
+                return claims;
             });
         }
 

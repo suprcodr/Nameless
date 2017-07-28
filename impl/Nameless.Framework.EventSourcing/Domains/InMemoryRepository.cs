@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading;
-using Nameless.Framework.EventSourcing.Caching;
+using Nameless.Framework.Caching;
 using Nameless.Framework.EventSourcing.Events;
 
 namespace Nameless.Framework.EventSourcing.Domains {
@@ -42,8 +42,6 @@ namespace Nameless.Framework.EventSourcing.Domains {
             _cache = cache;
             _eventStore = eventStore;
             _repository = repository;
-
-            Initialize();
         }
 
         #endregion Public Constructors
@@ -53,14 +51,6 @@ namespace Nameless.Framework.EventSourcing.Domains {
         private static SemaphoreSlim CreateLock(Guid key) => new SemaphoreSlim(1, 1);
 
         #endregion Private Static Methods
-
-        #region Private Methods
-
-        private void Initialize() {
-            _cache.RegisterEvictionCallback(key => Locks.TryRemove(key, out var dummy));
-        }
-
-        #endregion Private Methods
 
         #region IRepository Members
 
@@ -83,14 +73,11 @@ namespace Nameless.Framework.EventSourcing.Domains {
                 }
 
                 aggregate = _repository.Get<TAggregate>(aggregateID);
-                _cache.Set(aggregateID, aggregate);
+                _cache.Set(aggregateID, aggregate, key => Locks.TryRemove(key, out var dummy));
                 return aggregate;
-            } catch (Exception) {
-                _cache.Remove(aggregateID);
-                throw;
-            } finally {
-                @lock.Release();
             }
+            catch (Exception) { _cache.Remove(aggregateID); throw; }
+            finally { @lock.Release(); }
         }
 
         /// <inheritdoc />
@@ -98,16 +85,13 @@ namespace Nameless.Framework.EventSourcing.Domains {
             var @lock = Locks.GetOrAdd(aggregate.ID, CreateLock);
             @lock.Wait();
             try {
-                if (aggregate.ID != Guid.Empty && !_cache.IsTracked(aggregate.ID)) {
+                if (aggregate.ID != Guid.Empty && !_cache.IsTracked(aggregate.ID.ToString())) {
                     _cache.Set(aggregate.ID, aggregate);
                 }
                 _repository.Save(aggregate, expectedVersion);
-            } catch (Exception) {
-                _cache.Remove(aggregate.ID);
-                throw;
-            } finally {
-                @lock.Release();
             }
+            catch (Exception) { _cache.Remove(aggregate.ID); throw; }
+            finally { @lock.Release(); }
         }
 
         #endregion IRepository Members

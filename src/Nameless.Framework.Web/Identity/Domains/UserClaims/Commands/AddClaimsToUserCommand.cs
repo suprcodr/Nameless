@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Nameless.Framework.Cqrs.Command;
+using Nameless.Framework.CQRS.Command;
 using Nameless.Framework.Web.Identity.Models;
 
 namespace Nameless.Framework.Web.Identity.Domains.UserClaims.Commands {

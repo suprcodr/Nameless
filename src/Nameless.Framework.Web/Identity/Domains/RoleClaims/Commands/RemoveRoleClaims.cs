@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Nameless.Framework.Cqrs.Command;
-using Nameless.Framework.Data;
+using Nameless.Framework.CQRS.Command;
+using Nameless.Framework.Data.Generic;
 using Nameless.Framework.Web.Identity.Data.RoleClaims;
 using Nameless.Framework.Web.Identity.Models;
 

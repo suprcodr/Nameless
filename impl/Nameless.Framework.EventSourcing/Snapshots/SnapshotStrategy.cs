@@ -9,9 +9,9 @@ namespace Nameless.Framework.EventSourcing.Snapshots {
     /// </summary>
     public class SnapshotStrategy : ISnapshotStrategy {
 
-        #region Private Constants
+        #region Public Constants
 
-        private const int DefaultSnapshotInterval = 100;
+        public const int DEFAULT_SNAPSHOT_INTERVAL = 100;
 
         #endregion Private Constants
 
@@ -27,8 +27,8 @@ namespace Nameless.Framework.EventSourcing.Snapshots {
         /// Initializes a new instance of <see cref="SnapshotStrategy"/>.
         /// </summary>
         /// <param name="snapshotInterval">Interval between snapshots.</param>
-        public SnapshotStrategy(int snapshotInterval = DefaultSnapshotInterval) {
-            _snapshotInterval = snapshotInterval > 0 ? snapshotInterval : DefaultSnapshotInterval;
+        public SnapshotStrategy(int snapshotInterval = DEFAULT_SNAPSHOT_INTERVAL) {
+            _snapshotInterval = snapshotInterval > 0 ? snapshotInterval : DEFAULT_SNAPSHOT_INTERVAL;
         }
 
         #endregion Public Constructors

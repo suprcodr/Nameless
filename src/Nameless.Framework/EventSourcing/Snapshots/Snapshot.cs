@@ -3,7 +3,7 @@
 namespace Nameless.Framework.EventSourcing.Snapshots {
 
     /// <summary>
-    /// Abstract clas to define a snapshot object.
+    /// Abstract class for snapshot object.
     /// </summary>
     public abstract class Snapshot {
 

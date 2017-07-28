@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Nameless.Framework.IoC;
 
-namespace Nameless.Framework.Cqrs.Query {
+namespace Nameless.Framework.CQRS.Query {
 
     public class QueryDispatcher : IQueryDispatcher {
 

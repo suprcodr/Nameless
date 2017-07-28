@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Nameless.WebApplication.Areas.UserManagement.Models.Manage;
-using Nameless.Framework.Web;
-using Nameless.Framework.Web.Identity;
-using Nameless.Framework.Web.Identity.Models;
+using Nameless.WebApplication.Core;
+using Nameless.WebApplication.Core.Identity;
+using Nameless.WebApplication.Core.Identity.Models;
 
 namespace Nameless.WebApplication.Areas.UserManagement.Controllers {
 
