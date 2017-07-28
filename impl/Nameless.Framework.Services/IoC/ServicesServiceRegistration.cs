@@ -10,7 +10,7 @@ namespace Nameless.Framework.Services.IoC {
     /// <summary>
     /// Autofac module implementation for Nameless.Framework.Services namespace.
     /// </summary>
-    public class ClockServiceRegistration : ServiceRegistrationBase {
+    public class ServicesServiceRegistration : ServiceRegistrationBase {
 
         #region Public Properties
 
@@ -26,6 +26,18 @@ namespace Nameless.Framework.Services.IoC {
         /// <remarks>Default is <see cref="LifetimeScopeType.PerScope"/>.</remarks>
         public LifetimeScopeType ClockLifetimeScope { get; set; } = LifetimeScopeType.PerScope;
 
+        /// <summary>
+        /// Gets or sets the <see cref="IHostingEnvironment"/> implementation.
+        /// </summary>
+        /// <remarks>Default is <see cref="HostingEnvironmentWrapper"/>.</remarks>
+        public Type HostingEnvironmentImplementation { get; set; } = typeof(HostingEnvironmentWrapper);
+
+        /// <summary>
+        /// Gets or sets the <see cref="IHostingEnvironment"/> <see cref="LifetimeScopeType"/>.
+        /// </summary>
+        /// <remarks>Default is <see cref="LifetimeScopeType.PerScope"/>.</remarks>
+        public LifetimeScopeType HostingEnvironmentLifetimeScope { get; set; } = LifetimeScopeType.PerScope;
+
         #endregion Public Properties
 
         #region Public Constructors
@@ -33,14 +45,14 @@ namespace Nameless.Framework.Services.IoC {
         /// <summary>
         /// Initializes a new instance of <see cref="ClockServiceRegistration"/>.
         /// </summary>
-        public ClockServiceRegistration()
+        public ServicesServiceRegistration()
             : base(null) { }
 
         /// <summary>
         /// Initializes a new instance of <see cref="ClockServiceRegistration"/>.
         /// </summary>
         /// <param name="supportAssemblies">The support assemblies.</param>
-        public ClockServiceRegistration(IEnumerable<Assembly> supportAssemblies)
+        public ServicesServiceRegistration(IEnumerable<Assembly> supportAssemblies)
             : base(supportAssemblies) { }
 
         #endregion Public Constructors
@@ -49,7 +61,15 @@ namespace Nameless.Framework.Services.IoC {
 
         /// <inheritdoc />
         public override void Register() {
-            Builder.RegisterType(GetClockImplementation()).As<IClock>().SetLifetimeScope(ClockLifetimeScope);
+            Builder
+                .RegisterType(GetClockImplementation())
+                .As<IClock>()
+                .SetLifetimeScope(ClockLifetimeScope);
+
+            Builder
+                .RegisterType(GetHostingEnvironmentImplementation())
+                .As<IHostingEnvironment>()
+                .SetLifetimeScope(HostingEnvironmentLifetimeScope);
         }
 
         #endregion Public Override Methods
@@ -62,6 +82,14 @@ namespace Nameless.Framework.Services.IoC {
             }
 
             return GetImplementationsFromSupportAssemblies(typeof(IClock)).SingleOrDefault();
+        }
+
+        private Type GetHostingEnvironmentImplementation() {
+            if (HostingEnvironmentImplementation != null) {
+                return HostingEnvironmentImplementation;
+            }
+
+            return GetImplementationsFromSupportAssemblies(typeof(IHostingEnvironment)).SingleOrDefault();
         }
 
         #endregion Private Methods

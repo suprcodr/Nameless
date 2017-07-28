@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Nameless.Framework.Logging;
-using Nameless.Framework.Web;
+using Nameless.WebApplication.Core;
 
 namespace Nameless.WebApplication.Controllers {
 

@@ -312,6 +312,11 @@
     <Folder Include="wwwroot\src\img\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\impl\Nameless.Framework.Cqrs\Nameless.Framework.CQRS.csproj" />
+    <ProjectReference Include="..\..\impl\Nameless.Framework.EventSourcing\Nameless.Framework.EventSourcing.csproj" />
+    <ProjectReference Include="..\..\impl\Nameless.Framework.Logging\Nameless.Framework.Logging.csproj" />
+    <ProjectReference Include="..\..\impl\Nameless.Framework.ObjectMapper\Nameless.Framework.ObjectMapper.csproj" />
+    <ProjectReference Include="..\..\impl\Nameless.Framework.Services\Nameless.Framework.Services.csproj" />
     <ProjectReference Include="..\Nameless.Common\Nameless.Common.csproj" />
     <ProjectReference Include="..\Nameless.Framework\Nameless.Framework.csproj" />
     <ProjectReference Include="..\Nameless.WebApplication.Core\Nameless.WebApplication.Core.csproj" />

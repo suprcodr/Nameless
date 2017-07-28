@@ -18,13 +18,19 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
-using Nameless.Framework.Data.Generic.Sql.Ado;
+using Nameless.Framework.CQRS.IoC;
+using Nameless.Framework.Data.Ado;
+using Nameless.Framework.Data.Ado.IoC;
+using Nameless.Framework.EventSourcing.IoC;
 using Nameless.Framework.IoC;
-using Nameless.Framework.IoC.Modules;
-using Nameless.Framework.Web;
-using Nameless.Framework.Web.Identity.Models;
-using Nameless.Framework.Web.Identity.Stores;
+using Nameless.Framework.Localization.IoC;
+using Nameless.Framework.Logging.IoC;
+using Nameless.Framework.ObjectMapper.IoC;
+using Nameless.Framework.Services.IoC;
 using Nameless.WebApplication.Code;
+using Nameless.WebApplication.Core;
+using Nameless.WebApplication.Core.Identity.Models;
+using Nameless.WebApplication.Core.Identity.Stores;
 
 namespace Nameless.WebApplication {
 
@@ -87,11 +93,11 @@ namespace Nameless.WebApplication {
                            RequestPath = new PathString("/lib"),
                            OnPrepareResponse = CacheStaticFileResponseContextAction
                        });
-                       //.UseStaticFiles(new StaticFileOptions { // For the Bookshelf folder
-                       //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Areas/Bookshelf/wwwroot")),
-                       //    RequestPath = new PathString("/bookshelf"),
-                       //    OnPrepareResponse = CacheStaticFileResponseContextAction
-                       //});
+            //.UseStaticFiles(new StaticFileOptions { // For the Bookshelf folder
+            //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Areas/Bookshelf/wwwroot")),
+            //    RequestPath = new PathString("/bookshelf"),
+            //    OnPrepareResponse = CacheStaticFileResponseContextAction
+            //});
             application.UseRequestLocalization(Configuration.Get<RequestLocalizationOptions>());
 
             application.UseIdentity();
@@ -158,18 +164,17 @@ namespace Nameless.WebApplication {
             var supportAssemblies = new[] {
                 Assembly.Load(new AssemblyName("Nameless.Common")),
                 Assembly.Load(new AssemblyName("Nameless.Framework")),
-                Assembly.Load(new AssemblyName("Nameless.Framework.Impl")),
-                Assembly.Load(new AssemblyName("Nameless.Framework.Web")),
-                Assembly.Load(new AssemblyName("Nameless.WebApplication"))
+                Assembly.Load(new AssemblyName("Nameless.WebApplication")),
+                Assembly.Load(new AssemblyName("Nameless.WebApplication.Core"))
             };
 
-            _compositionRoot.Compose(new CqrsServiceRegistration(supportAssemblies));
+            _compositionRoot.Compose(new CQRSServiceRegistration(supportAssemblies));
             _compositionRoot.Compose(new AdoServiceRegistration(supportAssemblies));
             _compositionRoot.Compose(new EventSourcingServiceRegistration(supportAssemblies));
             _compositionRoot.Compose(new LocalizationServiceRegistration(supportAssemblies));
-            _compositionRoot.Compose(new Log4NetServiceRegistration(supportAssemblies));
-            _compositionRoot.Compose(new AutoMapperServiceRegistration(supportAssemblies));
-            _compositionRoot.Compose(new ClockServiceRegistration(supportAssemblies));
+            _compositionRoot.Compose(new LoggingServiceRegistration(supportAssemblies));
+            _compositionRoot.Compose(new ObjectMapperServiceRegistration(supportAssemblies));
+            _compositionRoot.Compose(new ServicesServiceRegistration(supportAssemblies));
             _compositionRoot.Compose(new WebApplicationServiceRegistration {
                 Feature = feature,
                 Services = services

@@ -5,7 +5,7 @@ using log4net;
 using log4net.Config;
 using log4net.Repository;
 
-namespace Nameless.Framework.Logging.Impl {
+namespace Nameless.Framework.Logging {
 
     /// <summary>
     /// log4net implementation of <see cref="ILoggerFactory"/>

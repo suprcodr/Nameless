@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using Nameless.Framework.IoC;
-using Nameless.Framework.Web;
+using Nameless.WebApplication.Core;
 
 namespace Nameless.WebApplication.Code {
 

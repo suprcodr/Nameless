@@ -3,7 +3,7 @@ using System.Globalization;
 using log4net;
 using log4net.Core;
 
-namespace Nameless.Framework.Logging.Impl {
+namespace Nameless.Framework.Logging {
 
     /// <summary>
     /// log4net implementation of <see cref="ILogger"/>
