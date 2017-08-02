@@ -21,8 +21,8 @@ namespace Nameless.WebApplication.Core.Identity.Domains.Users.Queries {
 
         #region Public Constructors
 
-        public FindUserByNormalizedUserNameQueryHandler(IDatabase database)
-            : base(database) { }
+        public FindUserByNormalizedUserNameQueryHandler(IApplicationContext appContext, IDatabase database)
+            : base(appContext, database) { }
 
         #endregion Public Constructors
 
@@ -35,7 +35,8 @@ namespace Nameless.WebApplication.Core.Identity.Domains.Users.Queries {
                     commandType: CommandType.StoredProcedure,
                     mapper: EntitySchema.Users.Mapper,
                     parameters: new[] {
-                        Parameter.CreateInputParameter(EntitySchema.Users.Fields.NormalizedUserName, query.NormalizedUserName)
+                        Parameter.CreateInputParameter(EntitySchema.Users.Fields.NormalizedUserName, query.NormalizedUserName),
+                        Parameter.CreateInputParameter(EntitySchema.Users.Fields.OwnerID, AppContext.Owner.ID, DbType.Guid)
                     }
                 );
             }, cancellationToken);

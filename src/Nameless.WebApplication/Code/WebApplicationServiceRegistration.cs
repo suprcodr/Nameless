@@ -35,6 +35,8 @@ namespace Nameless.WebApplication.Code {
                 .InstancePerLifetimeScope();
 
             Builder.RegisterInstance(NullCommunicationService.Instance).As<ICommunicationService>().SingleInstance();
+            Builder.RegisterInstance(NullApplicationContext.Instance).As<IApplicationContext>().SingleInstance();
+            
 
             Builder.Populate(Services);
         }

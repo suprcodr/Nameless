@@ -34,7 +34,8 @@ namespace Nameless.WebApplication.Core.Identity.Domains.Users.Queries {
                     commandText: EntitySchema.Users.StoredProcedures.IsUserInRole,
                     commandType: CommandType.StoredProcedure,
                     parameters: new[] {
-                        Parameter.CreateInputParameter(EntitySchema.Users.Fields.ID, query.UserID)
+                        Parameter.CreateInputParameter(EntitySchema.Users.Fields.ID, query.UserID),
+                        Parameter.CreateInputParameter(EntitySchema.Roles.Fields.Name, query.RoleName)
                     }
                 );
             }, cancellationToken);

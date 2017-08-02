@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[users] (
     [user_id]                   UNIQUEIDENTIFIER    NOT NULL,
-    [concurrency_stamp]         NVARCHAR(MAX)       NOT NULL,
+    [concurrency_stamp]         NVARCHAR(MAX)       NULL,
     [user_name]                 NVARCHAR(256)       NOT NULL,
     [normalized_user_name]      NVARCHAR(256)       NULL,
     [full_name]                 NVARCHAR(256)       NOT NULL,

@@ -22,8 +22,8 @@ namespace Nameless.WebApplication.Core.Identity.Domains.Users.Queries {
 
         #region Public Constructors
 
-        public FindUserByLoginQueryHandler(IDatabase database)
-            : base(database) { }
+        public FindUserByLoginQueryHandler(IApplicationContext appContext, IDatabase database)
+            : base(appContext, database) { }
 
         #endregion Public Constructors
 
@@ -38,8 +38,7 @@ namespace Nameless.WebApplication.Core.Identity.Domains.Users.Queries {
                     parameters: new[] {
                         Parameter.CreateInputParameter(EntitySchema.UsersLogins.Fields.LoginProvider, query.LoginProvider),
                         Parameter.CreateInputParameter(EntitySchema.UsersLogins.Fields.ProviderKey, query.ProviderKey),
-
-                        // TODO: OwnerID
+                        Parameter.CreateInputParameter(EntitySchema.Users.Fields.OwnerID, AppContext.Owner.ID, DbType.Guid)
                     }
                 );
             }, cancellationToken);

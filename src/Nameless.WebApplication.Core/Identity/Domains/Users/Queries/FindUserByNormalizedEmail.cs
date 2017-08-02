@@ -20,8 +20,8 @@ namespace Nameless.WebApplication.Core.Identity.Domains.Users.Queries {
 
         #region Public Constructors
 
-        public FindUserByNormalizedEmailQueryHandler(IDatabase database)
-            : base(database) { }
+        public FindUserByNormalizedEmailQueryHandler(IApplicationContext appContext, IDatabase database)
+            : base(appContext, database) { }
 
         #endregion Public Constructors
 
@@ -34,7 +34,8 @@ namespace Nameless.WebApplication.Core.Identity.Domains.Users.Queries {
                     commandType: CommandType.StoredProcedure,
                     mapper: EntitySchema.Users.Mapper,
                     parameters: new[] {
-                        Parameter.CreateInputParameter(EntitySchema.Users.Fields.NormalizedEmail, query.NormalizedEmail)
+                        Parameter.CreateInputParameter(EntitySchema.Users.Fields.NormalizedEmail, query.NormalizedEmail),
+                        Parameter.CreateInputParameter(EntitySchema.Users.Fields.OwnerID, AppContext.Owner.ID, DbType.Guid)
                     }
                 );
             }, cancellationToken);

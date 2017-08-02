@@ -21,8 +21,8 @@ namespace Nameless.WebApplication.Core.Identity.Domains.Users.Queries {
 
         #region Public Constructors
 
-        public GetUsersInRoleQueryHandler(IDatabase database)
-            : base(database) { }
+        public GetUsersInRoleQueryHandler(IApplicationContext appContext, IDatabase database)
+            : base(appContext, database) { }
 
         #endregion Public Constructors
 
@@ -35,7 +35,8 @@ namespace Nameless.WebApplication.Core.Identity.Domains.Users.Queries {
                     commandType: CommandType.StoredProcedure,
                     mapper: EntitySchema.Users.Mapper,
                     parameters: new[] {
-                        Parameter.CreateInputParameter(EntitySchema.Roles.Fields.Name, query.RoleName)
+                        Parameter.CreateInputParameter(EntitySchema.Roles.Fields.Name, query.RoleName),
+                        Parameter.CreateInputParameter(EntitySchema.Users.Fields.OwnerID, AppContext.Owner.ID, DbType.Guid)
                     }
                 );
             }, cancellationToken)

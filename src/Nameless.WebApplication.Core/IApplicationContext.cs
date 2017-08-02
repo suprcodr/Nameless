@@ -16,7 +16,7 @@ namespace Nameless.WebApplication.Core {
     /// <summary>
     /// Null Object Pattern implementation for IApplicationContext. (see: https://en.wikipedia.org/wiki/Null_Object_pattern)
     /// </summary>
-    internal sealed class NullApplicationContext : IApplicationContext {
+    public sealed class NullApplicationContext : IApplicationContext {
 
         #region Private Static Read-Only Fields
 

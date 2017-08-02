@@ -37,7 +37,7 @@ namespace Nameless.WebApplication.Core.Identity.Domains.Users.Queries {
                     mapper: EntitySchema.Users.Mapper,
                     parameters: new[] {
                         Parameter.CreateInputParameter(EntitySchema.UsersClaims.Fields.Type, query.ClaimType),
-                        GetOwnerParameter()
+                        Parameter.CreateInputParameter(EntitySchema.Users.Fields.OwnerID, AppContext.Owner.ID, DbType.Guid)
                     }
                 );
             }, cancellationToken)

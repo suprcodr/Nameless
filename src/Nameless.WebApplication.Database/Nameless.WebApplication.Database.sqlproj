@@ -105,55 +105,23 @@
     <Build Include="Identity\StoredProcedures\UsersLogins\Queries\dbo.GetUserLogins.sql" />
     <Build Include="Identity\StoredProcedures\Users\Commands\dbo.CreateUser.sql" />
     <Build Include="Identity\StoredProcedures\Users\Commands\dbo.DeleteUser.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Commands\dbo.IncrementUserAccessFailedCount.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Commands\dbo.ResetUserAccessFailedCount.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Commands\dbo.SetUserEmail.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Commands\dbo.SetUserEmailConfirmed.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Commands\dbo.SetUserLockoutEnabled.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Commands\dbo.SetUserLockoutEndDate.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Commands\dbo.SetUserNormalizedEmail.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Commands\dbo.SetUserNormalizedName.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Commands\dbo.SetUserPhoneNumber.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Commands\dbo.SetUserPhoneNumberConfirmed.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Commands\dbo.SetUserSecurityStamp.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Commands\dbo.SetUserTwoFactorEnabled.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Commands\dbo.SetUserName.sql" />
     <Build Include="Identity\StoredProcedures\Users\Commands\dbo.UpdateUser.sql" />
     <Build Include="Identity\StoredProcedures\Users\Queries\dbo.FindUserByNormalizedEmail.sql" />
     <Build Include="Identity\StoredProcedures\Users\Queries\dbo.FindUserByID.sql" />
     <Build Include="Identity\StoredProcedures\Users\Queries\dbo.FindUserByNormalizedUserName.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Queries\dbo.GetUserAccessFailedCount.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Queries\dbo.GetUserEmail.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Queries\dbo.GetUserEmailConfirmed.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Queries\dbo.GetUserID.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Queries\dbo.GetUserLockoutEnabled.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Queries\dbo.GetUserLockoutEndDate.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Queries\dbo.GetUserNormalizedEmail.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Queries\dbo.GetUserNormalizedName.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Queries\dbo.GetUserPasswordHash.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Queries\dbo.GetUserPhoneNumber.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Queries\dbo.GetUserPhoneNumberConfirmed.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Queries\dbo.GetUserSecurityStamp.sql" />
     <Build Include="Identity\StoredProcedures\Users\Queries\dbo.GetUsersFromClaim.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Queries\dbo.GetUserTwoFactorEnabled.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Queries\dbo.GetUserName.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Queries\dbo.UserHasPassword.sql" />
     <Build Include="Identity\StoredProcedures\Roles\Commands\dbo.CreateRole.sql" />
     <Build Include="Identity\StoredProcedures\Roles\Commands\dbo.DeleteRole.sql" />
-    <Build Include="Identity\StoredProcedures\Roles\Commands\dbo.SetRoleName.sql" />
-    <Build Include="Identity\StoredProcedures\Roles\Commands\dbo.SetRoleNormalizedName.sql" />
     <Build Include="Identity\StoredProcedures\Roles\Commands\dbo.UpdateRole.sql" />
     <Build Include="Identity\StoredProcedures\Roles\Queries\dbo.FindRoleByID.sql" />
     <Build Include="Identity\StoredProcedures\Roles\Queries\dbo.FindRoleByNormalizedName.sql" />
-    <Build Include="Identity\StoredProcedures\Roles\Queries\dbo.GetRoleID.sql" />
-    <Build Include="Identity\StoredProcedures\Roles\Queries\dbo.GetRoleName.sql" />
-    <Build Include="Identity\StoredProcedures\Roles\Queries\dbo.GetRoleNormalizedName.sql" />
     <Build Include="Identity\StoredProcedures\UsersClaims\Commands\dbo.ReplaceUserClaim.sql" />
     <Build Include="Identity\StoredProcedures\Users\Commands\dbo.RemoveUserFromRole.sql" />
     <Build Include="Identity\StoredProcedures\Users\Queries\dbo.FindUserByLogin.sql" />
     <Build Include="Identity\StoredProcedures\Users\Queries\dbo.GetUsersInRole.sql" />
-    <Build Include="Identity\StoredProcedures\Users\Queries\dbo.IsUserInRole.sql" />
+    <Build Include="Identity\StoredProcedures\Users\Queries\dbo.GetUserRoles.sql" />
     <Build Include="Identity\StoredProcedures\Users\Commands\dbo.AddUserToRole.sql" />
+    <Build Include="Identity\StoredProcedures\Users\Queries\dbo.IsUserInRole.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Identity\Tables\dbo.roles_claims.sql" />
@@ -169,5 +137,8 @@
     <None Include="EventSourcing\StoredProcedures\dbo.CreateEvent.sql" />
     <None Include="EventSourcing\StoredProcedures\dbo.ListEvents.sql" />
     <None Include="Nameless.WebApplication.Database.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="CreateRootOwner.PostDeployment.sql" />
   </ItemGroup>
 </Project>

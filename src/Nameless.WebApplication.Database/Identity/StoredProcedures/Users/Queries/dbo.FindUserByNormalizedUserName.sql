@@ -1,4 +1,4 @@
-CREATE PROCEDURE [dbo].[FindUserByNormalizedName] (
+CREATE PROCEDURE [dbo].[FindUserByNormalizedUserName] (
     @normalized_user_name   NVARCHAR(256),
     @owner_id               UNIQUEIDENTIFIER
 ) AS

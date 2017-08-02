@@ -25,8 +25,8 @@ namespace Nameless.WebApplication.Core.Identity.Domains.Users.Commands {
 
         #region Public Constructors
 
-        public CreateUserCommandHandler(IDatabase database)
-            : base(database) { }
+        public CreateUserCommandHandler(IApplicationContext appContext, IDatabase database)
+            : base(appContext, database) { }
 
         #endregion Public Constructors
 
@@ -43,7 +43,8 @@ namespace Nameless.WebApplication.Core.Identity.Domains.Users.Commands {
                         Parameter.CreateInputParameter(EntitySchema.Users.Fields.Email, command.Email),
                         Parameter.CreateInputParameter(EntitySchema.Users.Fields.FullName, command.FullName),
                         Parameter.CreateInputParameter(EntitySchema.Users.Fields.ProfilePicturePath, command.ProfilePicturePath),
-                        Parameter.CreateInputParameter(EntitySchema.Users.Fields.ProfilePictureBlob, command.ProfilePictureBlob, DbType.Binary)
+                        Parameter.CreateInputParameter(EntitySchema.Users.Fields.ProfilePictureBlob, command.ProfilePictureBlob, DbType.Binary),
+                        Parameter.CreateInputParameter(EntitySchema.Users.Fields.OwnerID, AppContext.Owner.ID, DbType.Guid)
                     }
                 );
             }, cancellationToken);

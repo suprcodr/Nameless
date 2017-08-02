@@ -176,27 +176,27 @@ namespace Nameless.WebApplication.Core.Identity.Stores {
         public Task<string> GetNormalizedRoleNameAsync(Role role, CancellationToken cancellationToken) {
             Prevent.ParameterNull(role, nameof(role));
 
-            return _queryDispatcher.QueryAsync(new GetNormalizedRoleNameQuery {
-                RoleID = role.ID
-            }, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Task.FromResult(role.NormalizedName);
         }
 
         /// <inheritdoc />
         public Task<string> GetRoleIdAsync(Role role, CancellationToken cancellationToken) {
             Prevent.ParameterNull(role, nameof(role));
 
-            return _queryDispatcher.QueryAsync(new GetRoleIDQuery {
-                NormalizedName = role.NormalizedName
-            }, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Task.FromResult(role.ID.ToString());
         }
 
         /// <inheritdoc />
         public Task<string> GetRoleNameAsync(Role role, CancellationToken cancellationToken) {
             Prevent.ParameterNull(role, nameof(role));
 
-            return _queryDispatcher.QueryAsync(new GetRoleNameQuery {
-                RoleID = role.ID
-            }, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Task.FromResult(role.Name);
         }
 
         /// <inheritdoc />
@@ -215,10 +215,11 @@ namespace Nameless.WebApplication.Core.Identity.Stores {
             Prevent.ParameterNull(role, nameof(role));
             Prevent.ParameterNull(normalizedName, nameof(normalizedName));
 
-            return _commandDispatcher.CommandAsync(new SetRoleNormalizedNameCommand {
-                RoleID = role.ID,
-                NormalizedName = normalizedName
-            }, cancellationToken: cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            role.NormalizedName = normalizedName;
+
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc />
@@ -226,10 +227,11 @@ namespace Nameless.WebApplication.Core.Identity.Stores {
             Prevent.ParameterNull(role, nameof(role));
             Prevent.ParameterNull(roleName, nameof(roleName));
 
-            return _commandDispatcher.CommandAsync(new SetRoleNameCommand {
-                RoleID = role.ID,
-                Name = roleName
-            }, cancellationToken: cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            role.Name = roleName;
+
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc />

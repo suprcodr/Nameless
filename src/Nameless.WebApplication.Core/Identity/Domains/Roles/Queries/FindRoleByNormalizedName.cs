@@ -20,8 +20,8 @@ namespace Nameless.WebApplication.Core.Identity.Domains.Roles.Queries {
 
         #region Public Constructors
 
-        public FindRoleByNormalizedNameQueryHandler(IDatabase database)
-            : base(database) { }
+        public FindRoleByNormalizedNameQueryHandler(IApplicationContext appContext, IDatabase database)
+            : base(appContext, database) { }
 
         #endregion Public Constructors
 
@@ -34,7 +34,8 @@ namespace Nameless.WebApplication.Core.Identity.Domains.Roles.Queries {
                     commandType: CommandType.StoredProcedure,
                     mapper: EntitySchema.Roles.Mapper,
                     parameters: new[] {
-                        Parameter.CreateInputParameter(EntitySchema.Roles.Fields.NormalizedName, query.NormalizedName)
+                        Parameter.CreateInputParameter(EntitySchema.Roles.Fields.NormalizedName, query.NormalizedName),
+                        Parameter.CreateInputParameter(EntitySchema.Roles.Fields.OwnerID, AppContext.Owner.ID, DbType.Guid)
                     }
                 );
             }, cancellationToken);

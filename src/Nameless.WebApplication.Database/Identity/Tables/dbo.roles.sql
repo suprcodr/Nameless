@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[roles] (
     [role_id]           UNIQUEIDENTIFIER    NOT NULL,
-    [concurrency_stamp] NVARCHAR(MAX)       NOT NULL,
+    [concurrency_stamp] NVARCHAR(MAX)       NULL,
     [name]	        	NVARCHAR(256)       NOT NULL,
     [normalized_name]   NVARCHAR(256)       NULL,
     [owner_id]          UNIQUEIDENTIFIER    NOT NULL,
