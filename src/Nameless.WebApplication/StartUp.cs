@@ -73,7 +73,6 @@ namespace Nameless.WebApplication {
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder application, IHostingEnvironment environment, ILoggerFactory loggerFactory, IApplicationLifetime applicationLifetime) {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            //loggerFactory.AddDebug();
 
             if (environment.IsDevelopment()) {
                 application.UseDeveloperExceptionPage();
@@ -92,22 +91,17 @@ namespace Nameless.WebApplication {
                            FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot/lib")),
                            RequestPath = new PathString("/lib"),
                            OnPrepareResponse = CacheStaticFileResponseContextAction
+                       })
+                       .UseStaticFiles(new StaticFileOptions { // For the UserManagement Area
+                           FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Areas/UserManagement/wwwroot")),
+                           RequestPath = new PathString("/lib"),
+                           OnPrepareResponse = CacheStaticFileResponseContextAction
                        });
-            //.UseStaticFiles(new StaticFileOptions { // For the Bookshelf folder
-            //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Areas/Bookshelf/wwwroot")),
-            //    RequestPath = new PathString("/bookshelf"),
-            //    OnPrepareResponse = CacheStaticFileResponseContextAction
-            //});
             application.UseRequestLocalization(Configuration.Get<RequestLocalizationOptions>());
 
             application.UseIdentity();
 
             application.UseMvc(routes => {
-                routes.MapRoute(
-                    name: "bookshelfRoute",
-                    template: "Bookshelf",
-                    defaults: new { area = "Bookshelf", controller = "Book", action = "Search" });
-
                 routes.MapRoute(
                     name: "areaRoute",
                     template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");

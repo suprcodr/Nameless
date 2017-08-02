@@ -4,6 +4,15 @@
     ViewData["PageCssClass"] = "register-page";
 }
 
+@section Styles {
+    <environment names="Development">
+        <link href="~/lib/css/account.signup.css" rel="stylesheet" />
+    </environment>
+    <environment names="Staging,Production">
+        <link href="~/lib/css/account.signup.min.css" rel="stylesheet" />
+    </environment>
+}
+
 <div class="register-box">
     <div class="register-logo">
         <a asp-area="" asp-controller="Home" asp-action="Index"><b>@ViewData["ApplicationName"]</b> App</a>
@@ -11,7 +20,7 @@
 
     <div class="register-box-body">
         <p class="login-box-msg">@T["Register a new membership"]</p>
-        <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+        <form asp-controller="Account" asp-action="SignUp" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
             <div class="form-group has-feedback">
                 <input type="text" asp-for="FullName" class="form-control" placeholder="@T["Full name"]">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -36,9 +45,10 @@
                 <div class="col-xs-8">
                     <div class="checkbox icheck icheckbox_flat-blue">
                         <label>
-                            <input type="checkbox" name="TermsAgreement"> @T["I agree to the"] <a asp-area="" asp-controller="About" asp-action="Agreement" target="_blank">@T["terms"]</a>
+                            <input type="checkbox" name="TermsAgreement" asp-for="TermsAgreement"> @T["I agree to the"] <a asp-area="" asp-controller="About" asp-action="Agreement" target="_blank">@T["terms"]</a>
                         </label>
                     </div>
+                    <span asp-validation-for="TermsAgreement" class="help-block"></span>
                 </div>
                 <!-- /.col -->
                 <div class="col-xs-4">

@@ -29,8 +29,8 @@ namespace Nameless.Framework.CQRS {
 
         #region ICommandQueryDispatcher Members
 
-        public Task CommandAsync<TCommand>(TCommand command, IProgress<int> progress = null, CancellationToken cancellationToken = default(CancellationToken)) where TCommand : ICommand {
-            return _commandDispatcher.CommandAsync(command, progress, cancellationToken);
+        public Task CommandAsync<TCommand>(TCommand command, CancellationToken cancellationToken = default(CancellationToken), IProgress<int> progress = null) where TCommand : ICommand {
+            return _commandDispatcher.CommandAsync(command, cancellationToken, progress);
         }
 
         public Task<TResult> QueryAsync<TResult>(IQuery<TResult> query, CancellationToken cancellationToken = default(CancellationToken)) {

@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="EntryPoint.cs" />
+    <Compile Include="Models\QueryBindingModel.cs" />
     <Compile Include="Models\SearchParameter.cs" />
     <Compile Include="Models\SearchResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

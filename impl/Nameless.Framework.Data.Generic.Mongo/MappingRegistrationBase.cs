@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson.Serialization;
 
-namespace Nameless.Framework.Data.Generic.NoSql.Mongo {
+namespace Nameless.Framework.Data.Generic.Mongo {
 
     /// <summary>
     /// Abstract class to implement BSON class mappings for POCO.

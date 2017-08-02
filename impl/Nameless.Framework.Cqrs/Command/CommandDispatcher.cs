@@ -25,13 +25,13 @@ namespace Nameless.Framework.CQRS.Command {
 
         #region ICommandDispatcher Members
 
-        public Task CommandAsync<TCommand>(TCommand command, IProgress<int> progress = null, CancellationToken cancellationToken = default(CancellationToken)) where TCommand : ICommand {
+        public Task CommandAsync<TCommand>(TCommand command, CancellationToken cancellationToken = default(CancellationToken), IProgress<int> progress = null) where TCommand : ICommand {
             Prevent.ParameterNull(command, nameof(command));
 
             var handlerType = typeof(ICommandHandler<>).MakeGenericType(command.GetType());
             dynamic handler = _resolver.Resolve(handlerType);
 
-            return handler.HandleAsync((dynamic)command, progress, cancellationToken);
+            return handler.HandleAsync((dynamic)command, cancellationToken, progress);
         }
 
         #endregion ICommandDispatcher Members

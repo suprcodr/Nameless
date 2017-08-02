@@ -38,7 +38,7 @@ namespace Nameless.WebApplication.Core.Identity.Domains.Users.Commands {
                     parameters: new[] {
                         Parameter.CreateInputParameter(EntitySchema.Users.Fields.ID, command.UserID, DbType.Guid),
                         Parameter.CreateInputParameter(EntitySchema.Users.Fields.FullName, command.FullName),
-                        Parameter.CreateInputParameter(EntitySchema.Users.Fields.ProfilePicture, command.ProfilePicture),
+                        Parameter.CreateInputParameter(EntitySchema.Users.Fields.ProfilePicturePath, command.ProfilePicture),
                         Parameter.CreateInputParameter(EntitySchema.Users.Fields.ProfilePictureBlob, command.ProfilePictureBlob, DbType.Binary)
                     }
                 );

@@ -18,7 +18,7 @@ namespace Nameless.Framework.CQRS.Command {
         /// <param name="command">The command.</param>
         /// <param name="progress">The progress notifier.</param>
         public static void Command<TCommand>(this ICommandDispatcher source, TCommand command, IProgress<int> progress = null) where TCommand : ICommand {
-            source.CommandAsync(command, progress, CancellationToken.None).Wait();
+            source.CommandAsync(command, CancellationToken.None, progress).Wait();
         }
 
         #endregion Public Static Methods

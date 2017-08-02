@@ -7,11 +7,14 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.4.4" />
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\impl\Nameless.Framework.Data.Generic.Mongo\Nameless.Framework.Data.Generic.Mongo.csproj" />
+    <ProjectReference Include="..\..\impl\Nameless.Framework.Network.PubSub\Nameless.Framework.Network.PubSub.csproj" />
     <ProjectReference Include="..\..\src\Nameless.Common\Nameless.Common.csproj" />
     <ProjectReference Include="..\..\src\Nameless.Framework\Nameless.Framework.csproj" />
   </ItemGroup>

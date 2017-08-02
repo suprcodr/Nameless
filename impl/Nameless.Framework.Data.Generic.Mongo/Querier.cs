@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 
-namespace Nameless.Framework.Data.Generic.NoSql.Mongo {
+namespace Nameless.Framework.Data.Generic.Mongo {
 
     public sealed class Querier : IQuerier {
         

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Nameless.WebApplication.Core.Validations;
 using Nameless.WebApplication.Resources;
 
 namespace Nameless.WebApplication.Areas.UserManagement.Models.Account {
@@ -27,6 +28,7 @@ namespace Nameless.WebApplication.Areas.UserManagement.Models.Account {
         [Compare(nameof(Password), ErrorMessageResourceType = typeof(Validations), ErrorMessageResourceName = "ConfirmPassword")]
         public string ConfirmPassword { get; set; }
 
+        [Accept(ErrorMessageResourceType = typeof(Validations), ErrorMessageResourceName = "Accept")]
         public bool TermsAgreement { get; set; }
 
         #endregion Public Properties

@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Http;
+﻿using System.Web.Http;
+using Nameless.Framework.Search.Models;
 
 namespace Nameless.Framework.Search.Controllers {
+
     public class SearchController : ApiController {
+
         #region Private Read-Only Fields
 
         private readonly IIndexProvider _indexProvider;
 
-        #endregion
+        #endregion Private Read-Only Fields
 
         #region Public Constructors
 
@@ -21,15 +19,15 @@ namespace Nameless.Framework.Search.Controllers {
             _indexProvider = indexProvider;
         }
 
-        #endregion
+        #endregion Public Constructors
 
         #region Public Methods
 
         [HttpGet]
-        public IHttpActionResult Search(SearchModel model) {
-
+        public IHttpActionResult Search(QueryBindingModel query) {
+            throw new System.NotImplementedException();
         }
-        
-        #endregion
+
+        #endregion Public Methods
     }
 }

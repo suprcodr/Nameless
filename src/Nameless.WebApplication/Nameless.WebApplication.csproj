@@ -30,15 +30,22 @@
   <ItemGroup>
     <Compile Remove="Areas\Financier\**" />
     <Compile Remove="Areas\Mailing\**" />
+    <Compile Remove="wwwroot\src\img\**" />
     <Content Remove="Areas\Financier\**" />
     <Content Remove="Areas\Mailing\**" />
+    <Content Remove="wwwroot\src\img\**" />
     <EmbeddedResource Remove="Areas\Financier\**" />
     <EmbeddedResource Remove="Areas\Mailing\**" />
+    <EmbeddedResource Remove="wwwroot\src\img\**" />
     <None Remove="Areas\Financier\**" />
     <None Remove="Areas\Mailing\**" />
+    <None Remove="wwwroot\src\img\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Areas\UserManagement\wwwroot\css\account.signup.css">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Include="wwwroot\favicon.ico" />
     <Content Include="wwwroot\src\css\form.css" />
     <Content Include="wwwroot\src\css\form.min.css" />
@@ -309,9 +316,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="wwwroot\src\img\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\impl\Nameless.Framework.Cqrs\Nameless.Framework.CQRS.csproj" />
     <ProjectReference Include="..\..\impl\Nameless.Framework.EventSourcing\Nameless.Framework.EventSourcing.csproj" />
     <ProjectReference Include="..\..\impl\Nameless.Framework.Logging\Nameless.Framework.Logging.csproj" />
@@ -320,6 +324,15 @@
     <ProjectReference Include="..\Nameless.Common\Nameless.Common.csproj" />
     <ProjectReference Include="..\Nameless.Framework\Nameless.Framework.csproj" />
     <ProjectReference Include="..\Nameless.WebApplication.Core\Nameless.WebApplication.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\UserManagement\wwwroot\img\" />
+    <Folder Include="Areas\UserManagement\wwwroot\js\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Areas\UserManagement\wwwroot\css\account.signup.min.css">
+      <DependentUpon>account.signup.css</DependentUpon>
+    </None>
   </ItemGroup>
 
 </Project>

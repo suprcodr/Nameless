@@ -62,6 +62,15 @@ namespace Nameless.WebApplication.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You must accept the terms imposed by {0}..
+        /// </summary>
+        public static string Accept {
+            get {
+                return ResourceManager.GetString("Accept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The new password and confirmation password do not match..
         /// </summary>
         public static string ConfirmNewPassword {

@@ -110,7 +110,7 @@ namespace Nameless.WebApplication.Core.Identity.Models {
         /// <summary>
         /// Gets or sets the profile picture.
         /// </summary>
-        public virtual string ProfilePicture { get; set; }
+        public virtual string ProfilePicturePath { get; set; }
 
         /// <summary>
         /// Gets or sets the profile picture (blob, if any).

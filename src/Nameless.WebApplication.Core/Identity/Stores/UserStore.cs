@@ -21,7 +21,7 @@ namespace Nameless.WebApplication.Core.Identity.Stores {
     /// <summary>
     /// Current implementation of <see cref="IUserStore{User}"/> and others.
     /// </summary>
-    public class UserStore : IQueryableUserStore<User>,
+    public sealed class UserStore : IQueryableUserStore<User>,
                              IUserClaimStore<User>,
                              IUserEmailStore<User>,
                              IUserLockoutStore<User>,
@@ -113,10 +113,7 @@ namespace Nameless.WebApplication.Core.Identity.Stores {
 
             return _commandDispatcher.CommandAsync(new ReplaceUserClaimCommand {
                 UserID = user.ID,
-
                 OldClaimType = claim.Type,
-                OldClaimValue = claim.Value,
-
                 NewClaimType = newClaim.Type,
                 NewClaimValue = newClaim.Value
             }, cancellationToken: cancellationToken);
@@ -151,38 +148,40 @@ namespace Nameless.WebApplication.Core.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
             Prevent.ParameterNullOrWhiteSpace(email, nameof(email));
 
-            return _commandDispatcher.CommandAsync(new SetUserEmailCommand {
-                UserID = user.ID,
-                Email = email
-            }, cancellationToken: cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            user.Email = email;
+
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc />
         public Task<string> GetEmailAsync(User user, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return _queryDispatcher.QueryAsync(new GetUserEmailQuery {
-                UserID = user.ID
-            }, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Task.FromResult(user.Email);
         }
 
         /// <inheritdoc />
         public Task<bool> GetEmailConfirmedAsync(User user, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return _queryDispatcher.QueryAsync(new GetUserEmailConfirmedQuery {
-                UserID = user.ID
-            }, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Task.FromResult(user.EmailConfirmed);
         }
 
         /// <inheritdoc />
         public Task SetEmailConfirmedAsync(User user, bool confirmed, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return _commandDispatcher.CommandAsync(new SetUserEmailConfirmedCommand {
-                UserID = user.ID,
-                Confirmed = confirmed
-            }, cancellationToken: cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            user.EmailConfirmed = confirmed;
+
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc />
@@ -198,9 +197,9 @@ namespace Nameless.WebApplication.Core.Identity.Stores {
         public Task<string> GetNormalizedEmailAsync(User user, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return _queryDispatcher.QueryAsync(new GetUserNormalizedEmailQuery {
-                UserID = user.ID
-            }, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Task.FromResult(user.NormalizedEmail);
         }
 
         /// <inheritdoc />
@@ -208,10 +207,11 @@ namespace Nameless.WebApplication.Core.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
             Prevent.ParameterNullOrWhiteSpace(normalizedEmail, nameof(normalizedEmail));
 
-            return _commandDispatcher.CommandAsync(new SetUserNormalizedEmailCommand {
-                UserID = user.ID,
-                NormalizedEmail = normalizedEmail
-            }, cancellationToken: cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            user.NormalizedEmail = normalizedEmail;
+
+            return Task.CompletedTask;
         }
 
         #endregion IUserEmailStore<User>
@@ -222,79 +222,71 @@ namespace Nameless.WebApplication.Core.Identity.Stores {
         public Task<DateTimeOffset?> GetLockoutEndDateAsync(User user, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return _queryDispatcher.QueryAsync(new GetUserLockoutEndDateQuery {
-                UserID = user.ID
-            }, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Task.FromResult(user.LockoutEndDateUtc);
         }
 
         /// <inheritdoc />
         public Task SetLockoutEndDateAsync(User user, DateTimeOffset? lockoutEnd, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return _commandDispatcher.CommandAsync(new SetUserLockoutEndDateCommand {
-                UserID = user.ID,
-                LockoutEndDateUtc = lockoutEnd
-            }, cancellationToken: cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            user.LockoutEndDateUtc = lockoutEnd;
+
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc />
         public Task<int> IncrementAccessFailedCountAsync(User user, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return _commandDispatcher
-                .CommandAsync(new IncrementUserAccessFailedCountCommand {
-                    UserID = user.ID
-                }, cancellationToken: cancellationToken)
-                .ContinueWith(continuation => {
-                    if (continuation.IsFaulted) {
-                        throw continuation.Exception.InnerException;
-                    }
+            cancellationToken.ThrowIfCancellationRequested();
 
-                    if (continuation.IsCanceled) {
-                        return user.AccessFailedCount;
-                    }
+            user.AccessFailedCount++;
 
-                    return _queryDispatcher.Query(new GetUserAccessFailedCountQuery {
-                        UserID = user.ID
-                    });
-                });
+            return Task.FromResult(user.AccessFailedCount);
         }
 
         /// <inheritdoc />
         public Task ResetAccessFailedCountAsync(User user, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return _commandDispatcher.CommandAsync(new ResetUserAccessFailedCountCommand {
-                UserID = user.ID
-            }, cancellationToken: cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            user.AccessFailedCount = 0;
+
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc />
         public Task<int> GetAccessFailedCountAsync(User user, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return _queryDispatcher.QueryAsync(new GetUserAccessFailedCountQuery {
-                UserID = user.ID
-            }, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Task.FromResult(user.AccessFailedCount);
         }
 
         /// <inheritdoc />
         public Task<bool> GetLockoutEnabledAsync(User user, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return _queryDispatcher.QueryAsync(new GetUserLockoutEnabledQuery {
-                UserID = user.ID
-            }, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Task.FromResult(user.LockoutEnabled);
         }
 
         /// <inheritdoc />
         public Task SetLockoutEnabledAsync(User user, bool enabled, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return _commandDispatcher.CommandAsync(new SetUserLockoutEnabledCommand {
-                UserID = user.ID,
-                LockoutEnabled = enabled
-            }, cancellationToken: cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            user.LockoutEnabled = enabled;
+
+            return Task.CompletedTask;
         }
 
         #endregion IUserLockoutStore<User>
@@ -351,31 +343,32 @@ namespace Nameless.WebApplication.Core.Identity.Stores {
 
         /// <inheritdoc />
         public Task SetPasswordHashAsync(User user, string passwordHash, CancellationToken cancellationToken) {
+            cancellationToken.ThrowIfCancellationRequested();
+
             Prevent.ParameterNull(user, nameof(user));
             Prevent.ParameterNullOrWhiteSpace(passwordHash, nameof(passwordHash));
 
-            return _commandDispatcher.CommandAsync(new SetUserPasswordHashCommand {
-                UserID = user.ID,
-                PasswordHash = passwordHash
-            }, cancellationToken: cancellationToken);
+            user.PasswordHash = passwordHash;
+
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc />
         public Task<string> GetPasswordHashAsync(User user, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return _queryDispatcher.QueryAsync(new GetUserPasswordHashQuery {
-                UserID = user.ID
-            }, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Task.FromResult(user.PasswordHash);
         }
 
         /// <inheritdoc />
         public Task<bool> HasPasswordAsync(User user, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return _queryDispatcher.QueryAsync(new UserHasPasswordQuery {
-                UserID = user.ID
-            }, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Task.FromResult(user.PasswordHash != null);
         }
 
         #endregion IUserPasswordStore<User> Members
@@ -387,38 +380,40 @@ namespace Nameless.WebApplication.Core.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
             Prevent.ParameterNullOrWhiteSpace(phoneNumber, nameof(phoneNumber));
 
-            return _commandDispatcher.CommandAsync(new SetUserPhoneNumberCommand {
-                UserID = user.ID,
-                PhoneNumber = phoneNumber
-            }, cancellationToken: cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            user.PhoneNumber = phoneNumber;
+
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc />
         public Task<string> GetPhoneNumberAsync(User user, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return _queryDispatcher.QueryAsync(new GetUserPhoneNumberQuery {
-                UserID = user.ID
-            }, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Task.FromResult(user.PhoneNumber);
         }
 
         /// <inheritdoc />
         public Task<bool> GetPhoneNumberConfirmedAsync(User user, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return _queryDispatcher.QueryAsync(new GetUserPhoneNumberConfirmedQuery {
-                UserID = user.ID
-            }, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Task.FromResult(user.PhoneNumberConfirmed);
         }
 
         /// <inheritdoc />
         public Task SetPhoneNumberConfirmedAsync(User user, bool confirmed, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return _commandDispatcher.CommandAsync(new SetUserPhoneNumberConfirmedCommand {
-                UserID = user.ID,
-                Confirmed = confirmed
-            }, cancellationToken: cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            user.PhoneNumberConfirmed = confirmed;
+
+            return Task.CompletedTask;
         }
 
         #endregion IUserPhoneNumberStore<User> Members
@@ -430,19 +425,20 @@ namespace Nameless.WebApplication.Core.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
             Prevent.ParameterNullOrWhiteSpace(stamp, nameof(stamp));
 
-            return _commandDispatcher.CommandAsync(new SetUserSecurityStampCommand {
-                UserID = user.ID,
-                SecurityStamp = stamp
-            }, cancellationToken: cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            user.SecurityStamp = stamp;
+
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc />
         public Task<string> GetSecurityStampAsync(User user, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return _queryDispatcher.QueryAsync(new GetUserSecurityStampQuery {
-                UserID = user.ID
-            }, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Task.FromResult(user.SecurityStamp);
         }
 
         #endregion IUserSecurityStampStore<User> Members
@@ -456,11 +452,11 @@ namespace Nameless.WebApplication.Core.Identity.Stores {
             return _commandDispatcher.CommandAsync(new CreateUserCommand {
                 Email = user.Email,
                 FullName = user.FullName,
-                ProfilePicture = user.ProfilePicture,
+                ProfilePicturePath = user.ProfilePicturePath,
                 ProfilePictureBlob = user.ProfilePictureBlob,
                 UserName = user.UserName
             }, cancellationToken: cancellationToken)
-                 .ContinueWith(IdentityResultContinuation);
+            .ContinueWith(IdentityResultContinuation);
         }
 
         /// <inheritdoc />
@@ -499,28 +495,27 @@ namespace Nameless.WebApplication.Core.Identity.Stores {
         public Task<string> GetNormalizedUserNameAsync(User user, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return _queryDispatcher.QueryAsync(new GetUserNormalizedNameQuery {
-                UserID = user.ID
-            }, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Task.FromResult(user.NormalizedUserName);
         }
 
         /// <inheritdoc />
         public Task<string> GetUserIdAsync(User user, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return _queryDispatcher
-                .QueryAsync(new GetUserIDQuery {
-                    NormalizedUserName = user.NormalizedUserName
-                }, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Task.FromResult(user.ID.ToString());
         }
 
         /// <inheritdoc />
         public Task<string> GetUserNameAsync(User user, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return _queryDispatcher.QueryAsync(new GetUserNameQuery {
-                UserID = user.ID
-            }, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Task.FromResult(user.UserName);
         }
 
         /// <inheritdoc />
@@ -528,10 +523,11 @@ namespace Nameless.WebApplication.Core.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
             Prevent.ParameterNullOrWhiteSpace(normalizedName, nameof(normalizedName));
 
-            return _commandDispatcher.CommandAsync(new SetUserNormalizedNameCommand {
-                UserID = user.ID,
-                NormalizedUserName = normalizedName
-            }, cancellationToken: cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            user.NormalizedUserName = normalizedName;
+
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc />
@@ -539,10 +535,11 @@ namespace Nameless.WebApplication.Core.Identity.Stores {
             Prevent.ParameterNull(user, nameof(user));
             Prevent.ParameterNullOrWhiteSpace(userName, nameof(userName));
 
-            return _commandDispatcher.CommandAsync(new SetUserNameCommand {
-                UserID = user.ID,
-                UserName = userName
-            }, cancellationToken: cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            user.UserName = userName;
+
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc />
@@ -552,7 +549,7 @@ namespace Nameless.WebApplication.Core.Identity.Stores {
             return _commandDispatcher.CommandAsync(new UpdateUserCommand {
                 UserID = user.ID,
                 FullName = user.FullName,
-                ProfilePicture = user.ProfilePicture
+                ProfilePicture = user.ProfilePicturePath
             }, cancellationToken: cancellationToken)
             .ContinueWith(IdentityResultContinuation);
         }
@@ -565,19 +562,20 @@ namespace Nameless.WebApplication.Core.Identity.Stores {
         public Task<bool> GetTwoFactorEnabledAsync(User user, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return _queryDispatcher.QueryAsync(new GetUserTwoFactorEnabledQuery {
-                UserID = user.ID
-            }, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Task.FromResult(user.TwoFactorEnabled);
         }
 
         /// <inheritdoc />
         public Task SetTwoFactorEnabledAsync(User user, bool enabled, CancellationToken cancellationToken) {
             Prevent.ParameterNull(user, nameof(user));
 
-            return _commandDispatcher.CommandAsync(new SetUserTwoFactorEnabledCommand {
-                UserID = user.ID,
-                Enabled = enabled
-            }, cancellationToken: cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            user.TwoFactorEnabled = enabled;
+
+            return Task.CompletedTask;
         }
 
         #endregion IUserTwoFactorStore<User> Members

@@ -14,7 +14,7 @@ namespace Nameless.WebApplication.Core.Identity.Domains.Users.Commands {
         public string UserName { get; set; }
         public string Email { get; set; }
         public string FullName { get; set; }
-        public string ProfilePicture { get; set; }
+        public string ProfilePicturePath { get; set; }
         public byte[] ProfilePictureBlob { get; set; }
         public Guid OwnerID { get; set; }
 
@@ -42,7 +42,7 @@ namespace Nameless.WebApplication.Core.Identity.Domains.Users.Commands {
                         Parameter.CreateInputParameter(EntitySchema.Users.Fields.UserName, command.UserName),
                         Parameter.CreateInputParameter(EntitySchema.Users.Fields.Email, command.Email),
                         Parameter.CreateInputParameter(EntitySchema.Users.Fields.FullName, command.FullName),
-                        Parameter.CreateInputParameter(EntitySchema.Users.Fields.ProfilePicture, command.ProfilePicture),
+                        Parameter.CreateInputParameter(EntitySchema.Users.Fields.ProfilePicturePath, command.ProfilePicturePath),
                         Parameter.CreateInputParameter(EntitySchema.Users.Fields.ProfilePictureBlob, command.ProfilePictureBlob, DbType.Binary)
                     }
                 );

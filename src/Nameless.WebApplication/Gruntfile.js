@@ -12,9 +12,9 @@
                 './wwwroot/test/**/*.js',
                 '!./wwwroot/test/**/*.min.js',
 
-                // Bookshelf
-                './Areas/Bookshelf/wwwroot/**/*.js',
-                '!./Areas/Bookshelf/wwwroot/**/*.min.js'
+                // UserManagement
+                './Areas/UserManagement/wwwroot/**/*.js',
+                '!./Areas/UserManagement/wwwroot/**/*.min.js'
             ],
             // configure JSHint (documented at http://www.jshint.com/docs/)
             options: {
@@ -109,12 +109,12 @@
                 }]
             },
 
-            bookshelf: {
+            user_management: {
                 files: [{
                     expand: true,
-                    cwd: './Areas/Bookshelf/wwwroot/',
+                    cwd: './Areas/UserManagement/wwwroot/',
                     src: ['css/**/*', 'img/**/*', 'js/**/*'],
-                    dest: './wwwroot/assets/areas/bookshelf'
+                    dest: './wwwroot/assets/areas/user_management'
                 }]
             }
         },
@@ -262,28 +262,28 @@
                 dest: './wwwroot/assets/js/<%= pkg.name %>.validation.min.js'
             },
 
-            bookshelf_js: {
+            user_management_js: {
                 options: {
                     separator: ';' /* define a string to put between each file in the concatenated output */
                 },
                 // the files to concatenate
                 src: [
-                    './Areas/Bookshelf/wwwroot/js/'
+                    './Areas/UserManagement/wwwroot/js/'
                 ],
                 // the location of the resulting JS file
-                dest: './wwwroot/assets/areas/bookshelf/js/bookshelf.bundle.min.js'
+                dest: './wwwroot/assets/areas/user_management/js/user_management.bundle.min.js'
             },
 
-            bookshelf_css: {
+            user_management_css: {
                 options: {
                     separator: '\n' /* define a string to put between each file in the concatenated output */
                 },
                 // the files to concatenate
                 src: [
-                    './Areas/Bookshelf/wwwroot/css/'
+                    './Areas/UserManagement/wwwroot/css/'
                 ],
                 // the location of the resulting CSS file
-                dest: './wwwroot/assets/areas/bookshelf/css/bookshelf.bundle.min.css'
+                dest: './wwwroot/assets/areas/user_management/css/user_management.bundle.min.css'
             }
         },
 
@@ -313,9 +313,10 @@
                     './wwwroot/lib/PACE/themes/blue/pace-theme-flash.min.css': './wwwroot/lib/PACE/themes/blue/pace-theme-flash.css'
                 }
             },
-            bookshelf: {
+            user_management: {
                 files: {
-                    './Areas/Bookshelf/wwwroot/css/book.views.show.min.css': './Areas/Bookshelf/wwwroot/css/book.views.show.css'
+                    './Areas/UserManagement/wwwroot/css/account.signin.min.css': './Areas/UserManagement/wwwroot/css/account.signin.css',
+                    './Areas/UserManagement/wwwroot/css/account.signup.min.css': './Areas/UserManagement/wwwroot/css/account.signup.css'
                 }
             }
         },
@@ -388,9 +389,9 @@
                 })
             },
 
-            bookshelf: {
+            user_management: {
                 files: [{
-                    //'./Areas/Bookshelf/wwwroot/js/*.min.js': './Areas/Bookshelf/wwwroot/*.js'
+                    //'./Areas/UserManagement/wwwroot/js/*.min.js': './Areas/UserManagement/wwwroot/*.js'
                 }]
             }
         },

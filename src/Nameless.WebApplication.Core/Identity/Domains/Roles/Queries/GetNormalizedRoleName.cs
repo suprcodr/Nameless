@@ -30,7 +30,7 @@ namespace Nameless.WebApplication.Core.Identity.Domains.Roles.Queries {
         public override Task<string> HandleAsync(GetNormalizedRoleNameQuery query, CancellationToken cancellationToken = default(CancellationToken)) {
             return Task.Run(() => {
                 return Database.ExecuteScalar<string>(
-                    commandText: EntitySchema.Roles.StoredProcedures.GetNormalizedRoleName,
+                    commandText: EntitySchema.Roles.StoredProcedures.GetRoleNormalizedName,
                     commandType: CommandType.StoredProcedure,
                     parameters: new[] {
                         Parameter.CreateInputParameter(EntitySchema.Roles.Fields.ID, query.RoleID, DbType.Guid)

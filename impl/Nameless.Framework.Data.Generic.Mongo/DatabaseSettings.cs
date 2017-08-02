@@ -1,4 +1,4 @@
-﻿namespace Nameless.Framework.Data.Generic.NoSql.Mongo {
+﻿namespace Nameless.Framework.Data.Generic.Mongo {
 
     public sealed class DatabaseSettings {
 

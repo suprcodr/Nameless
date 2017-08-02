@@ -29,7 +29,7 @@ namespace Nameless.Framework.CQRS.Command {
         #region ICommandDispatcher Members
 
         /// <inheritdoc />
-        public Task CommandAsync<TCommand>(TCommand command, IProgress<int> progress = null, CancellationToken cancellationToken = default(CancellationToken)) where TCommand : ICommand {
+        public Task CommandAsync<TCommand>(TCommand command, CancellationToken cancellationToken = default(CancellationToken), IProgress<int> progress = null) where TCommand : ICommand {
             return Task.CompletedTask;
         }
 

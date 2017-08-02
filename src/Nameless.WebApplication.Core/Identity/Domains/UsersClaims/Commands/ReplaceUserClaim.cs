@@ -14,7 +14,6 @@ namespace Nameless.WebApplication.Core.Identity.Domains.UsersClaims.Commands {
         public Guid UserID { get; set; }
 
         public string OldClaimType { get; set; }
-        public string OldClaimValue { get; set; }
 
         public string NewClaimType { get; set; }
         public string NewClaimValue { get; set; }
@@ -42,8 +41,7 @@ namespace Nameless.WebApplication.Core.Identity.Domains.UsersClaims.Commands {
                         Parameter.CreateInputParameter(EntitySchema.UsersClaims.Fields.UserID, command.UserID, DbType.Guid),
 
                         Parameter.CreateInputParameter(string.Concat("old_", EntitySchema.UsersClaims.Fields.Type), command.OldClaimType),
-                        Parameter.CreateInputParameter(string.Concat("old_", EntitySchema.UsersClaims.Fields.Value), command.OldClaimValue),
-
+                        
                         Parameter.CreateInputParameter(string.Concat("new_", EntitySchema.UsersClaims.Fields.Type), command.NewClaimType),
                         Parameter.CreateInputParameter(string.Concat("new_", EntitySchema.UsersClaims.Fields.Value), command.NewClaimValue)
                     }

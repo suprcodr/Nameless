@@ -6,7 +6,7 @@ using Autofac.Core;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using Nameless.Framework.Data.Generic;
-using Nameless.Framework.Data.Generic.NoSql.Mongo;
+using Nameless.Framework.Data.Generic.Mongo;
 
 namespace Nameless.Framework.IoC.Registrations {
 

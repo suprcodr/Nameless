@@ -16,10 +16,10 @@ namespace Nameless.Framework.CQRS.Command {
         /// </summary>
         /// <typeparam name="TCommand">Type of the command.</typeparam>
         /// <param name="command">The instance of the command.</param>
-        /// <param name="progress">The progress notifier.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        /// <param name="progress">The progress notifier.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous command execution.</returns>
-        Task CommandAsync<TCommand>(TCommand command, IProgress<int> progress = null, CancellationToken cancellationToken = default(CancellationToken)) where TCommand : ICommand;
+        Task CommandAsync<TCommand>(TCommand command, CancellationToken cancellationToken = default(CancellationToken), IProgress<int> progress = null) where TCommand : ICommand;
 
         #endregion Methods
     }

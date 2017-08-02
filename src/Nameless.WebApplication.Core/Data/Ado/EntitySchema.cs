@@ -37,7 +37,7 @@ namespace Nameless.WebApplication.Core {
                     PhoneNumberConfirmed = reader.GetBooleanOrDefault(Fields.PhoneNumberConfirmed),
                     TwoFactorEnabled = reader.GetBooleanOrDefault(Fields.TwoFactorEnabled),
                     SecurityStamp = reader.GetStringOrDefault(Fields.SecurityStamp),
-                    ProfilePicture = reader.GetStringOrDefault(Fields.ProfilePicture),
+                    ProfilePicturePath = reader.GetStringOrDefault(Fields.ProfilePicturePath),
                     ProfilePictureBlob = reader.GetBlobOrDefault(Fields.ProfilePictureBlob)
                 };
             }
@@ -136,7 +136,7 @@ namespace Nameless.WebApplication.Core {
                 internal static readonly string PhoneNumberConfirmed = "phone_number_confirmed";
                 internal static readonly string TwoFactorEnabled = "two_factor_enabled";
                 internal static readonly string SecurityStamp = "security_stamp";
-                internal static readonly string ProfilePicture = "profile_picture_path";
+                internal static readonly string ProfilePicturePath = "profile_picture_path";
                 internal static readonly string ProfilePictureBlob = "profile_picture_blob";
                 internal static readonly string Attributes = "attributes";
 
@@ -306,17 +306,16 @@ namespace Nameless.WebApplication.Core {
                 // Alteration
                 internal static readonly string CreateRole = nameof(CreateRole);
                 internal static readonly string DeleteRole = nameof(DeleteRole);
-                internal static readonly string SetRoleNormalizedName = nameof(SetRoleNormalizedName);
                 internal static readonly string SetRoleName = nameof(SetRoleName);
+                internal static readonly string SetRoleNormalizedName = nameof(SetRoleNormalizedName);
                 internal static readonly string UpdateRole = nameof(UpdateRole);
 
                 // Query
                 internal static readonly string FindRoleByID = nameof(FindRoleByID);
                 internal static readonly string FindRoleByNormalizedName = nameof(FindRoleByNormalizedName);
-                internal static readonly string GetNormalizedRoleName = nameof(GetNormalizedRoleName);
                 internal static readonly string GetRoleID = nameof(GetRoleID);
                 internal static readonly string GetRoleName = nameof(GetRoleName);
-                internal static readonly string GetRole = nameof(GetRole);
+                internal static readonly string GetRoleNormalizedName = nameof(GetRoleNormalizedName);
 
                 #endregion Internal Static Read-Only Fields
             }
