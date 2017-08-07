@@ -139,6 +139,6 @@
     <None Include="Nameless.WebApplication.Database.publish.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PostDeploy Include="CreateRootOwner.PostDeployment.sql" />
+    <PostDeploy Include="Seed.PostDeployment.sql" />
   </ItemGroup>
 </Project>

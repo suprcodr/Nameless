@@ -41,6 +41,7 @@ namespace Nameless.WebApplication.Core.Identity.Domains.Users.Commands {
                         Parameter.CreateInputParameter(EntitySchema.Users.Fields.ID, Guid.NewGuid(), DbType.Guid),
                         Parameter.CreateInputParameter(EntitySchema.Users.Fields.UserName, command.UserName),
                         Parameter.CreateInputParameter(EntitySchema.Users.Fields.Email, command.Email),
+                        Parameter.CreateInputParameter(EntitySchema.Users.Fields.NormalizedEmail, command.Email.ToUpper()),
                         Parameter.CreateInputParameter(EntitySchema.Users.Fields.FullName, command.FullName),
                         Parameter.CreateInputParameter(EntitySchema.Users.Fields.ProfilePicturePath, command.ProfilePicturePath),
                         Parameter.CreateInputParameter(EntitySchema.Users.Fields.ProfilePictureBlob, command.ProfilePictureBlob, DbType.Binary),

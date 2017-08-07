@@ -4,7 +4,7 @@ using Nameless.WebApplication.Resources;
 
 namespace Nameless.WebApplication.Areas.UserManagement.Models.Account {
 
-    public class LoginViewModel {
+    public class SignInViewModel {
 
         #region Public Properties
 

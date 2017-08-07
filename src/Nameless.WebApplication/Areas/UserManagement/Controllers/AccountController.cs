@@ -49,7 +49,7 @@ namespace Nameless.WebApplication.Areas.UserManagement.Controllers {
         public IActionResult SignIn(string returnUrl = null) {
             ViewData["ReturnUrl"] = returnUrl;
 
-            return View(new LoginViewModel {
+            return View(new SignInViewModel {
                 LoginProviders = _signInManager.GetExternalAuthenticationSchemes().Select(_ => new LoginProviderViewModel {
                     AuthenticationScheme = _.AuthenticationScheme,
                     DisplayName = _.DisplayName
@@ -60,12 +60,13 @@ namespace Nameless.WebApplication.Areas.UserManagement.Controllers {
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SignIn(LoginViewModel model, string returnUrl = null) {
+        public async Task<IActionResult> SignIn(SignInViewModel model, string returnUrl = null) {
             ViewData["ReturnUrl"] = returnUrl;
 
             if (ModelState.IsValid) {
                 // To disable password failures to trigger account lockout, set lockoutOnFailure: false
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: true);
 
                 if (result.Succeeded) {
                     return RedirectToLocal(returnUrl);

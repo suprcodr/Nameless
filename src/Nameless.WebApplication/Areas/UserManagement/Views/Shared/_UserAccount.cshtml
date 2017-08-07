@@ -1,0 +1,48 @@
+﻿@model UserAccountViewModel
+
+<!-- User Account: style can be found in dropdown.less -->
+<li class="dropdown user user-menu">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <img asp-img-path="@Model.ProfilePicturePath"
+             asp-img-blob="@Model.ProfilePictureBlob"
+             asp-img-fallback="~/assets/img/user2-160x160.jpg" class="user-image" alt="@Model.FullName">
+        <span class="hidden-xs">@Model.FullName</span>
+    </a>
+    <ul class="dropdown-menu">
+        <!-- User image -->
+        <li class="user-header">
+            <img asp-img-path="@Model.ProfilePicturePath"
+                 asp-img-blob="@Model.ProfilePictureBlob"
+                 asp-img-fallback="~/assets/img/user2-160x160.jpg" class="img-circle" alt="@Model.FullName">
+
+            <p>
+                @Model.FullName - @Model.JobRole
+                <small>@T["Member since"] @Model.RegisterDate.ToString("MMM. yyyy")</small>
+            </p>
+        </li>
+        <!-- Menu Body -->
+        <li class="user-body">
+            <div class="row">
+                <div class="col-xs-4 text-center">
+                    <a href="#">Followers</a>
+                </div>
+                <div class="col-xs-4 text-center">
+                    <a href="#">Sales</a>
+                </div>
+                <div class="col-xs-4 text-center">
+                    <a href="#">Friends</a>
+                </div>
+            </div>
+            <!-- /.row -->
+        </li>
+        <!-- Menu Footer-->
+        <li class="user-footer">
+            <div class="pull-left">
+                <a asp-controller="Account" asp-action="Profile" asp-route-id="@Model.UserID" class="btn btn-default btn-flat">@T["Profile"]</a>
+            </div>
+            <div class="pull-right">
+                <a asp-controller="Account" asp-action="SignOut" class="btn btn-default btn-flat">@T["Sign out"]</a>
+            </div>
+        </li>
+    </ul>
+</li>

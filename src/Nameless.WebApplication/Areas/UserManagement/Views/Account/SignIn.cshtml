@@ -1,4 +1,4 @@
-﻿@model LoginViewModel
+﻿@model SignInViewModel
 @{
     ViewData["Title"] = "Sign In";
     ViewData["PageCssClass"] = "user-management-page";
@@ -21,7 +21,7 @@
     <div class="user-management-box-body">
         <p class="user-management-box-msg">@T["Sign in to start your session"]</p>
 
-        <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+        <form asp-controller="Account" asp-action="SignIn" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
             <div class="form-group has-feedback">
                 <input type="email" asp-for="Email" class="form-control" placeholder="@T["Email"]" />
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -36,7 +36,7 @@
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
                         <label>
-                            <input type="checkbox" name="RememberMe" /> @T["Remember Me"]
+                            <input type="checkbox" name="RememberMe" asp-for="RememberMe" /> @T["Remember Me"]
                         </label>
                     </div>
                 </div>
